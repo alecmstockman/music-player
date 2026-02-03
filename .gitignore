@@ -1,0 +1,5 @@
+Music/Songs/*
+Music/Albums/*
+
+!Music/Songs/.gitkeep
+!Music/Albums/.gitkeep
