@@ -7,7 +7,6 @@ class VLCPlayer:
     def __init__(self):
         self.instance = vlc.Instance()
         self.player = self.instance.media_player_new()
-        # self.playlist_player = self.instance.media_list_player_new()
         self.media = None
         self.playlist = None
 
@@ -27,5 +26,6 @@ class VLCPlayer:
 
     def is_playing(self) -> bool:
         return bool(self.player.is_playing())
+
     
 

@@ -1,12 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 import time
+from .playlist import Playlist
 
 class PlayerControls(ttk.Frame):
-    def __init__(self, parent, player):
-        super().__init__(parent)
+    def __init__(self, parent, player, Playlist):
+        super().__init__(parent, Playlist)
         self.player = player
-
         self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play)
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track)
         self.next_btn = ttk.Button(self, text="⏭", command=self.next_track)
@@ -27,4 +27,5 @@ class PlayerControls(ttk.Frame):
         print("Previous track (not implemented yet)")
 
     def next_track(self):
+        self.media = (Playlist.current_index + 1) 
         print("Next track (not implemented yet)")

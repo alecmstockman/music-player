@@ -3,7 +3,7 @@ from tkinter import ttk
 def setup_styles(root):
     style = ttk.Style(root)
 
-    style.theme_use('clam')
+    style.theme_use('aqua')
 
     style.configure(
         "Custom.Horizontal.TProgressbar",
