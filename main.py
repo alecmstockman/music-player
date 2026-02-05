@@ -24,11 +24,8 @@ top_region = ttk.Frame(root)
 top_region.pack(side="top", fill="x")
 content_region = ttk.Frame(root)
 content_region.pack(side="top", fill="both", expand=True)
+
 player = VLCPlayer()
-
-controls = PlayerControls(parent=top_region, player=player)
-controls.pack(side="left")
-
 
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
@@ -37,11 +34,11 @@ album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_di
 
 library = Playlist("Main Library", library_all_tracks)
 
-ACTIVE_PLAYLIST = library
-controls = PlayerControls(top_region, player, ACTIVE_PLAYLIST)
-
-print(ACTIVE_PLAYLIST[0])
-player.load(ACTIVE_PLAYLIST.track_list[0])
+# ACTIVE_PLAYLIST = library
+controls = PlayerControls(top_region, player, library)
+controls.pack(side="left")
+print(library.track_list[library.current_index])
+player.load(library.track_list[library.current_index])
 
 
 time_label = tk.Label(content_region, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")

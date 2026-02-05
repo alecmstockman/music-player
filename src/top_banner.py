@@ -5,8 +5,9 @@ from .playlist import Playlist
 
 class PlayerControls(ttk.Frame):
     def __init__(self, parent, player, Playlist):
-        super().__init__(parent, Playlist)
+        super().__init__(parent)
         self.player = player
+        self.playlist = Playlist
         self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play)
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track)
         self.next_btn = ttk.Button(self, text="⏭", command=self.next_track)
@@ -24,8 +25,11 @@ class PlayerControls(ttk.Frame):
             self.play_pause_btn.config(text="⏸")
     
     def previous_track(self):
-        print("Previous track (not implemented yet)")
+        self.playlist.current_index -= 1
+        self.player.load(self.playlist.track_list[self.playlist.current_index])
+        self.player.play()
 
     def next_track(self):
-        self.media = (Playlist.current_index + 1) 
-        print("Next track (not implemented yet)")
+        self.playlist.current_index += 1
+        self.player.load(self.playlist.track_list[self.playlist.current_index])
+        self.player.play()
