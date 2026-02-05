@@ -2,19 +2,30 @@ import tkinter as tk
 from tkinter import ttk
 import time
 from .playlist import Playlist
+import random
 
 class PlayerControls(ttk.Frame):
     def __init__(self, parent, player, Playlist):
         super().__init__(parent)
         self.player = player
         self.playlist = Playlist
+        self.loop_status = None
+        self.shuffle = False
         self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play)
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track)
         self.next_btn = ttk.Button(self, text="⏭", command=self.next_track)
+        
+        # self.song_display = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
+        self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist)
+        self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop)
 
+    
+        self.shuffle_btn.pack(side="left")
         self.previous_btn.pack(side="left")
         self.play_pause_btn.pack(side="left")
         self.next_btn.pack(side="left")
+        self.loop_btn.pack(side="left")
+        self.song_display.pack(side="left")
 
     def toggle_play(self):
         if self.player.is_playing():
@@ -33,3 +44,32 @@ class PlayerControls(ttk.Frame):
         self.playlist.current_index += 1
         self.player.load(self.playlist.track_list[self.playlist.current_index])
         self.player.play()
+
+    def shuffle_playlist(self):
+        print(f"Shuffle was: {self.shuffle}")
+        playlist_copy = self.playlist.track_list.copy()
+        random.shuffle(playlist_copy)
+        
+        if self.loop_status != "track":
+            if self.shuffle == False:
+                self.shuffle = True
+                self.shuffle_btn.config(text="🔀*")
+            else:
+                self.shuffle = False
+                self.shuffle_btn.config(text="🔀")
+
+        print(f"Shuffle is now: {self.shuffle}")
+        print("Shuffle playlist not implemented yet")
+
+    def toggle_loop(self):
+        if self.loop_status == None:
+            self.loop_status = "Playlist"
+            self.loop_btn.config(text="🔁*")
+        elif self.loop_status == "Playlist":
+            self.loop_status = "track"
+            self.loop_btn.config(text="🔁")
+        elif self.loop_status == "track":
+            self.loop_btn.config(text="🔂")
+            self.loop_status = None
+        print("Loop functionality not complete!")    
+        print(f"Status: {self.loop_status}. Playlist length: {self.playlist.playlist_length}")

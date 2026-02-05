@@ -66,5 +66,13 @@ def update_time_and_progress():
 
     root.after(25, update_time_and_progress)
 
+def test_prints():
+
+    print("\n--- SONGS IN PLAYLIST ---")
+    for song in library_all_tracks:
+        print(song)
+    print("\n")
+
+test_prints()
 update_time_and_progress()
 root.mainloop()
