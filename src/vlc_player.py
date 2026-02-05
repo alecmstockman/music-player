@@ -26,6 +26,9 @@ class VLCPlayer:
 
     def is_playing(self) -> bool:
         return bool(self.player.is_playing())
+    
+    def track_finished(self, event):
+        return
 
     
 

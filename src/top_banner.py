@@ -15,7 +15,7 @@ class PlayerControls(ttk.Frame):
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track)
         self.next_btn = ttk.Button(self, text="⏭", command=self.next_track)
         
-        # self.song_display = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
+        # self.now_playing_label = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
         self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist)
         self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop)
 
