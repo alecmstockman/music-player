@@ -15,7 +15,7 @@ class PlayerControls(ttk.Frame):
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track)
         self.next_btn = ttk.Button(self, text="⏭", command=self.next_track)
         
-        # self.now_playing_label = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
+        self.now_playing_label = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
         self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist)
         self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop)
 
@@ -25,7 +25,7 @@ class PlayerControls(ttk.Frame):
         self.play_pause_btn.pack(side="left")
         self.next_btn.pack(side="left")
         self.loop_btn.pack(side="left")
-        self.song_display.pack(side="left")
+        self.now_playing_label.pack(side="left")
 
     def toggle_play(self):
         if self.player.is_playing():
@@ -37,13 +37,21 @@ class PlayerControls(ttk.Frame):
     
     def previous_track(self):
         self.playlist.current_index -= 1
-        self.player.load(self.playlist.track_list[self.playlist.current_index])
-        self.player.play()
+        if self.player.is_playing():
+            self.player.load(self.playlist.track_list[self.playlist.current_index])
+            self.player.play()
+            self.play_pause_btn.config(text="⏸")
+        else:
+            self.player.load(self.playlist.track_list[self.playlist.current_index])
 
     def next_track(self):
         self.playlist.current_index += 1
-        self.player.load(self.playlist.track_list[self.playlist.current_index])
-        self.player.play()
+        if self.player.is_playing():
+            self.player.load(self.playlist.track_list[self.playlist.current_index])
+            self.player.play()
+            self.play_pause_btn.config(text="⏸")
+        else:
+            self.player.load(self.playlist.track_list[self.playlist.current_index])
 
     def shuffle_playlist(self):
         print(f"Shuffle was: {self.shuffle}")

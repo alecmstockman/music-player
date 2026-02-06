@@ -29,6 +29,15 @@ class VLCPlayer:
     
     def track_finished(self, event):
         return
+    
+    def set_time(self, ms: int):
+        self.player.set_time(ms)
+
+    def get_time(self):
+        return self.player.get_time()
+    
+    def get_length(self):
+        return self.player.get_length()
 
     
 

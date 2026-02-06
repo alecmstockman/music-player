@@ -34,7 +34,6 @@ album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_di
 
 library = Playlist("Main Library", library_all_tracks)
 
-# ACTIVE_PLAYLIST = library
 controls = PlayerControls(top_region, player, library)
 controls.pack(side="left")
 print(library.track_list[library.current_index])
@@ -43,8 +42,28 @@ player.load(library.track_list[library.current_index])
 
 time_label = tk.Label(content_region, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
 time_label.pack(pady=5)
-progress_bar = ttk.Progressbar(content_region, orient="horizontal", length=480, mode="determinate")
-progress_bar.pack(pady=4)
+
+progress_var = tk.DoubleVar()
+def set_progress_on_click(event):
+    proportion = event.x / event.widget.winfo_width()
+    length = player.get_length()
+    if length <= 0:
+        return
+    new_time = int(proportion * length)
+    player.set_time(new_time)
+
+progress_bar = ttk.Progressbar(
+    content_region, 
+    orient="horizontal", 
+    length=500, 
+    maximum=100, 
+    mode="determinate", 
+    variable=progress_var
+    )
+
+progress_bar.pack(pady=5)
+progress_bar.bind('<Button-1>', set_progress_on_click)
+progress_bar.bind('<B1-Motion>', set_progress_on_click)
 
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
@@ -62,9 +81,10 @@ def update_time_and_progress():
 
     time_label.config(text=f"{elapsed_str} / {total_str}")
     percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
-    progress_bar['value'] = percent
+    progress_var.set(percent)
 
     root.after(25, update_time_and_progress)
+
 
 def test_prints():
 
