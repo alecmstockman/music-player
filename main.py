@@ -27,6 +27,9 @@ content_region.pack(side="top", fill="both", expand=True)
 
 player = VLCPlayer()
 
+def quit_app(event=None):
+    player.stop()
+    root.destroy()
 
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
@@ -97,6 +100,7 @@ def update_time_and_progress():
 root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
+root.bind("<Command-q>", quit_app, add="+")
 
 def test_prints():
 
@@ -106,7 +110,6 @@ def test_prints():
         print(f"{count}: {song}")
         count += 1
     print("\n")
-
 
 
 test_prints()
