@@ -3,6 +3,7 @@ from tkinter import ttk
 import time
 import vlc
 
+
 class VLCPlayer:
     def __init__(self):
         self.instance = vlc.Instance()

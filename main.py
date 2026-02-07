@@ -68,10 +68,13 @@ progress_bar.pack(pady=5)
 progress_bar.bind('<Button-1>', set_progress_on_click)
 progress_bar.bind('<B1-Motion>', set_progress_on_click)
 
+print("=== TRACK PATH ===")
+
 def play_next():
     library.next()
-    player.load(library.current_track)
-    controls.now_playing_label = library.current_track
+    track = library.track_list[library.current_index]
+    player.load(library.track_list[library.current_index])
+    controls.current_track_title.set(track.stem)
     player.play()
 
 player.on_track_finished = lambda: root.after(0, play_next)

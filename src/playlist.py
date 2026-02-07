@@ -7,10 +7,7 @@ class Playlist():
         self.name = name
         self.track_list = track_list
         self.current_index = 0
-        self.current_track = self.track_list[self.current_index]
         self.playlist_length = len(self.track_list)
-        self.next_track = self.track_list[self.current_index + 1]
 
     def next(self):
         self.current_index += 1
-        self.current_track = self.track_list[self.current_index]

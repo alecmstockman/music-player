@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import time
 from .playlist import Playlist
+from pathlib import Path
 import random
 
 class PlayerControls(ttk.Frame):
@@ -14,8 +15,12 @@ class PlayerControls(ttk.Frame):
         self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play)
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track)
         self.next_btn = ttk.Button(self, text="⏭", command=self.next_track)
-        
-        self.now_playing_label = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
+
+        self.current_track_title = tk.StringVar()
+        self.track = self.playlist.track_list[self.playlist.current_index]
+        self.current_track_title.set(self.track.stem)
+        self.now_playing_label = ttk.Label(self, textvariable=self.current_track_title)
+
         self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist)
         self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop)
     
@@ -24,7 +29,7 @@ class PlayerControls(ttk.Frame):
         self.play_pause_btn.pack(side="left")
         self.next_btn.pack(side="left")
         self.loop_btn.pack(side="left")
-        self.now_playing_label.pack(side="left")
+        self.now_playing_label.pack(side="left", padx=(180))
 
 
     def toggle_play(self, event=None):
@@ -46,6 +51,8 @@ class PlayerControls(ttk.Frame):
             self.play_pause_btn.config(text="⏸")
         else:
             self.player.load(self.playlist.track_list[self.playlist.current_index])
+        self.track = self.playlist.track_list[self.playlist.current_index]
+        self.current_track_title.set(self.track.stem)
 
     def next_track(self, event=None):
         print(f"Current Index: {self.playlist.current_index}")
@@ -62,6 +69,8 @@ class PlayerControls(ttk.Frame):
         else:
             if self.playlist.current_index < self.playlist.playlist_length:
                 self.player.load(self.playlist.track_list[self.playlist.current_index])
+        self.track = self.playlist.track_list[self.playlist.current_index]
+        self.current_track_title.set(self.track.stem)
 
     def shuffle_playlist(self):
         print(f"Shuffle was: {self.shuffle}")
