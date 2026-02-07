@@ -53,6 +53,7 @@ class PlayerControls(ttk.Frame):
             self.playlist.current_index += 1
         else:
             return
+        
         if self.player.is_playing():
             if self.playlist.current_index < self.playlist.playlist_length:
                 self.player.load(self.playlist.track_list[self.playlist.current_index])

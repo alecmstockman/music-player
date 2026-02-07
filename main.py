@@ -43,8 +43,6 @@ controls.pack(side="left")
 print(library.track_list[library.current_index])
 player.load(library.track_list[library.current_index])
 
-
-
 time_label = tk.Label(content_region, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
 time_label.pack(pady=5)
 
@@ -72,7 +70,8 @@ progress_bar.bind('<B1-Motion>', set_progress_on_click)
 
 def play_next():
     library.next()
-    player.load(library.current_track())
+    player.load(library.current_track)
+    controls.now_playing_label = library.current_track
     player.play()
 
 player.on_track_finished = lambda: root.after(0, play_next)
@@ -102,6 +101,7 @@ root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 root.bind("<Command-q>", quit_app, add="+")
 
+
 def test_prints():
 
     print("\n--- SONGS IN PLAYLIST ---")
@@ -110,7 +110,6 @@ def test_prints():
         print(f"{count}: {song}")
         count += 1
     print("\n")
-
 
 test_prints()
 update_time_and_progress()
