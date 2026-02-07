@@ -1,1 +1,1 @@
-# My Project
+This is a music player app similar to Apple Music or VLC and is my first personal project for my Boot.dev course. This app is built on the tkinter and VLC libraries. Currently in the early stages and currently only has basic functionality. 
