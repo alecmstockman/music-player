@@ -9,6 +9,10 @@ class VLCPlayer:
         self.player = self.instance.media_player_new()
         self.media = None
         self.playlist = None
+        self.event_manager = self.player.event_manager()
+        self.event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self._track_finished)
+        self.on_track_finished = None
+
 
     def load(self, filepath: str):
         self.media = self.instance.media_new(filepath)
@@ -27,7 +31,10 @@ class VLCPlayer:
     def is_playing(self) -> bool:
         return bool(self.player.is_playing())
     
-    def track_finished(self, event):
+    def _track_finished(self, event):
+        if self.on_track_finished:
+            self.on_track_finished()
+        print("Song Finished")
         return
     
     def set_time(self, ms: int):
@@ -39,5 +46,13 @@ class VLCPlayer:
     def get_length(self):
         return self.player.get_length()
 
+    def volume_up(self):
+        pass
+
+    def volume_down(self):
+        pass
+
+    def volume_mute(self):
+        pass
     
 

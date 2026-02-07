@@ -18,7 +18,6 @@ class PlayerControls(ttk.Frame):
         self.now_playing_label = ttk.Label(self, text=self.playlist.track_list[self.playlist.current_index])
         self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist)
         self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop)
-
     
         self.shuffle_btn.pack(side="left")
         self.previous_btn.pack(side="left")
@@ -27,7 +26,8 @@ class PlayerControls(ttk.Frame):
         self.loop_btn.pack(side="left")
         self.now_playing_label.pack(side="left")
 
-    def toggle_play(self):
+
+    def toggle_play(self, event=None):
         if self.player.is_playing():
             self.player.pause()
             self.play_pause_btn.config(text="▶")
@@ -35,7 +35,10 @@ class PlayerControls(ttk.Frame):
             self.player.play()
             self.play_pause_btn.config(text="⏸")
     
-    def previous_track(self):
+    def previous_track(self, event=None):
+        print(f"Current Index: {self.playlist.current_index}")
+        if self.playlist.current_index <= 0:
+            return
         self.playlist.current_index -= 1
         if self.player.is_playing():
             self.player.load(self.playlist.track_list[self.playlist.current_index])
@@ -44,14 +47,20 @@ class PlayerControls(ttk.Frame):
         else:
             self.player.load(self.playlist.track_list[self.playlist.current_index])
 
-    def next_track(self):
-        self.playlist.current_index += 1
-        if self.player.is_playing():
-            self.player.load(self.playlist.track_list[self.playlist.current_index])
-            self.player.play()
-            self.play_pause_btn.config(text="⏸")
+    def next_track(self, event=None):
+        print(f"Current Index: {self.playlist.current_index}")
+        if self.playlist.current_index < self.playlist.playlist_length - 1:
+            self.playlist.current_index += 1
         else:
-            self.player.load(self.playlist.track_list[self.playlist.current_index])
+            return
+        if self.player.is_playing():
+            if self.playlist.current_index < self.playlist.playlist_length:
+                self.player.load(self.playlist.track_list[self.playlist.current_index])
+                self.player.play()
+                self.play_pause_btn.config(text="⏸")
+        else:
+            if self.playlist.current_index < self.playlist.playlist_length:
+                self.player.load(self.playlist.track_list[self.playlist.current_index])
 
     def shuffle_playlist(self):
         print(f"Shuffle was: {self.shuffle}")
@@ -79,5 +88,8 @@ class PlayerControls(ttk.Frame):
         elif self.loop_status == "track":
             self.loop_btn.config(text="🔂")
             self.loop_status = None
+        else:
+            self.loop_status == None
+            self.loop_btn.config(text="🔁")
         print("Loop functionality not complete!")    
         print(f"Status: {self.loop_status}. Playlist length: {self.playlist.playlist_length}")

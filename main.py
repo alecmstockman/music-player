@@ -27,6 +27,7 @@ content_region.pack(side="top", fill="both", expand=True)
 
 player = VLCPlayer()
 
+
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
 album_dir = p / "albums"
@@ -38,6 +39,7 @@ controls = PlayerControls(top_region, player, library)
 controls.pack(side="left")
 print(library.track_list[library.current_index])
 player.load(library.track_list[library.current_index])
+
 
 
 time_label = tk.Label(content_region, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
@@ -65,6 +67,13 @@ progress_bar.pack(pady=5)
 progress_bar.bind('<Button-1>', set_progress_on_click)
 progress_bar.bind('<B1-Motion>', set_progress_on_click)
 
+def play_next():
+    library.next()
+    player.load(library.current_track())
+    player.play()
+
+player.on_track_finished = lambda: root.after(0, play_next)
+
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
     total_ms = player.player.get_length()
@@ -85,13 +94,20 @@ def update_time_and_progress():
 
     root.after(25, update_time_and_progress)
 
+root.bind("<space>", controls.toggle_play, add="+")
+root.bind("<Left>", controls.previous_track, add="+")
+root.bind("<Right>", controls.next_track, add="+")
 
 def test_prints():
 
     print("\n--- SONGS IN PLAYLIST ---")
+    count = 1
     for song in library_all_tracks:
-        print(song)
+        print(f"{count}: {song}")
+        count += 1
     print("\n")
+
+
 
 test_prints()
 update_time_and_progress()
