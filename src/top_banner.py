@@ -55,12 +55,12 @@ class PlayerControls(ttk.Frame):
         self.current_track_title.set(self.track.stem)
 
     def next_track(self, event=None):
-        print(f"Current Index: {self.playlist.current_index}")
         if self.playlist.current_index < self.playlist.playlist_length - 1:
             self.playlist.current_index += 1
         else:
             return
         
+        print(f"Current Index: {self.playlist.current_index}")
         if self.player.is_playing():
             if self.playlist.current_index < self.playlist.playlist_length:
                 self.player.load(self.playlist.track_list[self.playlist.current_index])

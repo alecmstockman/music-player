@@ -65,17 +65,20 @@ progress_bar = ttk.Progressbar(
     )
 
 progress_bar.pack(pady=5)
-progress_bar.bind('<Button-1>', set_progress_on_click)
-progress_bar.bind('<B1-Motion>', set_progress_on_click)
+progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
+progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
 
 print("=== TRACK PATH ===")
 
 def play_next():
     library.next()
-    track = library.track_list[library.current_index]
-    player.load(library.track_list[library.current_index])
-    controls.current_track_title.set(track.stem)
-    player.play()
+    if library.current_index >= len(library.track_list) - 1:
+        return
+    else:
+        track = library.track_list[library.current_index]
+        player.load(library.track_list[library.current_index])
+        controls.current_track_title.set(track.stem)
+        player.play()
 
 player.on_track_finished = lambda: root.after(0, play_next)
 
@@ -95,6 +98,7 @@ def update_time_and_progress():
 
     time_label.config(text=f"{elapsed_str} / {total_str}")
     percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
+    set_progress_on_click
     progress_var.set(percent)
 
     root.after(25, update_time_and_progress)
