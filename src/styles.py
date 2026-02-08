@@ -6,6 +6,14 @@ def setup_styles(root):
     style.theme_use('aqua')
 
     style.configure(
+        "Border.TFrame",
+        bordercolor="white",
+        relief="solid",
+        borderwidth=2,
+        padx=10
+    )
+
+    style.configure(
         "Custom.Horizontal.TProgressbar",
         troughcolor="#444444", 
         background="#096880", 

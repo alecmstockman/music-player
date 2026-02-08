@@ -46,12 +46,9 @@ class VLCPlayer:
     
     def get_length(self):
         return self.player.get_length()
-
-    def volume_up(self):
-        pass
-
-    def volume_down(self):
-        pass
+    
+    def set_volume(self, volume: int):
+        self.player.audio_set_volume(volume)
 
     def volume_mute(self):
         pass

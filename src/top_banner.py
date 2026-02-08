@@ -29,8 +29,7 @@ class PlayerControls(ttk.Frame):
         self.play_pause_btn.pack(side="left")
         self.next_btn.pack(side="left")
         self.loop_btn.pack(side="left")
-        self.now_playing_label.pack(side="left", padx=(180))
-
+        self.now_playing_label.pack(side="left", padx=(180))     
 
     def toggle_play(self, event=None):
         if self.player.is_playing():

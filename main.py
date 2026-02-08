@@ -20,16 +20,12 @@ root.geometry(f"{screen_width}x{screen_height}")
 
 setup_styles(root)
 
-top_region = ttk.Frame(root)
+top_region = ttk.Frame(root, style="Border.TFrame")
 top_region.pack(side="top", fill="x")
 content_region = ttk.Frame(root)
 content_region.pack(side="top", fill="both", expand=True)
 
 player = VLCPlayer()
-
-def quit_app(event=None):
-    player.stop()
-    root.destroy()
 
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
@@ -47,6 +43,11 @@ time_label = tk.Label(content_region, text="00:00 / 00:00", font=("Trebuchet MS"
 time_label.pack(pady=5)
 
 progress_var = tk.DoubleVar()
+
+def quit_app(event=None):
+    player.stop()
+    root.destroy()
+
 def set_progress_on_click(event):
     proportion = event.x / event.widget.winfo_width()
     length = player.get_length()
@@ -68,7 +69,22 @@ progress_bar.pack(pady=5)
 progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
 progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
 
-print("=== TRACK PATH ===")
+
+def set_audio_volume(val):
+    volume_level = int(float(val))
+    player.set_volume(volume_level)
+    # print(f"Volume set to: {volume_level}")
+
+volume_slider = ttk.Scale(
+        top_region,
+        orient="horizontal",
+        from_=0,
+        to=100,
+        command=set_audio_volume
+    )
+volume_slider.set(80)
+volume_slider.pack(padx=200, pady=10)
+
 
 def play_next():
     library.next()
