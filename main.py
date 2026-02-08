@@ -49,6 +49,9 @@ player.load(library.track_list[library.current_index])
 time_label = tk.Label(top_row_2, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
 time_label.pack(pady=5)
 
+music_window = PlaylistDisplay(content_region, player, library)
+music_window.pack(fill="both", expand=True)
+
 def quit_app(event=None):
     player.stop()
     root.destroy()
