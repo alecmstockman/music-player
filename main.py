@@ -8,6 +8,7 @@ from src.vlc_player import VLCPlayer
 from src.styles import setup_styles
 from src.playlist import Playlist
 from src.config import AUDIO_FILETYPES
+from src.music_window import PlaylistDisplay
 
 root = tk.Tk()
 root.lift()
@@ -22,16 +23,12 @@ setup_styles(root)
 
 top_region = ttk.Frame(root, style="Border.TFrame")
 top_region.pack(side="top", fill="x")
-
 top_row_1 = ttk.Frame(top_region)
 top_row_1.pack(side="top", fill="x")
-
 top_row_2 = ttk.Frame(top_region)
 top_row_2.pack(side="top", fill="x")
-
 sidebar_region = ttk.Frame(root, width=300, style="Border.TFrame")
 sidebar_region.pack(side="left", fill="y")
-
 content_region = ttk.Frame(root, style="Border.TFrame")
 content_region.pack(side="top", fill="both", expand=True)
 
@@ -49,6 +46,18 @@ controls.pack(side="left")
 print(library.track_list[library.current_index])
 player.load(library.track_list[library.current_index])
 
+time_label = tk.Label(top_row_2, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
+time_label.pack(pady=5)
+
+def quit_app(event=None):
+    player.stop()
+    root.destroy()
+
+root.bind("<space>", controls.toggle_play, add="+")
+root.bind("<Left>", controls.previous_track, add="+")
+root.bind("<Right>", controls.next_track, add="+")
+root.bind("<Command-q>", quit_app, add="+")
+
 
 def play_next():
     library.next()
@@ -61,13 +70,6 @@ def play_next():
         player.play()
 
 player.on_track_finished = lambda: root.after(0, play_next)
-
-def quit_app(event=None):
-    player.stop()
-    root.destroy()
-
-time_label = tk.Label(top_row_2, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
-time_label.pack(pady=5)
 
 progress_var = tk.DoubleVar()
 
@@ -107,8 +109,6 @@ volume_slider = ttk.Scale(
 volume_slider.set(80)
 volume_slider.pack(padx=200, pady=10)
 
-
-
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
     total_ms = player.player.get_length()
@@ -129,11 +129,6 @@ def update_time_and_progress():
     progress_var.set(percent)
 
     root.after(25, update_time_and_progress)
-
-root.bind("<space>", controls.toggle_play, add="+")
-root.bind("<Left>", controls.previous_track, add="+")
-root.bind("<Right>", controls.next_track, add="+")
-root.bind("<Command-q>", quit_app, add="+")
 
 
 def test_prints():
