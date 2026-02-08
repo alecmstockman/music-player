@@ -73,7 +73,6 @@ progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
 def set_audio_volume(val):
     volume_level = int(float(val))
     player.set_volume(volume_level)
-    # print(f"Volume set to: {volume_level}")
 
 volume_slider = ttk.Scale(
         top_region,
