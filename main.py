@@ -51,6 +51,7 @@ time_label.pack(pady=5)
 
 music_window = PlaylistDisplay(content_region, player, library)
 music_window.pack(fill="both", expand=True)
+music_window.set_playlist()
 
 def quit_app(event=None):
     player.stop()

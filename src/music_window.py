@@ -6,6 +6,7 @@ from pathlib import Path
 from src.playlist import Playlist
 from src.vlc_player import VLCPlayer
 from src.styles import setup_styles
+from src.config import AUDIO_FILETYPES
 
 
 class PlaylistDisplay(ttk.Frame):
@@ -14,14 +15,15 @@ class PlaylistDisplay(ttk.Frame):
         self.player = player
         self.playlist = Playlist
 
-        self.playlist_tree = ttk.Treeview(self, columns=("Play Status", "Track", "Time", "Artist", "Album", "Blank"), show="headings")
+        self.playlist_tree = ttk.Treeview(self, columns=("Play Status", "Track", "Time", "Artist", "Album", "Filetype", "Blank"), show="headings")
         self.playlist_tree.pack(side="left", fill="both", expand=True)
         
         self.playlist_tree.column("Play Status", anchor="w", width=50, stretch=False)
-        self.playlist_tree.column("Track", anchor="w", width=200, stretch=False)
-        self.playlist_tree.column("Time", anchor="w", width=200, stretch=False)
+        self.playlist_tree.column("Track", anchor="w", width=400, stretch=False)
+        self.playlist_tree.column("Time", anchor="e", width=80, stretch=False)
         self.playlist_tree.column("Artist", anchor="w", width=200, stretch=False)
         self.playlist_tree.column("Album", anchor="w", width=200, stretch=False)
+        self.playlist_tree.column("Filetype", anchor="e", width=100, stretch=False)
         self.playlist_tree.column("Blank", anchor="w", width=200, stretch=True)
 
         self.playlist_tree.heading("Play Status", text="  ")
@@ -29,7 +31,24 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("Time", text="Time")
         self.playlist_tree.heading("Artist", text="Artist")
         self.playlist_tree.heading("Album", text="Album")
+        self.playlist_tree.heading("Filetype", text="Filetype")
         self.playlist_tree.heading("Blank", text="")
         
+    def set_playlist(self):
+        for track in self.playlist.track_list:
+            media = self.player.instance.media_new(track)
+            media.parse()
 
-        # self.playlist_tree.pack(side="left", fill="both")
+            title = media.get_meta(vlc.Meta.Title)
+            artist = media.get_meta(vlc.Meta.Artist)
+            album = media.get_meta(vlc.Meta.Album)
+            total_s = media.get_duration() // 1000
+            total_str = f"{total_s//60:d}:{total_s%60:02d}"
+            filetype = track.suffix[1:]
+
+            if track.suffix in AUDIO_FILETYPES:
+                self.playlist_tree.insert(
+                    "", "end", 
+                    values=("", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"), 
+                )
+    
