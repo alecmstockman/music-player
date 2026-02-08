@@ -8,8 +8,8 @@ from vlc_player import VLCPlayer
 from styles import setup_styles
 
 
-class PlaylistDisplay(ttk.Frame):
-    def __init__(self, parent, player, Playlist):
-        super.__init__(parent)
-        self.player = player
+class Sidebar(ttk.Frame):
+    def __init__(self, parent, Playlist):
+        super().__init__(parent)
+        self.parent = parent
         self.playlist = Playlist
