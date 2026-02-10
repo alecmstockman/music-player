@@ -17,14 +17,14 @@ class PlaylistDisplay(ttk.Frame):
 
         self.playlist_tree = ttk.Treeview(
             self, 
-            columns=("filepath", "index", "Play Status", "Track", "Time", "Artist", "Album", "Filetype", "Blank"), 
+            columns=("filepath", "index", "play status", "Track", "Time", "Artist", "Album", "Filetype", "Blank"), 
             show="headings"
         )
         self.playlist_tree.pack(side="left", fill="both", expand=True)
         
         self.playlist_tree.column("filepath", width=0, stretch=False)
         self.playlist_tree.column("index", width=0, stretch=False)
-        self.playlist_tree.column("Play Status", anchor="w", width=50, stretch=False)
+        self.playlist_tree.column("play status", anchor="w", width=40, stretch=False)
         self.playlist_tree.column("Track", anchor="w", width=400, stretch=False)
         self.playlist_tree.column("Time", anchor="e", width=80, stretch=False)
         self.playlist_tree.column("Artist", anchor="w", width=200, stretch=False)
@@ -34,7 +34,7 @@ class PlaylistDisplay(ttk.Frame):
         
         self.playlist_tree.heading("filepath")
         self.playlist_tree.heading("index")
-        self.playlist_tree.heading("Play Status", text="  ")
+        self.playlist_tree.heading("play status", text="  ")
         self.playlist_tree.heading("Track", text="Title")
         self.playlist_tree.heading("Time", text="Length")
         self.playlist_tree.heading("Artist", text="Artist")
@@ -66,6 +66,7 @@ class PlaylistDisplay(ttk.Frame):
     
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
+        print(selection)
         if not selection:
             return None
         
@@ -81,7 +82,14 @@ class PlaylistDisplay(ttk.Frame):
             "album": values[6],
             "filetype": values[7]
         }
+    
+    def get_track_iid(self):
+        return self.playlist_tree.selection()[0]
         
-
+    def update_track_row(self, iid):
+        # item = self.playlist_tree.selection()[0]
+        self.playlist_tree.set(iid, column="play status", value="  🔊")
+        # print(iid["filepath"])
+        # new_values = ("")
   
 
