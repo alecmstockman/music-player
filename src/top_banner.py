@@ -13,23 +13,23 @@ class PlayerControls(ttk.Frame):
         self.loop_status = None
         self.shuffle = False
 
-        self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play, takefocus=0)
-        self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track, takefocus=0)
-        self.next_btn = ttk.Button(self, text="⏭", command=self.next_track, takefocus=0)
-        self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist, takefocus=0)
-        self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop, takefocus=0)
+        self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play, takefocus=0, width=3)
+        self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track, takefocus=0, width=3)
+        self.next_btn = ttk.Button(self, text="⏭", command=self.next_track, takefocus=0, width=3)
+        self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist, takefocus=0, width=3)
+        self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop, takefocus=0, width=3)
 
         self.current_track_title = tk.StringVar()
         self.track = self.playlist.track_list[self.playlist.current_index]
         self.current_track_title.set(self.track.stem)
         self.now_playing_label = ttk.Label(self, textvariable=self.current_track_title)
       
-        self.shuffle_btn.pack(side="left")
+        self.shuffle_btn.pack(side="left",)
         self.previous_btn.pack(side="left")
         self.play_pause_btn.pack(side="left")
         self.next_btn.pack(side="left")
         self.loop_btn.pack(side="left")
-        self.now_playing_label.pack(side="left", padx=(180))     
+        self.now_playing_label.pack(side="left", padx=(300))     
 
     def toggle_play(self, event=None):
         if self.player.is_playing():

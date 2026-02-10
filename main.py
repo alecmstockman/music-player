@@ -53,6 +53,11 @@ music_window = PlaylistDisplay(content_region, player, library)
 music_window.pack(fill="both", expand=True)
 music_window.set_playlist()
 
+# def play_selected_track(self):
+#     pass
+
+music_window.bind('<Double-Button-1>', music_window.play_selected_track)
+
 def quit_app(event=None):
     player.stop()
     root.destroy()
@@ -61,7 +66,6 @@ root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 root.bind("<Command-q>", quit_app, add="+")
-
 
 def play_next():
     library.next()
@@ -76,7 +80,6 @@ def play_next():
 player.on_track_finished = lambda: root.after(0, play_next)
 
 progress_var = tk.DoubleVar()
-
 def set_progress_on_click(event):
     proportion = event.x / event.widget.winfo_width()
     length = player.get_length()
@@ -111,7 +114,7 @@ volume_slider = ttk.Scale(
         command=set_audio_volume
     )
 volume_slider.set(80)
-volume_slider.pack(padx=200, pady=10)
+volume_slider.pack(padx=150, pady=10)
 
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
@@ -136,7 +139,6 @@ def update_time_and_progress():
 
 
 def test_prints():
-
     print("\n--- SONGS IN PLAYLIST ---")
     count = 1
     for song in library_all_tracks:
