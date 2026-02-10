@@ -15,11 +15,16 @@ class PlaylistDisplay(ttk.Frame):
         self.player = player
         self.playlist = Playlist
 
-        self.playlist_tree = ttk.Treeview(self, columns=("filepath", "Play Status", "Track", "Time", "Artist", "Album", "Filetype", "Blank"), show="headings")
+        self.playlist_tree = ttk.Treeview(
+            self, 
+            columns=("filepath", "index", "Play Status", "Track", "Time", "Artist", "Album", "Filetype", "Blank"), 
+            show="headings"
+        )
         self.playlist_tree.pack(side="left", fill="both", expand=True)
-        self.playlist_tree.bind('<Double-Button-1>', self.play_selected_track)
+        # self.playlist_tree.bind('<Double-Button-1>', self.get_selected_tracks)
         
         self.playlist_tree.column("filepath", width=0, stretch=False)
+        self.playlist_tree.column("index", width=0, stretch=False)
         self.playlist_tree.column("Play Status", anchor="w", width=50, stretch=False)
         self.playlist_tree.column("Track", anchor="w", width=400, stretch=False)
         self.playlist_tree.column("Time", anchor="e", width=80, stretch=False)
@@ -29,6 +34,7 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.column("Blank", anchor="w", width=200, stretch=True)
         
         self.playlist_tree.heading("filepath")
+        self.playlist_tree.heading("index")
         self.playlist_tree.heading("Play Status", text="  ")
         self.playlist_tree.heading("Track", text="Title")
         self.playlist_tree.heading("Time", text="Length")
@@ -44,7 +50,6 @@ class PlaylistDisplay(ttk.Frame):
             media.parse()
 
             filepath = self.playlist.track_list[index]
-            index += 1
             title = media.get_meta(vlc.Meta.Title)
             artist = media.get_meta(vlc.Meta.Artist)
             album = media.get_meta(vlc.Meta.Album)
@@ -55,22 +60,29 @@ class PlaylistDisplay(ttk.Frame):
             if track.suffix in AUDIO_FILETYPES:
                 self.playlist_tree.insert(
                     "", "end", 
-                    values=(filepath, "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"), 
+                    values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"), 
                 )
+                index += 1
+            
     
+    def get_selected_tracks(self):
+        selection = self.playlist_tree.selection()
+        if not selection:
+            return None
+        
+        item = self.playlist_tree.item(selection[0])
+        values = item["values"]
+        return {
+            "filepath": values[0],
+            "index": values[1],
+            "play status": values[2],
+            "title": values[3],
+            "length": values[4],
+            "artist": values[5], 
+            "album": values[6],
+            "filetype": values[7]
+        }
+        
 
-
-    def play_selected_track(self, event):
-        track = event.widget
-        selected_tracks = track.selection()
-        for item_iid in selected_tracks:
-            item = track.item(item_iid)
-            filepath = item["values"][0]
-            self.player.load(filepath)
-            self.player.play
-            print(filepath)
-            # print(track.item(item_iid))
-            # item = track.item(item_iid)
-
-        # self.player.load(track)
+  
 
