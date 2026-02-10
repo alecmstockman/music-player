@@ -13,7 +13,7 @@ class VLCPlayer:
         self.event_manager = self.player.event_manager()
         self.event_manager.event_attach(vlc.EventType.MediaPlayerEndReached, self._track_finished)
         self.on_track_finished = None
-
+        self.track_playing = None
 
     def load(self, filepath: str):
         self.media = self.instance.media_new(filepath)

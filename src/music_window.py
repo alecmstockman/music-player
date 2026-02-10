@@ -21,7 +21,6 @@ class PlaylistDisplay(ttk.Frame):
             show="headings"
         )
         self.playlist_tree.pack(side="left", fill="both", expand=True)
-        # self.playlist_tree.bind('<Double-Button-1>', self.get_selected_tracks)
         
         self.playlist_tree.column("filepath", width=0, stretch=False)
         self.playlist_tree.column("index", width=0, stretch=False)

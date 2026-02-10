@@ -56,15 +56,13 @@ music_window.set_playlist()
 def play_selected_tracks(event):
     # returns one track for now
     track_values = music_window.get_selected_tracks()
-    print(track_values, "\n\n")
     index = track_values["index"]
-    print(index)
     library.current_index = index
     track = library.track_list[index]
     player.load(track)
     controls.current_track_title.set(track.stem)
     player.play()
-    print(track)
+    controls.toggle_play()
 
 music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks) 
 
