@@ -53,15 +53,23 @@ music_window = PlaylistDisplay(content_region, player, library)
 music_window.pack(fill="both", expand=True)
 music_window.set_playlist()
 
+def update_playing_row():
+    iid = music_window.find_iid_for_index(library.current_index)
+    if not iid:
+        return
+    
+    music_window.clear_play_status()
+    music_window.playlist_tree.set(iid, column="play status", value="  🔊")
+    music_window.playlist_tree.selection_set(iid)
+    music_window.playlist_tree.see(iid)
+
 def play_selected_tracks(event):
-    # returns one track for now
-    track_iid = music_window.get_track_iid()
     track_values = music_window.get_selected_tracks()
     index = track_values["index"]
-    library.current_index = index
+    library.set_index(index)
     track = library.track_list[index]
-
-    music_window.update_track_row(track_iid)
+    
+    update_playing_row()
     player.load(track)
     controls.current_track_title.set(track.stem)
     player.play()

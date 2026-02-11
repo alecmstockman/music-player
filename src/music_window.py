@@ -14,6 +14,7 @@ class PlaylistDisplay(ttk.Frame):
         super().__init__(parent)
         self.player = player
         self.playlist = Playlist
+        self.current_track_id = None
 
         self.playlist_tree = ttk.Treeview(
             self, 
@@ -66,7 +67,7 @@ class PlaylistDisplay(ttk.Frame):
     
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
-        print(selection)
+        # print(f"g_s_t selection: {selection}")
         if not selection:
             return None
         
@@ -85,11 +86,19 @@ class PlaylistDisplay(ttk.Frame):
     
     def get_track_iid(self):
         return self.playlist_tree.selection()[0]
+    
+    def clear_play_status(self):
+        for iid in self.playlist_tree.get_children():
+            self.playlist_tree.set(iid, column="play status", value="")
+    
+    def find_iid_for_index(self, index):
+        for iid in self.playlist_tree.get_children():
+            item = self.playlist_tree.item(iid)
+            if item["values"][1] == index:
+                return iid
+        return None
+            
         
-    def update_track_row(self, iid):
-        # item = self.playlist_tree.selection()[0]
-        self.playlist_tree.set(iid, column="play status", value="  🔊")
-        # print(iid["filepath"])
-        # new_values = ("")
+        
   
 
