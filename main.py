@@ -9,6 +9,7 @@ from src.styles import setup_styles
 from src.playlist import Playlist
 from src.config import AUDIO_FILETYPES
 from src.music_window import PlaylistDisplay
+from src.sidebar import Sidebar
 
 root = tk.Tk()
 root.lift()
@@ -39,12 +40,17 @@ paned.add(content_region, weight=1)
 
 player = VLCPlayer()
 
+
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
 library = Playlist("Main Library", library_all_tracks)
+
+sidebar = Sidebar(sidebar_region, library)
+sidebar.pack(fill="both", expand=True)
+sidebar.set_sidebar()
 
 controls = PlayerControls(top_row_1, player, library)
 controls.pack(side="left")
