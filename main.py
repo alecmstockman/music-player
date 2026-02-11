@@ -27,10 +27,15 @@ top_row_1 = ttk.Frame(top_region)
 top_row_1.pack(side="top", fill="x")
 top_row_2 = ttk.Frame(top_region)
 top_row_2.pack(side="top", fill="x")
-sidebar_region = ttk.Frame(root, width=300, style="Border.TFrame")
+
+paned = ttk.PanedWindow(root, orient="horizontal")
+paned.pack(fill="both", expand=True)
+sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
 sidebar_region.pack(side="left", fill="y")
-content_region = ttk.Frame(root, style="Border.TFrame")
+content_region = ttk.Frame(paned, style="Border.TFrame")
 content_region.pack(side="top", fill="both", expand=True)
+paned.add(sidebar_region, weight=0)
+paned.add(content_region, weight=1)
 
 player = VLCPlayer()
 
