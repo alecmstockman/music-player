@@ -75,16 +75,30 @@ def play_selected_tracks(event):
     player.play()
     controls.toggle_play()
 
-music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks) 
-
 def quit_app(event=None):
     player.stop()
     root.destroy()
 
+music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks) 
 root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 root.bind("<Command-q>", quit_app, add="+")
+
+def set_audio_volume(val):
+    volume_level = int(float(val))
+    player.set_volume(volume_level)
+
+volume_slider = ttk.Scale(
+        top_row_1,
+        orient="horizontal",
+        from_=0,
+        to=100,
+        command=set_audio_volume,
+        length = 120
+    )
+volume_slider.set(80)
+volume_slider.pack(padx=100, pady=10)
 
 def play_next():
     library.next()
@@ -97,6 +111,7 @@ def play_next():
         player.play()
 
 player.on_track_finished = lambda: root.after(0, play_next)
+
 
 progress_var = tk.DoubleVar()
 def set_progress_on_click(event):
@@ -121,19 +136,7 @@ progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
 progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
 
 
-def set_audio_volume(val):
-    volume_level = int(float(val))
-    player.set_volume(volume_level)
 
-volume_slider = ttk.Scale(
-        top_row_1,
-        orient="horizontal",
-        from_=0,
-        to=100,
-        command=set_audio_volume
-    )
-volume_slider.set(80)
-volume_slider.pack(padx=150, pady=10)
 
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
