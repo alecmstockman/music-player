@@ -45,6 +45,7 @@ class PlaylistDisplay(ttk.Frame):
         
     def set_playlist(self):
         index = 0
+        even = True
         for track in self.playlist.track_list:
             media = self.player.instance.media_new(track)
             media.parse()
@@ -57,11 +58,24 @@ class PlaylistDisplay(ttk.Frame):
             total_str = f"{total_s//60:d}:{total_s%60:02d}"
             filetype = track.suffix[1:]
 
+            self.playlist_tree.tag_configure("even", background="purple")
+            self.playlist_tree.tag_configure("odd", background="black")
+
             if track.suffix in AUDIO_FILETYPES:
-                self.playlist_tree.insert(
-                    "", "end", 
-                    values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"), 
-                )
+                if even is True:
+                    self.playlist_tree.insert(
+                        "", "end", 
+                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"),
+                        tags="even" 
+                    )
+                    even = False
+                else:
+                    self.playlist_tree.insert(
+                        "", "end", 
+                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"),
+                        tags="odd" 
+                    )
+                    even = True
                 index += 1
             
     

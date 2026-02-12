@@ -147,8 +147,6 @@ progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
 progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
 
 
-
-
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
     total_ms = player.player.get_length()

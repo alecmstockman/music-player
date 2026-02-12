@@ -9,7 +9,7 @@ from .styles import setup_styles
 
 
 class Sidebar(ttk.Frame):
-    def __init__(self, parent, Playlist):
+    def __init__(self, parent, playlist):
         super().__init__(parent)
         self.parent = parent
         self.playlist = Playlist
@@ -28,4 +28,10 @@ class Sidebar(ttk.Frame):
         
         self.sidebar_tree.insert(library_id, "end", text="Artists")
         self.sidebar_tree.insert(library_id, "end", text="Albums")
+        self.sidebar_tree.insert(library_id, "end", text="Songs")
+
+        self.sidebar_tree.insert(playlist_id, "end", text="All Playlists")
+
+        self.sidebar_tree.item(library_id, open=True)
+        self.sidebar_tree.item(playlist_id, open=True)
 
