@@ -74,6 +74,14 @@ def update_playing_row():
     music_window.playlist_tree.selection_set(iid)
     music_window.playlist_tree.see(iid)
 
+def play_previous(event=None):
+    controls.previous_track()
+    update_playing_row()
+
+def play_next(event=None):
+    controls.next_track()
+    update_playing_row()
+
 def play_selected_tracks(event):
     track_values = music_window.get_selected_tracks()
     index = track_values["index"]
@@ -92,8 +100,8 @@ def quit_app(event=None):
 
 music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks) 
 root.bind("<space>", controls.toggle_play, add="+")
-root.bind("<Left>", controls.previous_track, add="+")
-root.bind("<Right>", controls.next_track, add="+")
+root.bind("<Left>", play_previous, add="+")
+root.bind("<Right>", play_next, add="+")
 root.bind("<Command-q>", quit_app, add="+")
 
 def set_audio_volume(val):
@@ -113,9 +121,11 @@ volume_slider.pack(padx=100, pady=10)
 
 def play_next():
     library.next()
+    update_playing_row()
     if library.current_index >= len(library.track_list) - 1:
         return
     else:
+        
         track = library.track_list[library.current_index]
         player.load(library.track_list[library.current_index])
         controls.current_track_title.set(track.stem)
