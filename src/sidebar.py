@@ -29,6 +29,7 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.insert(library_id, "end", text="Artists")
         self.sidebar_tree.insert(library_id, "end", text="Albums")
         self.sidebar_tree.insert(library_id, "end", text="Songs")
+        self.sidebar_tree.insert(library_id, "end", text="Favorites")
 
         self.sidebar_tree.insert(playlist_id, "end", text="All Playlists")
 

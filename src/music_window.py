@@ -18,7 +18,7 @@ class PlaylistDisplay(ttk.Frame):
 
         self.playlist_tree = ttk.Treeview(
             self, 
-            columns=("filepath", "index", "play status", "Track", "Time", "Artist", "Album", "Filetype", "Blank"), 
+            columns=("filepath", "index", "play status", "Track", "Time", "Artist", "Album", "favorite", "Filetype", "Blank"), 
             show="headings"
         )
         self.playlist_tree.pack(side="left", fill="both", expand=True)
@@ -31,6 +31,7 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.column("Artist", anchor="w", width=200, stretch=False)
         self.playlist_tree.column("Album", anchor="w", width=200, stretch=False)
         self.playlist_tree.column("Filetype", anchor="e", width=100, stretch=False)
+        self.playlist_tree.column("favorite", anchor="e", width=40, stretch=False)
         self.playlist_tree.column("Blank", anchor="w", width=200, stretch=True)
         
         self.playlist_tree.heading("filepath")
@@ -40,6 +41,7 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("Time", text="Length")
         self.playlist_tree.heading("Artist", text="Artist")
         self.playlist_tree.heading("Album", text="Album")
+        self.playlist_tree.heading("favorite", text="  ")
         self.playlist_tree.heading("Filetype", text="Filetype")
         self.playlist_tree.heading("Blank", text="")
         
@@ -65,14 +67,14 @@ class PlaylistDisplay(ttk.Frame):
                 if even is True:
                     self.playlist_tree.insert(
                         "", "end", 
-                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"),
+                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
                         tags="even" 
                     )
                     even = False
                 else:
                     self.playlist_tree.insert(
                         "", "end", 
-                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", f"{filetype}"),
+                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
                         tags="odd" 
                     )
                     even = True
