@@ -22,7 +22,6 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.heading("#0", text="")
 
     def set_sidebar(self):
-        print("SIDEBAR SETUP")
         library_id = self.sidebar_tree.insert("", "end", text="Library")
         playlist_id = self.sidebar_tree.insert("", "end", text="Playlists")
         

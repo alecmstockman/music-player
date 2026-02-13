@@ -9,14 +9,5 @@ class Playlist():
         self.current_index = 0
         self.playlist_length = len(self.track_list)
 
-    # def next(self):
-    #     if self.current_index < len(self.track_list) -1:
-    #         self.current_index += 1
-    #     return self.current_index
-
-    # def previous(self):
-    #     if self.current_index > 0:
-    #         self.current_index -=1
-    #     return self.current_index
     
 

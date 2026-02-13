@@ -67,15 +67,12 @@ music_window.set_playlist(library)
 def update_playing_row():
     real_index = controls.play_order[controls.current_position]
     iid = music_window.find_iid_for_index(real_index)
-    print(f"-iid: {iid}, controls.current_pos {controls.current_position}\n")
     if not iid:
         return
     music_window.clear_play_status()
     if player.is_playing():
-        # print("is playing")
         music_window.playlist_tree.set(iid, column="play status", value="  🔊")
     elif not player.is_playing():
-        # print("is not playing")
         music_window.playlist_tree.set(iid, column="play status", value="  🔈")
     music_window.playlist_tree.selection_set(iid)
     music_window.playlist_tree.see(iid)
@@ -91,7 +88,6 @@ def play_previous(event=None):
 def play_next(event=None):
     controls.next_track()
     root.after(100, update_playing_row)
-    print(f"play_next, current_position: {controls.current_position}")
 
 def play_selected_tracks(event):
     track_values = music_window.get_selected_tracks()
@@ -99,7 +95,6 @@ def play_selected_tracks(event):
     controls.set_index(index)
     track = library.track_list[index]
     
-    # update_playing_row()
     player.load(track)
     controls.current_track_title.set(track.stem)
     player.play()

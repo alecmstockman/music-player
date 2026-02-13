@@ -99,22 +99,16 @@ class PlayerControls(ttk.Frame):
             self.player.load(track)
 
     def shuffle_playlist(self):
-        print(f"self.playorder: {self.play_order}")
-        print(f"self.current_position: {self.current_position}\n")
-        
         if self.loop_status != "track":
             if self.shuffle == False:
                 self.shuffle = True
                 self.shuffle_btn.config(text="🔀*")
                 self.play_order = list(range(len(self.playlist.track_list)))
                 random.shuffle(self.play_order)
-                print(f"shuffle self.playorder: {self.play_order}\n")
-                
             else:
                 self.shuffle = False
                 self.shuffle_btn.config(text="🔀")
                 self.play_order = list(range(len(self.playlist.track_list)))
-                print(f"shuffle off self.playorder: {self.play_order}\n")
         print(f"Shuffle is now: {self.shuffle}")
 
     def toggle_loop(self):
@@ -127,7 +121,7 @@ class PlayerControls(ttk.Frame):
         elif self.loop_status == "track":
             self.loop_btn.config(text="🔁")
             self.loop_status = None
-        print(f"Status: {self.loop_status}. Playlist length: {self.playlist.playlist_length}")
+        print(f"Loop is now: {self.loop_status}")
 
     def set_index(self, index: int):
         if 0 <= index < len(self.play_order):
