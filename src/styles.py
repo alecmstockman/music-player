@@ -22,7 +22,7 @@ def setup_styles(root):
 
     style.configure(
         "Custom.TButton", 
-        font=("Trebuchet MS", 12), 
+        font=("Trebuchet MS", 14), 
         padding=5
     )
 

@@ -54,38 +54,49 @@ sidebar.set_sidebar()
 
 controls = PlayerControls(top_row_1, player, library)
 controls.pack(side="left")
-print(library.track_list[library.current_index])
-player.load(library.track_list[library.current_index])
+player.load(library.track_list[controls.current_position])
 
 time_label = tk.Label(top_row_2, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
 time_label.pack(pady=5)
-
+ 
 music_window = PlaylistDisplay(content_region, player, library)
 music_window.pack(fill="both", expand=True)
-music_window.set_playlist()
+music_window.set_playlist(library)
+
 
 def update_playing_row():
-    iid = music_window.find_iid_for_index(library.current_index)
+    real_index = controls.play_order[controls.current_position]
+    iid = music_window.find_iid_for_index(real_index)
+    print(f"-iid: {iid}, controls.current_pos {controls.current_position}\n")
     if not iid:
         return
-    
     music_window.clear_play_status()
-    music_window.playlist_tree.set(iid, column="play status", value="  🔊")
+    if player.is_playing():
+        # print("is playing")
+        music_window.playlist_tree.set(iid, column="play status", value="  🔊")
+    elif not player.is_playing():
+        # print("is not playing")
+        music_window.playlist_tree.set(iid, column="play status", value="  🔈")
     music_window.playlist_tree.selection_set(iid)
     music_window.playlist_tree.see(iid)
 
+def play_pause_current(event=None):
+    controls.toggle_play()
+    root.after(100, update_playing_row)
+
 def play_previous(event=None):
     controls.previous_track()
-    update_playing_row()
+    root.after(100, update_playing_row)
 
 def play_next(event=None):
     controls.next_track()
-    update_playing_row()
+    root.after(100, update_playing_row)
+    print(f"play_next, current_position: {controls.current_position}")
 
 def play_selected_tracks(event):
     track_values = music_window.get_selected_tracks()
     index = track_values["index"]
-    library.set_index(index)
+    controls.set_index(index)
     track = library.track_list[index]
     
     update_playing_row()
@@ -99,7 +110,7 @@ def quit_app(event=None):
     root.destroy()
 
 music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks) 
-root.bind("<space>", controls.toggle_play, add="+")
+root.bind("<space>", play_pause_current, add="+")
 root.bind("<Left>", play_previous, add="+")
 root.bind("<Right>", play_next, add="+")
 root.bind("<Command-q>", quit_app, add="+")
@@ -122,12 +133,12 @@ volume_slider.pack(padx=100, pady=10)
 def play_next():
     library.next()
     update_playing_row()
-    if library.current_index >= len(library.track_list) - 1:
+    if controls.current_position >= len(library.track_list) - 1:
         return
     else:
         
-        track = library.track_list[library.current_index]
-        player.load(library.track_list[library.current_index])
+        track = library.track_list[controls.current_position]
+        player.load(library.track_list[controls.current_position])
         controls.current_track_title.set(track.stem)
         player.play()
 

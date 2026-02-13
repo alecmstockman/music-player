@@ -10,10 +10,10 @@ from src.config import AUDIO_FILETYPES
 
 
 class PlaylistDisplay(ttk.Frame):
-    def __init__(self, parent, player, Playlist):
+    def __init__(self, parent, player, playlist):
         super().__init__(parent)
         self.player = player
-        self.playlist = Playlist
+        self.playlist = playlist
         self.current_track_id = None
 
         self.playlist_tree = ttk.Treeview(
@@ -45,9 +45,11 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("Filetype", text="Filetype")
         self.playlist_tree.heading("Blank", text="")
         
-    def set_playlist(self):
+    def set_playlist(self, playlist):
+        print("SET PLAYLIST")
         index = 0
         even = True
+
         for track in self.playlist.track_list:
             media = self.player.instance.media_new(track)
             media.parse()
@@ -60,7 +62,7 @@ class PlaylistDisplay(ttk.Frame):
             total_str = f"{total_s//60:d}:{total_s%60:02d}"
             filetype = track.suffix[1:]
 
-            self.playlist_tree.tag_configure("even", background="purple")
+            self.playlist_tree.tag_configure("even", background="darkblue")
             self.playlist_tree.tag_configure("odd", background="black")
 
             if track.suffix in AUDIO_FILETYPES:
@@ -83,7 +85,6 @@ class PlaylistDisplay(ttk.Frame):
     
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
-        # print(f"g_s_t selection: {selection}")
         if not selection:
             return None
         
