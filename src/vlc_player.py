@@ -33,7 +33,8 @@ class VLCPlayer:
     
     def _track_finished(self, event):
         if self.on_track_finished:
-            self.on_track_finished()
+            print("TEST - on_track_finished")
+            self.on_track_finished(autoplay=True)
         print("Song Finished")
         return
     

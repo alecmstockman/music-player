@@ -126,19 +126,12 @@ volume_slider = ttk.Scale(
 volume_slider.set(80)
 volume_slider.pack(padx=100, pady=10)
 
-def play_next():
-    library.next()
-    update_playing_row()
-    if controls.current_position >= len(library.track_list) - 1:
-        return
-    else:
-        
-        track = library.track_list[controls.current_position]
-        player.load(library.track_list[controls.current_position])
-        controls.current_track_title.set(track.stem)
-        player.play()
-
-player.on_track_finished = lambda: root.after(0, play_next)
+controls.on_track_changed = lambda: root.after(100, update_playing_row)
+player.on_track_finished = lambda autoplay=True: root.after(
+    0,
+    controls._handle_track_finished,
+    autoplay,
+)
 
 
 progress_var = tk.DoubleVar()
