@@ -99,10 +99,11 @@ def play_selected_tracks(event):
     controls.set_index(index)
     track = library.track_list[index]
     
-    update_playing_row()
+    # update_playing_row()
     player.load(track)
     controls.current_track_title.set(track.stem)
     player.play()
+    root.after(100, update_playing_row)
     controls.toggle_play()
 
 def quit_app(event=None):
