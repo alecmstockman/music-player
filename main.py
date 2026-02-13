@@ -40,7 +40,6 @@ paned.add(content_region, weight=1)
 
 player = VLCPlayer()
 
-
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
 album_dir = p / "albums"
@@ -126,13 +125,21 @@ volume_slider = ttk.Scale(
 volume_slider.set(80)
 volume_slider.pack(padx=100, pady=10)
 
-controls.on_track_changed = lambda: root.after(100, update_playing_row)
+def schedule_ui_update(controls):
+    if hasattr(controls, "_update_job") and controls._update_job:
+        root.after_cancel(controls._update_job)
+    def delayed_update():
+        controls._update_job = None
+        update_playing_row()
+    controls._update_job = root.after(100, delayed_update)
+
+controls.on_track_changed = schedule_ui_update
+
 player.on_track_finished = lambda autoplay=True: root.after(
     0,
     controls._handle_track_finished,
     autoplay,
 )
-
 
 progress_var = tk.DoubleVar()
 def set_progress_on_click(event):

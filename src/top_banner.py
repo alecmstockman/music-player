@@ -20,6 +20,7 @@ class PlayerControls(ttk.Frame):
         self.player.on_track_end = self._handle_track_finished
         self.player.on_track_finished = self._handle_track_finished
         self.on_track_changed = None
+        self._update_job = None
 
         self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play, takefocus=0, width=3)
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track, takefocus=0, width=3)
@@ -76,7 +77,7 @@ class PlayerControls(ttk.Frame):
 
     def next_track(self, event=None, autoplay=False):
         was_playing = self.player.is_playing()
-        print(f"START - was_playing: {was_playing}, autoplay: {autoplay}")
+        # print(f"START - was_playing: {was_playing}, autoplay: {autoplay}")
 
         if self.loop_status == "track":
             real_index = self.play_order[self.current_position]
@@ -85,7 +86,8 @@ class PlayerControls(ttk.Frame):
             if was_playing or autoplay:
                 self.player.play()
             if self.on_track_changed:
-                self.on_track_changed()
+                self._fire_track_changed()
+                # self.on_track_changed()
             return
 
         if self.current_position < len(self.play_order) - 1:
@@ -104,7 +106,8 @@ class PlayerControls(ttk.Frame):
         if was_playing or autoplay:
             self.player.play()
         if self.on_track_changed:
-            self.on_track_changed()
+            self._fire_track_changed()
+            # self.on_track_changed()
 
 
     def shuffle_playlist(self):
@@ -138,5 +141,8 @@ class PlayerControls(ttk.Frame):
         return self.current_position
 
     def _handle_track_finished(self, autoplay=True):
-        print("HANDLE_TRACK_FINISHED")
         self.next_track(autoplay=autoplay)
+
+    def _fire_track_changed(self):
+        if self.on_track_changed:
+            self.on_track_changed(self)
