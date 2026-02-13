@@ -104,7 +104,7 @@ def quit_app(event=None):
     player.stop()
     root.destroy()
 
-music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks) 
+music_window.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 root.bind("<space>", play_pause_current, add="+")
 root.bind("<Left>", play_previous, add="+")
 root.bind("<Right>", play_next, add="+")
@@ -124,6 +124,7 @@ volume_slider = ttk.Scale(
     )
 volume_slider.set(80)
 volume_slider.pack(padx=100, pady=10)
+
 
 def schedule_ui_update(controls):
     if hasattr(controls, "_update_job") and controls._update_job:
@@ -162,7 +163,6 @@ progress_bar = ttk.Progressbar(
 progress_bar.pack(pady=5)
 progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
 progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
-
 
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
