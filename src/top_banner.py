@@ -47,6 +47,7 @@ class PlayerControls(ttk.Frame):
         else:
             self.player.play()
             self.play_pause_btn.config(text="⏸")
+        self._fire_track_changed()
 
     def previous_track(self, event=None):
         if self.loop_status == "track":
@@ -74,11 +75,12 @@ class PlayerControls(ttk.Frame):
             self.player.play()
         else:
             self.player.load(track)
+        self._fire_track_changed()
 
     def next_track(self, event=None, autoplay=False):
+        print("MANUAL NEXT_TRACK")
         was_playing = self.player.is_playing()
-        # print(f"START - was_playing: {was_playing}, autoplay: {autoplay}")
-
+        print(self.current_position)
         if self.loop_status == "track":
             real_index = self.play_order[self.current_position]
             track = self.playlist.track_list[real_index]
@@ -87,7 +89,6 @@ class PlayerControls(ttk.Frame):
                 self.player.play()
             if self.on_track_changed:
                 self._fire_track_changed()
-                # self.on_track_changed()
             return
 
         if self.current_position < len(self.play_order) - 1:
@@ -107,8 +108,6 @@ class PlayerControls(ttk.Frame):
             self.player.play()
         if self.on_track_changed:
             self._fire_track_changed()
-            # self.on_track_changed()
-
 
     def shuffle_playlist(self):
         if self.loop_status != "track":
@@ -138,11 +137,14 @@ class PlayerControls(ttk.Frame):
     def set_index(self, index: int):
         if 0 <= index < len(self.play_order):
             self.current_position = index
+        self._fire_track_changed()
         return self.current_position
 
     def _handle_track_finished(self, autoplay=True):
+        print("AUTO TRACK FINISHED")
         self.next_track(autoplay=autoplay)
 
     def _fire_track_changed(self):
+        print("FIRE TRACK CHANGED")
         if self.on_track_changed:
             self.on_track_changed(self)

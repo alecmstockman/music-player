@@ -68,37 +68,53 @@ def update_playing_row():
     iid = music_window.find_iid_for_index(real_index)
     if not iid:
         return
-    music_window.clear_play_status()
-    if player.is_playing():
-        music_window.playlist_tree.set(iid, column="play status", value="  🔊")
-    elif not player.is_playing():
-        music_window.playlist_tree.set(iid, column="play status", value="  🔈")
-    music_window.playlist_tree.selection_set(iid)
+
+    # Prevent flicker: only select if not already selected
+    current_selection = music_window.playlist_tree.selection()
+    if iid not in current_selection:
+        music_window.playlist_tree.selection_set(iid)
     music_window.playlist_tree.see(iid)
 
-def play_pause_current(event=None):
-    controls.toggle_play()
-    root.after(100, update_playing_row)
+    music_window.clear_play_status()
 
+    if player.is_playing():
+        music_window.playlist_tree.set(iid, column="play status", value="  🔊")
+        update_playing_row._retry_playing = 0  # reset retry counter
+    else:
+        # Retry up to 3 times if VLC hasn't started yet
+        retries = getattr(update_playing_row, "_retry_playing", 0)
+        if retries < 3:
+            update_playing_row._retry_playing = retries + 1
+            root.after(50, update_playing_row)
+            return
+        else:
+            update_playing_row._retry_playing = 0
+            music_window.playlist_tree.set(iid, column="play status", value="  🔈")
+
+
+
+def play_pause_current(event=None):
+    print("MAIN.PY PLAY_PAUSE_CURRENT")
+    controls.toggle_play()
+    
 def play_previous(event=None):
+    print("MAIN.PY PLAY_PREVIOUS")
     controls.previous_track()
-    root.after(100, update_playing_row)
 
 def play_next(event=None):
+    print("MAIN.PY PLAY_NEXT")
     controls.next_track()
-    root.after(100, update_playing_row)
 
 def play_selected_tracks(event):
     track_values = music_window.get_selected_tracks()
     index = track_values["index"]
     controls.set_index(index)
-    track = library.track_list[index]
     
+    track = library.track_list[index]
     player.load(track)
-    controls.current_track_title.set(track.stem)
     player.play()
+    controls.current_track_title.set(track.stem)
     root.after(100, update_playing_row)
-    controls.toggle_play()
 
 def quit_app(event=None):
     player.stop()
@@ -127,15 +143,15 @@ volume_slider.pack(padx=100, pady=10)
 
 
 def schedule_ui_update(controls):
+    print("SCHEDULE UI UPDATE")
     if hasattr(controls, "_update_job") and controls._update_job:
         root.after_cancel(controls._update_job)
     def delayed_update():
         controls._update_job = None
         update_playing_row()
-    controls._update_job = root.after(100, delayed_update)
+    controls._update_job = root.after_idle(delayed_update)
 
 controls.on_track_changed = schedule_ui_update
-
 player.on_track_finished = lambda autoplay=True: root.after(
     0,
     controls._handle_track_finished,
@@ -160,10 +176,6 @@ progress_bar = ttk.Progressbar(
     variable=progress_var
     )
 
-progress_bar.pack(pady=5)
-progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
-progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
-
 def update_time_and_progress():
     elapsed_ms = player.player.get_time()
     total_ms = player.player.get_length()
@@ -185,6 +197,9 @@ def update_time_and_progress():
 
     root.after(25, update_time_and_progress)
 
+progress_bar.pack(pady=5)
+progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
+progress_bar.bind('<B1-Motion>', set_progress_on_click, add="+")
 
 def test_prints():
     print("\n--- SONGS IN PLAYLIST ---")
