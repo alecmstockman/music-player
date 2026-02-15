@@ -5,6 +5,7 @@ import vlc
 from pathlib import Path
 from src.playlist import Playlist
 from src.vlc_player import VLCPlayer
+# from .player_controls import PlayerControls
 # from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 
@@ -103,8 +104,18 @@ class PlaylistDisplay(ttk.Frame):
             "filetype": values[7]
         }
     
-    
-    def update_play_status_column(self):
-        self.playlist_display.playlist_tree.set(iid, column="play status", value="  🔊")
-        self.playlist_display.playlist_tree.set(iid, column="play status", value="  🔈")
-        pass
+    def clear_play_status(self):
+        for iid in self.playlist_tree.get_children():
+            self.playlist_tree.set(iid, column="play status", value="")
+
+    def remove_play_status_icon(self, index):
+        iid = index
+        self.playlist_tree.set(iid, column="play status", value="   ")
+
+    def play_status_icon_playing(self, index):
+        iid = index
+        self.playlist_tree.set(iid, column="play status", value="  🔊")
+
+    def play_status_icon_paused(self, index):
+        iid = index
+        self.playlist_tree.set(iid, column="play status", value="  🔈")

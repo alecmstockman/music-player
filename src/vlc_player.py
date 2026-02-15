@@ -28,6 +28,9 @@ class VLCPlayer:
     def is_playing(self) -> bool:
         return bool(self.player.is_playing())
     
+    def get_state(self):
+        return self.player.get_state()
+    
     def set_time(self, ms: int):
         self.player.set_time(ms)
     

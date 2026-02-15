@@ -38,6 +38,11 @@ paned.add(sidebar_region, weight=0)
 paned.add(content_region, weight=1)
 
 player = VLCPlayer()
+event_manager = player.player.event_manager()
+event_manager.event_attach(
+    vlc.EventType.MediaPlayerEndReached,
+    lambda event: root.after(50, controls.play_next_track)
+)
 
 p = Path("Music/")
 library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
@@ -76,6 +81,7 @@ def play_selected_tracks(event):
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
+
 progress_var = tk.DoubleVar()
 def set_progress_on_click(event):
     proportion = event.x / event.widget.winfo_width()
@@ -108,11 +114,11 @@ def update_time_and_progress():
     elapsed_str = f"{elapsed_s//60:02d}:{elapsed_s%60:02d}"
     total_str = f"{total_s//60:02d}:{total_s%60:02d}"
  
- 
+
     time_label.config(text=f"{elapsed_str} / {total_str}")
     percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
     progress_var.set(percent)
-    root.after(50, update_time_and_progress)
+    root.after(100, update_time_and_progress)
 
 progress_bar.pack(pady=5)
 progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
