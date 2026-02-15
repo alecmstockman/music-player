@@ -103,6 +103,7 @@ class PlaylistDisplay(ttk.Frame):
             "filetype": values[7]
         }
     
+    
     def update_play_status_column(self):
         self.playlist_display.playlist_tree.set(iid, column="play status", value="  🔊")
         self.playlist_display.playlist_tree.set(iid, column="play status", value="  🔈")

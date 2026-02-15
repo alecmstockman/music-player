@@ -150,6 +150,7 @@ class PlayerControls(ttk.Frame):
     def track_finished(self, event):
         pass
 
+
     def track_changed():
         pass
 

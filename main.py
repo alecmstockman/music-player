@@ -107,7 +107,8 @@ def update_time_and_progress():
     total_s = total_ms // 1000
     elapsed_str = f"{elapsed_s//60:02d}:{elapsed_s%60:02d}"
     total_str = f"{total_s//60:02d}:{total_s%60:02d}"
-
+ 
+ 
     time_label.config(text=f"{elapsed_str} / {total_str}")
     percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
     progress_var.set(percent)
