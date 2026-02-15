@@ -154,6 +154,7 @@ class PlayerControls(ttk.Frame):
         self.play_index = self.play_order.index(iid)
         index = self.play_order[self.play_index]
         track = self.playlist.track_list[index]
+        print(f"IID: {iid}")
         print("PLAY SELECTION")
         print(f"Play index: {self.play_index}, index: {index}, track: {track} \n")
         self.player.load(track)

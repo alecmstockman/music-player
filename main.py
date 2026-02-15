@@ -57,6 +57,7 @@ playlist_display.set_playlist(library)
 
 controls = PlayerControls(top_row_1, player, playlist_display, library)
 controls.pack(side="left")
+playlist_display.controls = controls
 player.load(library.track_list[controls.play_index])
 time_label = tk.Label(top_row_2, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
 time_label.pack(pady=5)

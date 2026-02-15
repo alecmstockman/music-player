@@ -11,12 +11,13 @@ from src.config import AUDIO_FILETYPES
 
 
 class PlaylistDisplay(ttk.Frame):
-    def __init__(self, parent, player, playlist):
+    def __init__(self, parent, player, playlist, ):
         super().__init__(parent)
         self.player = player
         self.playlist = playlist
         
         self.popup_menu = tk.Menu(self, tearoff=False)
+        self.playlist_submenu = tk.Menu(self.popup_menu, tearoff=False)
 
         self.playlist_tree = ttk.Treeview(
             self, 
@@ -50,10 +51,21 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("Blank", text="")
 
         self.playlist_tree.bind("<Button-1>", self.on_tree_click)
-        self.popup_menu.add_command(
-            label="Test",
-            command=self._on_menu_test
-        )
+
+        self.popup_menu.add_command(label="Play", command=self._on_menu_play)
+        self.popup_menu.add_command(label="Previous", command=self._on_menu_test)
+        self.popup_menu.add_command(label="Next", command=self._on_menu_test)
+        self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Add to Playlist", command=self._on_menu_test)
+        self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Favorite", command=self._on_menu_test)
+        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_test)
+        self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_test)
+
+        self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
+        self.playlist_submenu.add_command(label="Playlist One", state="disabled")
+        self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
 
 
     def set_playlist(self, playlist):
@@ -141,5 +153,32 @@ class PlaylistDisplay(ttk.Frame):
 
     def _on_menu_test(self):
         print("menu clicked")
+
+    def _on_menu_play(self):
+        print(f"MENU IID; {self.menu_iid}")
+        self.clear_play_status()
+        self.controls.play_index = int(self.menu_iid)
+        index = self.controls.play_order[self.controls.play_index]
+        track = self.playlist.track_list[index]
+        self.player.load(track)
+        self.player.play()
+        self.play_status_icon_playing(index)
+
+    def _on_menu_previous(self):
+        pass
+
+    def _on_menu_next(self):
+        pass
+
+    def _on_menu_add_to_playlist(self):
+        pass
+
+    def _on_menu_favorite(self):
+        pass
+
+    def _on_menu_remove_favorite(self):
+        pass
+
+
 
 
