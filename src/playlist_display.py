@@ -15,10 +15,12 @@ class PlaylistDisplay(ttk.Frame):
         super().__init__(parent)
         self.player = player
         self.playlist = playlist
+        
+        self.popup_menu = tk.Menu(self, tearoff=False)
 
         self.playlist_tree = ttk.Treeview(
             self, 
-            columns=("filepath", "index", "play status", "Track", "Time", "Artist", "Album", "favorite", "Filetype", "Blank"), 
+            columns=("filepath", "index", "play status", "Track", "Menu", "Time", "Artist", "Album", "favorite", "Filetype", "Blank"), 
             show="headings"
         )
         self.playlist_tree.pack(side="left", fill="both", expand=True)
@@ -27,7 +29,8 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.column("index", width=0, stretch=False)
         self.playlist_tree.column("play status", anchor="w", width=40, stretch=False)
         self.playlist_tree.column("Track", anchor="w", width=400, stretch=False)
-        self.playlist_tree.column("Time", anchor="e", width=80, stretch=False)
+        self.playlist_tree.column("Menu", anchor="e", width=20, stretch=False)
+        self.playlist_tree.column("Time", anchor="e", width=60, stretch=False)
         self.playlist_tree.column("Artist", anchor="w", width=200, stretch=False)
         self.playlist_tree.column("Album", anchor="w", width=200, stretch=False)
         self.playlist_tree.column("Filetype", anchor="e", width=100, stretch=False)
@@ -38,12 +41,19 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("index")
         self.playlist_tree.heading("play status", text="  ")
         self.playlist_tree.heading("Track", text="Title")
-        self.playlist_tree.heading("Time", text="Length")
+        self.playlist_tree.heading("Menu", text="···")
+        self.playlist_tree.heading("Time", text="Time")
         self.playlist_tree.heading("Artist", text="Artist")
         self.playlist_tree.heading("Album", text="Album")
         self.playlist_tree.heading("favorite", text="  ")
         self.playlist_tree.heading("Filetype", text="Filetype")
         self.playlist_tree.heading("Blank", text="")
+
+        self.playlist_tree.bind("<Button-1>", self.on_tree_click)
+        self.popup_menu.add_command(
+            label="Test",
+            command=self._on_menu_test
+        )
 
 
     def set_playlist(self, playlist):
@@ -72,7 +82,7 @@ class PlaylistDisplay(ttk.Frame):
                     self.playlist_tree.insert(
                         "", "end",
                         iid=str(track_index),
-                        values=(filepath, f"{track_index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
+                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
                         tags="even" 
                     )
                     even = False
@@ -80,7 +90,7 @@ class PlaylistDisplay(ttk.Frame):
                     self.playlist_tree.insert(
                         "", "end",
                         iid=str(track_index), 
-                        values=(filepath, f"{track_index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
+                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
                         tags="odd" 
                     )
                     even = True
@@ -119,3 +129,17 @@ class PlaylistDisplay(ttk.Frame):
     def play_status_icon_paused(self, index):
         iid = index
         self.playlist_tree.set(iid, column="play status", value="  🔈")
+
+    def on_tree_click(self, event):
+        row_id = self.playlist_tree.identify_row(event.y)
+        col_id = self.playlist_tree.identify_column(event.x)
+        self.menu_iid = row_id
+        print(f"Row ID: {row_id}, Col ID: {col_id}")
+        if col_id == "#5":
+            print("#5...")
+            self.popup_menu.tk_popup(event.x_root, event.y_root)
+
+    def _on_menu_test(self):
+        print("menu clicked")
+
+
