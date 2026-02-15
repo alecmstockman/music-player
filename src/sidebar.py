@@ -5,20 +5,17 @@ import vlc
 from pathlib import Path
 from .playlist import Playlist
 from .vlc_player import VLCPlayer
-from .styles import setup_styles
-
+# from .styles import setup_styles
 
 class Sidebar(ttk.Frame):
     def __init__(self, parent, playlist):
         super().__init__(parent)
         self.parent = parent
-        self.playlist = Playlist
+        self.playlist = playlist
 
         self.sidebar_tree = ttk.Treeview(self)
         self.sidebar_tree.pack(side="left", fill="both", expand=True)
-
         self.sidebar_tree.column("#0", width=200, stretch=False)
-    
         self.sidebar_tree.heading("#0", text="")
 
     def set_sidebar(self):
@@ -34,4 +31,3 @@ class Sidebar(ttk.Frame):
 
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(playlist_id, open=True)
-

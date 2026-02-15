@@ -2,25 +2,26 @@ import tkinter as tk
 from tkinter import ttk
 import time
 from .playlist import Playlist
-from .music_window import PlaylistDisplay
+from .playlist_display import PlaylistDisplay
 from pathlib import Path
 import random
 
 class PlayerControls(ttk.Frame):
-    def __init__(self, parent, player, playlist):
+    def __init__(self, parent, player, playlist_display, playlist):
         super().__init__(parent)
         self.player = player
         self.playlist = playlist
-
-        self.play_order = list(range(len(self.playlist.track_list)))
-        self.current_position = 0
+        self.playlist_display = playlist_display
 
         self.loop_status = None
         self.shuffle = False
-        self.player.on_track_end = self._handle_track_finished
-        self.player.on_track_finished = self._handle_track_finished
-        self.on_track_changed = None
-        self._update_job = None
+        self.play_order = list(range(len(self.playlist.track_list)))
+        self.play_index = 0
+
+        self.current_track_title = tk.StringVar()
+        self.track = self.playlist.track_list[self.play_index]
+        self.current_track_title.set(self.track.stem)
+        self.now_playing_label = ttk.Label(self, textvariable=self.current_track_title)
 
         self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play, takefocus=0, width=3)
         self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track, takefocus=0, width=3)
@@ -28,31 +29,33 @@ class PlayerControls(ttk.Frame):
         self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist, takefocus=0, width=3)
         self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop, takefocus=0, width=3)
 
-        self.current_track_title = tk.StringVar()
-        self.track = self.playlist.track_list[self.current_position]
-        self.current_track_title.set(self.track.stem)
-        self.now_playing_label = ttk.Label(self, textvariable=self.current_track_title)
-      
         self.shuffle_btn.pack(side="left",)
         self.previous_btn.pack(side="left")
         self.play_pause_btn.pack(side="left")
         self.next_btn.pack(side="left")
         self.loop_btn.pack(side="left")
-        self.now_playing_label.pack(side="left", padx=(300))     
+        self.now_playing_label.pack(side="left", padx=(300))   
+
+    def get_current_track(self):
+        # print(f"play order: {self.play_order}, play index; {self.play_index}")
+        index = self.play_order[self.play_index]
+        self.track = self.playlist.track_list[index]
+        self.current_track_title.set(self.track.stem)
 
     def toggle_play(self, event=None):
         if self.player.is_playing():
             self.player.pause()
             self.play_pause_btn.config(text="▶")
+            # print("toggle_play: PAUSED")
         else:
             self.player.play()
             self.play_pause_btn.config(text="⏸")
-        self._fire_track_changed()
+            # print("toggle_play: PLAYING")
 
     def previous_track(self, event=None):
         if self.loop_status == "track":
-            real_index = self.play_order[self.current_position]
-            track = self.playlist.track_list[real_index]
+            index = self.play_order[self.play_index]
+            track = self.playlist.track_list[index]
             if self.player.is_playing():
                 self.player.load(track)
                 self.player.play()
@@ -60,54 +63,53 @@ class PlayerControls(ttk.Frame):
                 self.player.load(track)
             return
         
-        if self.current_position > 0:
-            self.current_position -= 1
+        if self.play_index > 0:
+            self.play_index -= 1
         else:
             if self.loop_status == "playlist":
-                self.current_position = len(self.play_order) - 1
+                self.play_index = len(self.playlist.track_list) -1
             else:
-                return
-        real_index = self.play_order[self.current_position]
-        track = self.playlist.track_list[real_index]
-        self.current_track_title.set(track.stem)
+                self.play_index = 0
+        index = self.play_order[self.play_index]
+        track = self.playlist.track_list[index]
         if self.player.is_playing():
             self.player.load(track)
             self.player.play()
         else:
             self.player.load(track)
-        self._fire_track_changed()
+        self.get_current_track()
 
-    def next_track(self, event=None, autoplay=False):
-        print("MANUAL NEXT_TRACK")
-        was_playing = self.player.is_playing()
-        print(self.current_position)
+        print(f"Previous_track, play index now {self.play_index}")
+
+
+    def next_track(self, event=None):
         if self.loop_status == "track":
-            real_index = self.play_order[self.current_position]
-            track = self.playlist.track_list[real_index]
-            self.player.load(track)
-            if was_playing or autoplay:
+            index = self.play_order[self.play_index]
+            track = self.playlist.track_list[index]
+            if self.player.is_playing():
+                self.player.load(track)
                 self.player.play()
-            if self.on_track_changed:
-                self._fire_track_changed()
+            else:
+                self.player.load(track)
             return
 
-        if self.current_position < len(self.play_order) - 1:
-            self.current_position += 1
+        if 0 <= self.play_index < len(self.playlist.track_list) -1:
+            self.play_index += 1
         else:
             if self.loop_status == "playlist":
-                self.current_position = 0
+                self.play_index = 0
             else:
-                return
-            
-        real_index = self.play_order[self.current_position]
-        track = self.playlist.track_list[real_index]
-        self.current_track_title.set(track.stem)
-        self.player.load(track)
-
-        if was_playing or autoplay:
+                self.play_index = len(self.playlist.track_list) - 1
+        index = self.play_order[self.play_index]
+        track = self.playlist.track_list[index]
+        if self.player.is_playing():
+            self.player.load(track)
             self.player.play()
-        if self.on_track_changed:
-            self._fire_track_changed()
+        else:
+            self.player.load(track)
+        self.get_current_track()
+        print(f"Next_track, play index now {self.play_index}")
+
 
     def shuffle_playlist(self):
         if self.loop_status != "track":
@@ -120,7 +122,8 @@ class PlayerControls(ttk.Frame):
                 self.shuffle = False
                 self.shuffle_btn.config(text="🔀")
                 self.play_order = list(range(len(self.playlist.track_list)))
-        print(f"Shuffle is now: {self.shuffle}")
+        print(f"Shuffle is now: {self.shuffle}, DOES NOT FUNCTION YET!")
+
 
     def toggle_loop(self):
         if self.loop_status == None:
@@ -134,17 +137,19 @@ class PlayerControls(ttk.Frame):
             self.loop_status = None
         print(f"Loop is now: {self.loop_status}")
 
-    def set_index(self, index: int):
-        if 0 <= index < len(self.play_order):
-            self.current_position = index
-        self._fire_track_changed()
-        return self.current_position
+    def play_selection(self, iid):
+        self.play_index = self.play_order.index(iid)
+        index = self.play_order[self.play_index]
+        track = self.playlist.track_list[index]
+        print("PLAY SELECTION")
+        print(f"Play index: {self.play_index}, index: {index}, track: {track} \n")
+        self.player.load(track)
+        self.player.play()
+        self.toggle_play()
 
-    def _handle_track_finished(self, autoplay=True):
-        print("AUTO TRACK FINISHED")
-        self.next_track(autoplay=autoplay)
+    def track_finished(self, event):
+        pass
 
-    def _fire_track_changed(self):
-        print("FIRE TRACK CHANGED")
-        if self.on_track_changed:
-            self.on_track_changed(self)
+    def track_changed():
+        pass
+

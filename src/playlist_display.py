@@ -5,7 +5,7 @@ import vlc
 from pathlib import Path
 from src.playlist import Playlist
 from src.vlc_player import VLCPlayer
-from src.styles import setup_styles
+# from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 
 
@@ -14,7 +14,6 @@ class PlaylistDisplay(ttk.Frame):
         super().__init__(parent)
         self.player = player
         self.playlist = playlist
-        self.current_track_id = None
 
         self.playlist_tree = ttk.Treeview(
             self, 
@@ -44,7 +43,8 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("favorite", text="  ")
         self.playlist_tree.heading("Filetype", text="Filetype")
         self.playlist_tree.heading("Blank", text="")
-        
+
+
     def set_playlist(self, playlist):
         print("SET PLAYLIST")
         index = 0
@@ -66,30 +66,32 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.tag_configure("odd", background="black")
 
             if track.suffix in AUDIO_FILETYPES:
+                track_index = index
                 if even is True:
                     self.playlist_tree.insert(
-                        "", "end", 
-                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
+                        "", "end",
+                        iid=str(track_index),
+                        values=(filepath, f"{track_index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
                         tags="even" 
                     )
                     even = False
                 else:
                     self.playlist_tree.insert(
-                        "", "end", 
-                        values=(filepath, f"{index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
+                        "", "end",
+                        iid=str(track_index), 
+                        values=(filepath, f"{track_index}", "", f"{title}", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
                         tags="odd" 
                     )
                     even = True
                 index += 1
-            
-    
+
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
+        print(f"Get selected tracks, selection: {selection}")
         if not selection:
             return None
-        
-        item = self.playlist_tree.item(selection[0])
-        values = item["values"]
+        selected_iid = self.playlist_tree.item(selection[0])
+        values = selected_iid["values"]
         return {
             "filepath": values[0],
             "index": values[1],
@@ -101,21 +103,7 @@ class PlaylistDisplay(ttk.Frame):
             "filetype": values[7]
         }
     
-    def get_track_iid(self):
-        return self.playlist_tree.selection()[0]
-    
-    def clear_play_status(self):
-        for iid in self.playlist_tree.get_children():
-            self.playlist_tree.set(iid, column="play status", value="")
-    
-    def find_iid_for_index(self, index):
-        for iid in self.playlist_tree.get_children():
-            item = self.playlist_tree.item(iid)
-            if item["values"][1] == index:
-                return iid
-        return None
-            
-        
-        
-  
-
+    def update_play_status_column(self):
+        self.playlist_display.playlist_tree.set(iid, column="play status", value="  🔊")
+        self.playlist_display.playlist_tree.set(iid, column="play status", value="  🔈")
+        pass
