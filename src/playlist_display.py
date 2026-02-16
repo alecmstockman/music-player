@@ -150,6 +150,8 @@ class PlaylistDisplay(ttk.Frame):
         if col_id == "#5":
             print("#5...")
             self.popup_menu.tk_popup(event.x_root, event.y_root)
+        if col_id == "#9":
+            self.update_favorite(row_id)
 
     def _on_menu_test(self):
         print("menu clicked")
@@ -167,16 +169,12 @@ class PlaylistDisplay(ttk.Frame):
     def _on_menu_previous_track(self):
         self.clear_play_status()
         self.controls.play_index = int(self.menu_iid)
-        self.controls.previous_track()
-        # self.play_status_icon_playing(self.controls.play_index)
-        
+        self.controls.previous_track()        
 
     def _on_menu_next_track(self):
         self.clear_play_status()
         self.controls.play_index = int(self.menu_iid)
-        self.controls.next_track()
-        # self.play_status_icon_playing(self.controls.play_index)
-        
+        self.controls.next_track()        
 
     def _on_menu_add_to_playlist(self):
         pass
@@ -186,6 +184,15 @@ class PlaylistDisplay(ttk.Frame):
 
     def _on_menu_remove_favorite(self):
         pass
+
+
+    def update_favorite(self, iid):
+        value = self.playlist_tree.set(iid, column="favorite")
+        if value == " ☆ ":
+            self.playlist_tree.set(iid, column="favorite", value=" ★ ")
+        else:
+            self.playlist_tree.set(iid, column="favorite", value=" ☆ ")
+
 
 
 
