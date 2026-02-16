@@ -53,8 +53,8 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.bind("<Button-1>", self.on_tree_click)
 
         self.popup_menu.add_command(label="Play", command=self._on_menu_play)
-        self.popup_menu.add_command(label="Previous", command=self._on_menu_test)
-        self.popup_menu.add_command(label="Next", command=self._on_menu_test)
+        self.popup_menu.add_command(label="Previous", command=self._on_menu_previous_track)
+        self.popup_menu.add_command(label="Next", command=self._on_menu_next_track)
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Add to Playlist", command=self._on_menu_test)
         self.popup_menu.add_separator()
@@ -164,11 +164,19 @@ class PlaylistDisplay(ttk.Frame):
         self.player.play()
         self.play_status_icon_playing(index)
 
-    def _on_menu_previous(self):
-        pass
+    def _on_menu_previous_track(self):
+        self.clear_play_status()
+        self.controls.play_index = int(self.menu_iid)
+        self.controls.previous_track()
+        # self.play_status_icon_playing(self.controls.play_index)
+        
 
-    def _on_menu_next(self):
-        pass
+    def _on_menu_next_track(self):
+        self.clear_play_status()
+        self.controls.play_index = int(self.menu_iid)
+        self.controls.next_track()
+        # self.play_status_icon_playing(self.controls.play_index)
+        
 
     def _on_menu_add_to_playlist(self):
         pass

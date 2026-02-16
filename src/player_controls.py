@@ -85,9 +85,7 @@ class PlayerControls(ttk.Frame):
             self.player.load(track)
             self.playlist_display.play_status_icon_paused(self.play_order[self.play_index])
         self.get_current_track()
-
-        print(f"Previous_track, play index now {self.play_index}")
-
+        # print(f"Previous_track, play index now {self.play_index}")
 
     def next_track(self, event=None):
         self.playlist_display.clear_play_status()
@@ -120,7 +118,7 @@ class PlayerControls(ttk.Frame):
             self.player.load(track)
             self.playlist_display.play_status_icon_paused(self.play_order[self.play_index])
         self.get_current_track()
-        print(f"Next_track, play index now {self.play_index}")
+        # print(f"Next_track, play index now {self.play_index}")
 
 
     def shuffle_playlist(self):
