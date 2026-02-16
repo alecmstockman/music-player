@@ -18,6 +18,7 @@ class PlaylistDisplay(ttk.Frame):
         
         self.popup_menu = tk.Menu(self, tearoff=False)
         self.playlist_submenu = tk.Menu(self.popup_menu, tearoff=False)
+        self.menu_iid = None
 
         self.playlist_tree = ttk.Treeview(
             self, 
@@ -58,8 +59,8 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Add to Playlist", command=self._on_menu_test)
         self.popup_menu.add_separator()
-        self.popup_menu.add_command(label="Favorite", command=self._on_menu_test)
-        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_test)
+        self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
+        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_test)
 
@@ -151,7 +152,7 @@ class PlaylistDisplay(ttk.Frame):
             print("#5...")
             self.popup_menu.tk_popup(event.x_root, event.y_root)
         if col_id == "#9":
-            self.update_favorite(row_id)
+            self._update_favorite(self.menu_iid)
 
     def _on_menu_test(self):
         print("menu clicked")
@@ -179,19 +180,18 @@ class PlaylistDisplay(ttk.Frame):
     def _on_menu_add_to_playlist(self):
         pass
 
-    def _on_menu_favorite(self):
-        pass
+    def _on_menu_update_favorite(self):
+        self._update_favorite(self.menu_iid)
+        
 
-    def _on_menu_remove_favorite(self):
-        pass
-
-
-    def update_favorite(self, iid):
+    def _update_favorite(self, iid):
         value = self.playlist_tree.set(iid, column="favorite")
         if value == " ☆ ":
             self.playlist_tree.set(iid, column="favorite", value=" ★ ")
-        else:
+        elif value == " ★ ":
             self.playlist_tree.set(iid, column="favorite", value=" ☆ ")
+        else:
+            return
 
 
 
