@@ -17,6 +17,7 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.pack(side="left", fill="both", expand=True)
         self.sidebar_tree.column("#0", width=200, stretch=False)
         self.sidebar_tree.heading("#0", text="")
+        self.sidebar_tree.bind("<<TreeviewSelect>>", self.on_sidebar_click)
 
 
     def set_sidebar(self):
@@ -32,3 +33,8 @@ class Sidebar(ttk.Frame):
 
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(playlist_id, open=True)
+
+    def on_sidebar_click(self, event):
+        self.event_generate("<<SidebarSelection>>")
+        print("SIDEBAR CLICK")
+

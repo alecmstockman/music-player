@@ -94,7 +94,7 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.tag_configure("even", background="darkblue")
             self.playlist_tree.tag_configure("odd", background="black")
 
-            is_fav = self.favoirtes.get(str(filepath), False)
+            is_fav = self.favorites.get(str(filepath), False)
             star = " ★ " if is_fav else " ☆ "
 
             if track.suffix in AUDIO_FILETYPES:
@@ -237,7 +237,7 @@ class PlaylistDisplay(ttk.Frame):
         
         try: 
             with path.open("r", encoding="utf-8") as f:
-                self.favoirtes = json.load(f)
+                self.favorites = json.load(f)
         except Exception as e:
             print(f"Failed to load favoirtes: {e}")
             self.favorites = {}

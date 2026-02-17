@@ -75,6 +75,11 @@ root.bind("<Right>", controls.next_track, add="+")
 
 
 
+def on_sidebar_selection(event):
+    print("MAIN: ON SIDEBAR EVENT")
+
+sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
+
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()
     iid = track_values["index"]
