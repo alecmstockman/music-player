@@ -57,16 +57,13 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_command(label="Previous", command=self._on_menu_previous_track)
         self.popup_menu.add_command(label="Next", command=self._on_menu_next_track)
         self.popup_menu.add_separator()
-        self.popup_menu.add_command(label="Add to Playlist", command=self._on_menu_test)
-        self.popup_menu.add_separator()
-        self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
-        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
-        self.popup_menu.add_separator()
-        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_test)
-
+        # self.popup_menu.add_command(label="Add to Playlist", command=self._on_menu_test)
         self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
         self.playlist_submenu.add_command(label="Playlist One", state="disabled")
         self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
+        self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
+        self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
 
 
     def set_playlist(self, playlist):
@@ -111,7 +108,6 @@ class PlaylistDisplay(ttk.Frame):
 
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
-        print(f"Get selected tracks, selection: {selection}")
         if not selection:
             return None
         selected_iid = self.playlist_tree.item(selection[0])
@@ -132,14 +128,20 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.set(iid, column="play status", value="")
 
     def remove_play_status_icon(self, index):
+        if index is None:
+            return
         iid = index
         self.playlist_tree.set(iid, column="play status", value="   ")
 
     def play_status_icon_playing(self, index):
+        if index is None:
+            return
         iid = index
         self.playlist_tree.set(iid, column="play status", value="  🔊")
 
     def play_status_icon_paused(self, index):
+        if index is None:
+            return
         iid = index
         self.playlist_tree.set(iid, column="play status", value="  🔈")
 
@@ -149,13 +151,13 @@ class PlaylistDisplay(ttk.Frame):
         self.menu_iid = row_id
         print(f"Row ID: {row_id}, Col ID: {col_id}")
         if col_id == "#5":
-            print("#5...")
             self.popup_menu.tk_popup(event.x_root, event.y_root)
         if col_id == "#9":
             self._update_favorite(self.menu_iid)
 
     def _on_menu_test(self):
-        print("menu clicked")
+        # print("menu clicked")
+        pass
 
     def _on_menu_play(self):
         print(f"MENU IID; {self.menu_iid}")
@@ -183,15 +185,16 @@ class PlaylistDisplay(ttk.Frame):
     def _on_menu_update_favorite(self):
         self._update_favorite(self.menu_iid)
         
-
     def _update_favorite(self, iid):
+        if iid is None or not self.playlist_tree.exists(iid):
+            return
+        
         value = self.playlist_tree.set(iid, column="favorite")
+
         if value == " ☆ ":
             self.playlist_tree.set(iid, column="favorite", value=" ★ ")
         elif value == " ★ ":
             self.playlist_tree.set(iid, column="favorite", value=" ☆ ")
-        else:
-            return
 
 
 
