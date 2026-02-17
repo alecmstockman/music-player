@@ -12,6 +12,8 @@ class VLCPlayer:
         self.event_manager = self.player.event_manager()
 
     def load(self, filepath: str):
+        if not filepath:
+            return
         self.media = self.instance.media_new(filepath)
         self.player.set_media(self.media)
 

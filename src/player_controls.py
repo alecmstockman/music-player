@@ -148,6 +148,9 @@ class PlayerControls(ttk.Frame):
         print(f"Loop is now: {self.loop_status}")
 
     def play_selection(self, iid):
+        if iid is None:
+            print("player_controls: play_selection, iid is None")
+            return
         self.playlist_display.clear_play_status()
         self.play_index = self.play_order.index(iid)
         index = self.play_order[self.play_index]

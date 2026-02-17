@@ -67,11 +67,17 @@ class PlaylistDisplay(ttk.Frame):
 
 
     def set_playlist(self, playlist):
+        if not playlist or not hasattr(playlist, "track_list"):
+            print("No playlist or invalid playlist object")
+            return
         print("SET PLAYLIST")
         index = 0
         even = True
 
         for track in self.playlist.track_list:
+            if not track or not track.exists():
+                print(f"Skipping invalid track: {track}")
+                continue
             media = self.player.instance.media_new(track)
             media.parse()
 
@@ -109,6 +115,7 @@ class PlaylistDisplay(ttk.Frame):
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
         if not selection:
+            print("playlist_display: get_selected_tracks, no selection")
             return None
         selected_iid = self.playlist_tree.item(selection[0])
         values = selected_iid["values"]
@@ -129,18 +136,21 @@ class PlaylistDisplay(ttk.Frame):
 
     def remove_play_status_icon(self, index):
         if index is None:
+            print("playlist_display: remove_play_status_icon, index is None")
             return
         iid = index
         self.playlist_tree.set(iid, column="play status", value="   ")
 
     def play_status_icon_playing(self, index):
         if index is None:
+            print("playlist_display: play_status_icon_playing, index is None")
             return
         iid = index
         self.playlist_tree.set(iid, column="play status", value="  🔊")
 
     def play_status_icon_paused(self, index):
         if index is None:
+            print("playlist_display: play_status_icon_paused, index is None")
             return
         iid = index
         self.playlist_tree.set(iid, column="play status", value="  🔈")
@@ -187,6 +197,7 @@ class PlaylistDisplay(ttk.Frame):
         
     def _update_favorite(self, iid):
         if iid is None or not self.playlist_tree.exists(iid):
+            print("playlist_display: _update_favorite, iid is None or doesn't exit")
             return
         
         value = self.playlist_tree.set(iid, column="favorite")
