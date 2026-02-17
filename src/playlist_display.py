@@ -5,7 +5,7 @@ import vlc
 from pathlib import Path
 from src.playlist import Playlist
 from src.vlc_player import VLCPlayer
-# from .player_controls import PlayerControls
+import json
 # from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 
@@ -19,6 +19,8 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu = tk.Menu(self, tearoff=False)
         self.playlist_submenu = tk.Menu(self.popup_menu, tearoff=False)
         self.menu_iid = None
+        self.favorites = {}
+        self.load_favorites()
 
         self.playlist_tree = ttk.Treeview(
             self, 
@@ -92,13 +94,16 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.tag_configure("even", background="darkblue")
             self.playlist_tree.tag_configure("odd", background="black")
 
+            is_fav = self.favoirtes.get(str(filepath), False)
+            star = " ★ " if is_fav else " ☆ "
+
             if track.suffix in AUDIO_FILETYPES:
                 track_index = index
                 if even is True:
                     self.playlist_tree.insert(
                         "", "end",
                         iid=str(track_index),
-                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
+                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
                         tags="even" 
                     )
                     even = False
@@ -106,7 +111,7 @@ class PlaylistDisplay(ttk.Frame):
                     self.playlist_tree.insert(
                         "", "end",
                         iid=str(track_index), 
-                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", " ☆ ", f"{filetype}"),
+                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
                         tags="odd" 
                     )
                     even = True
@@ -132,6 +137,8 @@ class PlaylistDisplay(ttk.Frame):
     
     def clear_play_status(self):
         for iid in self.playlist_tree.get_children():
+            if iid is None:
+                return
             self.playlist_tree.set(iid, column="play status", value="")
 
     def remove_play_status_icon(self, index):
@@ -201,11 +208,40 @@ class PlaylistDisplay(ttk.Frame):
             return
         
         value = self.playlist_tree.set(iid, column="favorite")
+        filepath = self.playlist_tree.set(iid, column="filepath")
 
         if value == " ☆ ":
             self.playlist_tree.set(iid, column="favorite", value=" ★ ")
+            self.favorites[filepath] = True
         elif value == " ★ ":
             self.playlist_tree.set(iid, column="favorite", value=" ☆ ")
+            self.favorites[filepath] = False
+        self.save_favorites()
+
+
+    def save_favorites(self):
+        path = Path("data/favorites.json")
+
+        try: 
+            with path.open("w", encoding="utf-8") as f:
+                json.dump(self.favorites, f, indent=2)
+        except Exception as e:
+            print(f"Failed to save favorites: {e}")
+
+    def load_favorites(self):
+        path = Path("data/favorites.json")
+
+        if not path.exists():
+            self.favorites = {}
+            return
+        
+        try: 
+            with path.open("r", encoding="utf-8") as f:
+                self.favoirtes = json.load(f)
+        except Exception as e:
+            print(f"Failed to load favoirtes: {e}")
+            self.favorites = {}
+
 
 
 
