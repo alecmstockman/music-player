@@ -6,10 +6,10 @@ from pathlib import Path
 from src.player_controls import PlayerControls
 from src.vlc_player import VLCPlayer
 from src.playlist import Playlist
-# from src.styles import setup_styles
+from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
-from src.sidebar import Sidebar
+from src.sidebar import Sidebar, SecondarySidebar
 import random
 
 root = tk.Tk()
@@ -32,10 +32,15 @@ paned = ttk.PanedWindow(root, orient="horizontal")
 paned.pack(fill="both", expand=True)
 sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
 sidebar_region.pack(side="left", fill="y")
+paned.add(sidebar_region, weight=0)
+
+secondary_sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
+# secondary_sidebar_region.pack(side="top", fill="y")
 content_region = ttk.Frame(paned, style="Border.TFrame")
 content_region.pack(side="top", fill="both", expand=True)
-paned.add(sidebar_region, weight=0)
+
 paned.add(content_region, weight=1)
+
 
 player = VLCPlayer()
 event_manager = player.player.event_manager()
@@ -64,19 +69,87 @@ time_label.pack(pady=5)
 
 player.load(library.track_list[controls.play_index])
 
-
 sidebar = Sidebar(sidebar_region, library)
 sidebar.pack(fill="both", expand=True)
 sidebar.set_sidebar()
+
+# secondary_sidebar = None
+paned.secondary_sidebar = None
+
 
 root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 
+def get_all_artists(track_list):
+    print(f"track_list:")
+    for track in track_list:
+        print(track)
+    return ["Bilmuri", "Sylarin"]
+    
 
+def get_all_albums(track_list):
+    pass
 
 def on_sidebar_selection(event):
-    print("MAIN: ON SIDEBAR EVENT")
+    selected_view = sidebar.selected_view
+    print("MAIN: ON SIDEBAR EVENT", selected_view)
+
+    if selected_view not in ("Artists", "Albums"):
+        if paned.secondary_sidebar is not None:
+            paned.forget(secondary_sidebar_region)
+            paned.secondary_sidebar.destroy()
+            paned.secondary_sidebar = None
+        return
+
+    if secondary_sidebar_region not in paned.panes():
+        paned.insert(1, secondary_sidebar_region)
+
+    if paned.secondary_sidebar is not None:
+        paned.secondary_sidebar.destroy()
+        paned.secondary_sidebar = None
+
+    if selected_view == "Artists":
+        items = get_all_artists(library.track_list)
+    else:
+        items = get_all_albums(library.track_list)
+
+    paned.secondary_sidebar = SecondarySidebar(
+        secondary_sidebar_region,
+        items
+    )
+    paned.secondary_sidebar.pack(fill="both", expand=True)
+
+
+
+
+
+    # global secondary_sidebar
+
+    # selected_view = sidebar.selected_view
+    # # print("MAIN: ON SIDEBAR EVENT", sidebar.selected_view)
+    # panes = paned.panes()
+
+    # if selected_view in ("Artists", "Albums"):
+
+    #     if str(secondary_sidebar_region) not in panes:
+    #         paned.insert(1, secondary_sidebar_region)
+    #         paned.pane(secondary_sidebar_region, weight=0)
+
+    #     if secondary_sidebar is not None:
+    #         secondary_sidebar.destroy()
+
+    #     items = (
+    #         get_all_artists(library.track_list)
+    #         if selected_view == "Artists"
+    #         else get_all_albums(library.track_list)
+    #     )
+
+    #     secondary_sidebar = SecondarySidebar(secondary_sidebar_region, items)
+    #     secondary_sidebar.pack(fill="both", expand=True)
+    # else:
+    #     if str(secondary_sidebar_region) in panes:
+    #         paned.forget(secondary_sidebar_region)
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 

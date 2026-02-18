@@ -59,7 +59,6 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_command(label="Previous", command=self._on_menu_previous_track)
         self.popup_menu.add_command(label="Next", command=self._on_menu_next_track)
         self.popup_menu.add_separator()
-        # self.popup_menu.add_command(label="Add to Playlist", command=self._on_menu_test)
         self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
         self.playlist_submenu.add_command(label="Playlist One", state="disabled")
         self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
@@ -166,7 +165,7 @@ class PlaylistDisplay(ttk.Frame):
         row_id = self.playlist_tree.identify_row(event.y)
         col_id = self.playlist_tree.identify_column(event.x)
         self.menu_iid = row_id
-        print(f"Row ID: {row_id}, Col ID: {col_id}")
+        # print(f"Row ID: {row_id}, Col ID: {col_id}")
         if col_id == "#5":
             self.popup_menu.tk_popup(event.x_root, event.y_root)
         if col_id == "#9":

@@ -21,20 +21,38 @@ class Sidebar(ttk.Frame):
 
 
     def set_sidebar(self):
-        library_id = self.sidebar_tree.insert("", "end", text="Library")
-        playlist_id = self.sidebar_tree.insert("", "end", text="Playlists")
+        library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"))
+        playlist_id = self.sidebar_tree.insert("", "end", text="Playlists", values=("Playlists"))
         
-        self.sidebar_tree.insert(library_id, "end", text="Artists")
-        self.sidebar_tree.insert(library_id, "end", text="Albums")
-        self.sidebar_tree.insert(library_id, "end", text="Songs")
-        self.sidebar_tree.insert(library_id, "end", text="Favorites")
+        self.sidebar_tree.insert(library_id, "end", text="Artists", values=("Artists", ))
+        self.sidebar_tree.insert(library_id, "end", text="Albums", values=("Albums", ))
+        self.sidebar_tree.insert(library_id, "end", text="Songs", values=("Songs", ))
+        self.sidebar_tree.insert(library_id, "end", text="Favorites", values=("Favorites", ))
 
-        self.sidebar_tree.insert(playlist_id, "end", text="All Playlists")
+        self.sidebar_tree.insert(playlist_id, "end", text="All Playlists", values=("All Playlists"))
 
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(playlist_id, open=True)
 
-    def on_sidebar_click(self, event):
-        self.event_generate("<<SidebarSelection>>")
-        print("SIDEBAR CLICK")
 
+    def on_sidebar_click(self, event):
+        selection = self.sidebar_tree.selection()
+        if not selection:
+            return
+        self.selected_iid = selection[0]
+        self.selected_view = self.sidebar_tree.item(self.selected_iid, "values")[0]
+        self.event_generate("<<SidebarSelection>>")
+        print("SIDEBAR CLICK:", self.selected_iid)
+        print(self.selected_view)
+
+
+class SecondarySidebar(ttk.Frame):
+    def __init__(self, parent, items):
+        super().__init__(parent)
+        self.tree = ttk.Treeview(self)
+        self.tree.pack(fill="both", expand=True)
+        self.populate(items)
+
+    def populate(self, items):
+        for i, item in enumerate(items):
+            self.tree.insert("", "end", iid=str(i), text=item, values=(item, ))
