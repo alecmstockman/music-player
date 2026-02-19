@@ -80,25 +80,27 @@ root.bind("<Right>", controls.next_track, add="+")
 
 def get_all_artists(track_list):
     artist_set = set()
-    for iid in playlist_display.playlist_tree.get_children():
-        if iid is None:
-            return
-        artist = playlist_display.playlist_tree.set(iid, "Artist")
-        artist_set.add(artist)
-    artist_list = list(artist_set)
-    artist_list.sort()
-    return artist_list
+
+    for track in track_list:
+        media = player.instance.media_new(track)
+        media.parse()
+        artist = media.get_meta(vlc.Meta.Artist)
+        if artist:
+            artist_set.add(artist)
+
+    return sorted(artist_set)
 
 def get_all_albums(track_list):
     album_set = set()
-    for iid in playlist_display.playlist_tree.get_children():
-        if iid is None:
-            return
-        artist = playlist_display.playlist_tree.set(iid, "Album")
-        album_set.add(artist)
-    album_list = list(album_set)
-    album_list.sort()
-    return album_list
+
+    for track in track_list:
+        media = player.instance.media_new(track)
+        media.parse()
+        artist = media.get_meta(vlc.Meta.Album)
+        if artist:
+            album_set.add(artist)
+            
+    return sorted(album_set)
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
