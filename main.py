@@ -28,6 +28,7 @@ top_row_1.pack(side="top", fill="x")
 top_row_2 = ttk.Frame(top_region)
 top_row_2.pack(side="top", fill="x")
 
+
 paned = ttk.PanedWindow(root, orient="horizontal")
 paned.pack(fill="both", expand=True)
 sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
@@ -35,10 +36,9 @@ sidebar_region.pack(side="left", fill="y")
 paned.add(sidebar_region, weight=0)
 
 secondary_sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
-# secondary_sidebar_region.pack(side="top", fill="y")
+
 content_region = ttk.Frame(paned, style="Border.TFrame")
 content_region.pack(side="top", fill="both", expand=True)
-
 paned.add(content_region, weight=1)
 
 
@@ -72,24 +72,33 @@ player.load(library.track_list[controls.play_index])
 sidebar = Sidebar(sidebar_region, library)
 sidebar.pack(fill="both", expand=True)
 sidebar.set_sidebar()
-
-# secondary_sidebar = None
 paned.secondary_sidebar = None
-
 
 root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 
 def get_all_artists(track_list):
-    print(f"track_list:")
-    for track in track_list:
-        print(track)
-    return ["Bilmuri", "Sylarin"]
-    
+    artist_set = set()
+    for iid in playlist_display.playlist_tree.get_children():
+        if iid is None:
+            return
+        artist = playlist_display.playlist_tree.set(iid, "Artist")
+        artist_set.add(artist)
+    artist_list = list(artist_set)
+    artist_list.sort()
+    return artist_list
 
 def get_all_albums(track_list):
-    pass
+    album_set = set()
+    for iid in playlist_display.playlist_tree.get_children():
+        if iid is None:
+            return
+        artist = playlist_display.playlist_tree.set(iid, "Album")
+        album_set.add(artist)
+    album_list = list(album_set)
+    album_list.sort()
+    return album_list
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
@@ -121,36 +130,6 @@ def on_sidebar_selection(event):
     paned.secondary_sidebar.pack(fill="both", expand=True)
 
 
-
-
-
-    # global secondary_sidebar
-
-    # selected_view = sidebar.selected_view
-    # # print("MAIN: ON SIDEBAR EVENT", sidebar.selected_view)
-    # panes = paned.panes()
-
-    # if selected_view in ("Artists", "Albums"):
-
-    #     if str(secondary_sidebar_region) not in panes:
-    #         paned.insert(1, secondary_sidebar_region)
-    #         paned.pane(secondary_sidebar_region, weight=0)
-
-    #     if secondary_sidebar is not None:
-    #         secondary_sidebar.destroy()
-
-    #     items = (
-    #         get_all_artists(library.track_list)
-    #         if selected_view == "Artists"
-    #         else get_all_albums(library.track_list)
-    #     )
-
-    #     secondary_sidebar = SecondarySidebar(secondary_sidebar_region, items)
-    #     secondary_sidebar.pack(fill="both", expand=True)
-    # else:
-    #     if str(secondary_sidebar_region) in panes:
-    #         paned.forget(secondary_sidebar_region)
-
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
@@ -159,6 +138,16 @@ def play_selected_tracks(event):
     controls.play_selection(iid)
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
+
+
+def lock_sidebar():
+    try:
+        paned.sashpos(0, 250)
+    except tk.TclError:
+        pass
+    root.after(500, lock_sidebar)
+# start it AFTER UI is built
+root.after(200, lock_sidebar)
 
 
 progress_var = tk.DoubleVar()
