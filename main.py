@@ -10,7 +10,6 @@ from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
 from src.sidebar import Sidebar, SecondarySidebar
-import random
 
 root = tk.Tk()
 root.lift()

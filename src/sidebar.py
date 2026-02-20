@@ -19,7 +19,6 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.heading("#0", text="")
         self.sidebar_tree.bind("<<TreeviewSelect>>", self.on_sidebar_click)
 
-
     def set_sidebar(self):
         library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"))
         playlist_id = self.sidebar_tree.insert("", "end", text="Playlists", values=("Playlists"))

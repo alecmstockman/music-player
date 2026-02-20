@@ -32,4 +32,5 @@ def setup_styles(root):
         foreground="FFFFFF"
     )
 
+
     return style
