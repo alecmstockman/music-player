@@ -19,6 +19,7 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.heading("#0", text="")
         self.sidebar_tree.bind("<<TreeviewSelect>>", self.on_sidebar_click)
 
+
     def set_sidebar(self):
         library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"))
         playlist_id = self.sidebar_tree.insert("", "end", text="Playlists", values=("Playlists"))
@@ -32,7 +33,6 @@ class Sidebar(ttk.Frame):
 
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(playlist_id, open=True)
-
 
     def on_sidebar_click(self, event):
         selection = self.sidebar_tree.selection()
@@ -51,7 +51,18 @@ class SecondarySidebar(ttk.Frame):
         self.tree = ttk.Treeview(self)
         self.tree.pack(fill="both", expand=True)
         self.populate(items)
+        self.tree.bind("<<TreeviewSelect>>", self.on_secondary_sidebar_click)
 
     def populate(self, items):
         for i, item in enumerate(items):
             self.tree.insert("", "end", iid=str(i), text=item, values=(item, ))
+
+    def on_secondary_sidebar_click(self, event):
+        selection = self.tree.selection()
+        if not selection:
+            return
+        self.selected_iid = selection[0]
+        self.selected_view = self.tree.item(self.selected_iid, "values")[0]
+        self.event_generate("<<SidebarSelection>>")
+        print("SECONDARY SIDEBAR CLICK:", self.selected_iid)
+        print(self.selected_view)

@@ -163,6 +163,7 @@ class PlayerControls(ttk.Frame):
         self.get_current_track()
         self.toggle_play()
         
+
     def play_next_track(self):
         if self.loop_status == "track":
             index = self.play_order[self.play_index]

@@ -10,6 +10,7 @@ from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
 from src.sidebar import Sidebar, SecondarySidebar
+import random
 
 root = tk.Tk()
 root.lift()
@@ -30,11 +31,11 @@ top_row_2.pack(side="top", fill="x")
 
 paned = ttk.PanedWindow(root, orient="horizontal")
 paned.pack(fill="both", expand=True)
-sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
+sidebar_region = ttk.Frame(paned, width=200, style="Border.TFrame")
 sidebar_region.pack(side="left", fill="y")
 paned.add(sidebar_region, weight=0)
 
-secondary_sidebar_region = ttk.Frame(paned, width=250, style="Border.TFrame")
+secondary_sidebar_region = ttk.Frame(paned, width=300, style="Border.TFrame")
 
 content_region = ttk.Frame(paned, style="Border.TFrame")
 content_region.pack(side="top", fill="both", expand=True)
@@ -101,9 +102,16 @@ def get_all_albums(track_list):
             
     return sorted(album_set)
 
+
+
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
     print("MAIN: ON SIDEBAR EVENT", selected_view)
+
+    if selected_view == "Favorites":
+        playlist_display.show_favorites()
+    if selected_view != "Favorites":
+        playlist_display.set_playlist(library)
 
     if selected_view not in ("Artists", "Albums"):
         if paned.secondary_sidebar is not None:
@@ -118,7 +126,7 @@ def on_sidebar_selection(event):
     if paned.secondary_sidebar is not None:
         paned.secondary_sidebar.destroy()
         paned.secondary_sidebar = None
-
+    
     if selected_view == "Artists":
         items = get_all_artists(library.track_list)
     else:
@@ -129,9 +137,10 @@ def on_sidebar_selection(event):
         items
     )
     paned.secondary_sidebar.pack(fill="both", expand=True)
-
+    
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
+secondary_sidebar_region.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()
@@ -143,7 +152,7 @@ playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
 def lock_sidebar():
     try:
-        paned.sashpos(0, 250)
+        paned.sashpos(0, 200)
     except tk.TclError:
         pass
     root.after(500, lock_sidebar)
@@ -182,7 +191,6 @@ def update_time_and_progress():
     total_s = total_ms // 1000
     elapsed_str = f"{elapsed_s//60:02d}:{elapsed_s%60:02d}"
     total_str = f"{total_s//60:02d}:{total_s%60:02d}"
- 
 
     time_label.config(text=f"{elapsed_str} / {total_str}")
     percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0

@@ -68,10 +68,12 @@ class PlaylistDisplay(ttk.Frame):
 
 
     def set_playlist(self, playlist):
+        self.playlist = playlist
+        self.clear_playlist()
         if not playlist or not hasattr(playlist, "track_list"):
             print("No playlist or invalid playlist object")
             return
-        print("SET PLAYLIST")
+        # print("SET PLAYLIST")
         index = 0
         even = True
 
@@ -115,6 +117,11 @@ class PlaylistDisplay(ttk.Frame):
                     )
                     even = True
                 index += 1
+
+    def clear_playlist(self):
+        print("clear_playlist")
+        for iid in self.playlist_tree.get_children():
+            self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
         selection = self.playlist_tree.selection()
@@ -176,7 +183,7 @@ class PlaylistDisplay(ttk.Frame):
         pass
 
     def _on_menu_play(self):
-        print(f"MENU IID; {self.menu_iid}")
+        # print(f"MENU IID; {self.menu_iid}")
         self.clear_play_status()
         self.controls.play_index = int(self.menu_iid)
         index = self.controls.play_order[self.controls.play_index]
@@ -238,8 +245,23 @@ class PlaylistDisplay(ttk.Frame):
             with path.open("r", encoding="utf-8") as f:
                 self.favorites = json.load(f)
         except Exception as e:
-            print(f"Failed to load favoirtes: {e}")
+            print(f"Failed to load favorites: {e}")
             self.favorites = {}
+
+    def show_favorites(self):
+        self.clear_playlist()
+        path = Path("data/favorites.json")
+
+        if not path.exists():
+            self.favorites = {}
+            return
+        
+        with path.open("r", encoding="utf-8") as f:
+            favorites = json.load(f)
+        
+        favorites_list = [Path(key) for key, value in favorites.items() if value == True]
+        playlist = Playlist("Favorites", favorites_list)        
+        self.set_playlist(playlist)
 
 
 
