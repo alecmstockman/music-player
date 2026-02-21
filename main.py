@@ -78,31 +78,6 @@ root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 
-def get_all_artists(track_list):
-    artist_set = set()
-
-    for track in track_list:
-        media = player.instance.media_new(track)
-        media.parse()
-        artist = media.get_meta(vlc.Meta.Artist)
-        if artist:
-            artist_set.add(artist)
-
-    return sorted(artist_set)
-
-def get_all_albums(track_list):
-    album_set = set()
-
-    for track in track_list:
-        media = player.instance.media_new(track)
-        media.parse()
-        artist = media.get_meta(vlc.Meta.Album)
-        if artist:
-            album_set.add(artist)
-            
-    return sorted(album_set)
-
-
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
@@ -128,19 +103,23 @@ def on_sidebar_selection(event):
         paned.secondary_sidebar = None
     
     if selected_view == "Artists":
-        items = get_all_artists(library.track_list)
+        items = playlist_display.get_all_artists(library.track_list)
     else:
-        items = get_all_albums(library.track_list)
+        items = playlist_display.get_all_albums(library.track_list)
 
     paned.secondary_sidebar = SecondarySidebar(
         secondary_sidebar_region,
         items
     )
     paned.secondary_sidebar.pack(fill="both", expand=True)
+
+def on_secondary_sidebar_selection(event):
+    print('SECONDARY SIDEBAR SELECTION TEST')
     
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
-secondary_sidebar_region.bind("<<SidebarSelection>>", on_sidebar_selection)
+# secondary_sidebar_region.bind("<<SidebarSelection>>", on_sidebar_selection)
+secondary_sidebar_region.bind("<<SecondarySidebarSelection>>", on_secondary_sidebar_selection)
 
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()

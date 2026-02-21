@@ -263,6 +263,30 @@ class PlaylistDisplay(ttk.Frame):
         playlist = Playlist("Favorites", favorites_list)        
         self.set_playlist(playlist)
 
+    def get_all_artists(self, track_list):
+        artist_set = set()
+
+        for track in track_list:
+            media = self.player.instance.media_new(track)
+            media.parse()
+            artist = media.get_meta(vlc.Meta.Artist)
+            if artist:
+                artist_set.add(artist)
+
+        return sorted(artist_set)
+    
+    def get_all_albums(self, track_list):
+        album_set = set()
+
+        for track in track_list:
+            media = self.player.instance.media_new(track)
+            media.parse()
+            artist = media.get_meta(vlc.Meta.Album)
+            if artist:
+                album_set.add(artist)
+                
+        return sorted(album_set)
+
 
 
 
