@@ -119,7 +119,7 @@ class PlaylistDisplay(ttk.Frame):
                 index += 1
 
     def clear_playlist(self):
-        print("clear_playlist")
+        # print("clear_playlist")
         for iid in self.playlist_tree.get_children():
             self.playlist_tree.delete(iid)
 

@@ -41,7 +41,6 @@ content_region = ttk.Frame(paned, style="Border.TFrame")
 content_region.pack(side="top", fill="both", expand=True)
 paned.add(content_region, weight=1)
 
-
 player = VLCPlayer()
 event_manager = player.player.event_manager()
 event_manager.event_attach(
@@ -112,14 +111,19 @@ def on_sidebar_selection(event):
         items
     )
     paned.secondary_sidebar.pack(fill="both", expand=True)
+    paned.secondary_sidebar.bind("<<SecondarySidebarSelection>>", on_secondary_sidebar_selection)
+
 
 def on_secondary_sidebar_selection(event):
+    sidebar_widget = event.widget
+    artist = sidebar_widget.selected_view
+    if sidebar.selected_view == "Artists" and artist:
+        print(f"ARTIST: {artist}")
+    if sidebar.selected_view == "Albums" and artist:
+        print(f"Album: {artist}")
     print('SECONDARY SIDEBAR SELECTION TEST')
-    
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
-# secondary_sidebar_region.bind("<<SidebarSelection>>", on_sidebar_selection)
-secondary_sidebar_region.bind("<<SecondarySidebarSelection>>", on_secondary_sidebar_selection)
 
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()
