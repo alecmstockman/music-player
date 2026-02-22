@@ -116,12 +116,18 @@ def on_sidebar_selection(event):
 
 def on_secondary_sidebar_selection(event):
     sidebar_widget = event.widget
-    artist = sidebar_widget.selected_view
-    if sidebar.selected_view == "Artists" and artist:
-        print(f"ARTIST: {artist}")
-    if sidebar.selected_view == "Albums" and artist:
-        print(f"Album: {artist}")
-    print('SECONDARY SIDEBAR SELECTION TEST')
+    artist_album = sidebar_widget.selected_view
+    print(f"Library: {library.track_list}")
+    print(f"SIDEBAR.SIDEBAR_WIDGET = {artist_album}")
+    if sidebar.selected_view == "Artists" and artist_album:
+        print(f"ARTIST: {artist_album}")
+        playlist_display.set_playlist(library)
+        playlist_display.get_artist_tracks(artist_album)
+    if sidebar.selected_view == "Albums" and artist_album:
+        print(f"Album: {artist_album}")
+        playlist_display.set_playlist(library)
+        playlist_display.get_album_tracks(artist_album)
+    print(f"SIDEBAR.SELECTED_VIEW = {sidebar.selected_view}")
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 

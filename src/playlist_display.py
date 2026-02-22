@@ -172,15 +172,14 @@ class PlaylistDisplay(ttk.Frame):
         row_id = self.playlist_tree.identify_row(event.y)
         col_id = self.playlist_tree.identify_column(event.x)
         self.menu_iid = row_id
-        # print(f"Row ID: {row_id}, Col ID: {col_id}")
         if col_id == "#5":
             self.popup_menu.tk_popup(event.x_root, event.y_root)
         if col_id == "#9":
             self._update_favorite(self.menu_iid)
 
-    def _on_menu_test(self):
-        # print("menu clicked")
-        pass
+    # def _on_menu_test(self):
+    #     # print("menu clicked")
+    #     pass
 
     def _on_menu_play(self):
         # print(f"MENU IID; {self.menu_iid}")
@@ -227,7 +226,6 @@ class PlaylistDisplay(ttk.Frame):
 
     def save_favorites(self):
         path = Path("data/favorites.json")
-
         try: 
             with path.open("w", encoding="utf-8") as f:
                 json.dump(self.favorites, f, indent=2)
@@ -265,27 +263,43 @@ class PlaylistDisplay(ttk.Frame):
 
     def get_all_artists(self, track_list):
         artist_set = set()
-
         for track in track_list:
             media = self.player.instance.media_new(track)
             media.parse()
             artist = media.get_meta(vlc.Meta.Artist)
             if artist:
                 artist_set.add(artist)
-
         return sorted(artist_set)
     
     def get_all_albums(self, track_list):
         album_set = set()
-
         for track in track_list:
             media = self.player.instance.media_new(track)
             media.parse()
             artist = media.get_meta(vlc.Meta.Album)
             if artist:
                 album_set.add(artist)
-                
         return sorted(album_set)
+    
+    def get_artist_tracks(self, artist_album):
+        track_list = []
+        for iid in self.playlist_tree.get_children():
+            artist = self.playlist_tree.item(iid, 'values')
+            if artist_album == artist[6]:
+                print(f"{artist_album} == {artist[6]}")
+                track_list.append(Path(artist[0]))
+        playlist = Playlist(f"{artist_album}", track_list)
+        self.set_playlist(playlist)
+                
+    def get_album_tracks(self, artist_album):
+        track_list = []
+        for iid in self.playlist_tree.get_children():
+            album = self.playlist_tree.item(iid, 'values')
+            if artist_album == album[7]:
+                track_list.append(Path(album[0]))        
+        playlist = Playlist(f"{artist_album}", track_list)
+        self.set_playlist(playlist)
+        
 
 
 
