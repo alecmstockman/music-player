@@ -1,1 +1,1 @@
-AUDIO_FILETYPES = [".mp3", ".wav", ".aac", ".flac"]
+AUDIO_FILETYPES = [".mp3", ".wav", ".aac", ".flac", ".wma", "ac3"]

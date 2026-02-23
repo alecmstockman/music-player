@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import time
 from .playlist import Playlist
 from .playlist_display import PlaylistDisplay
 from pathlib import Path
@@ -120,7 +119,6 @@ class PlayerControls(ttk.Frame):
         self.get_current_track()
         # print(f"Next_track, play index now {self.play_index}")
 
-
     def shuffle_playlist(self):
         if self.loop_status != "track":
             if self.shuffle == False:
@@ -184,5 +182,6 @@ class PlayerControls(ttk.Frame):
         self.player.play()
         self.playlist_display.play_status_icon_playing(self.play_order[self.play_index])
         self.get_current_track()
+
 
 

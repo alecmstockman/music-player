@@ -3,7 +3,7 @@ from tkinter import ttk
 import time
 import vlc
 from pathlib import Path
-from src.playlist import Playlist
+from src.playlist import Playlist, PlaylistManager, CreatePlaylistEntry
 from src.vlc_player import VLCPlayer
 import json
 # from src.styles import setup_styles
@@ -11,10 +11,11 @@ from src.config import AUDIO_FILETYPES
 
 
 class PlaylistDisplay(ttk.Frame):
-    def __init__(self, parent, player, playlist, ):
+    def __init__(self, parent, player, playlist, playlist_manager):
         super().__init__(parent)
         self.player = player
         self.playlist = playlist
+        self.playlist_manager = playlist_manager
         
         self.popup_menu = tk.Menu(self, tearoff=False)
         self.playlist_submenu = tk.Menu(self.popup_menu, tearoff=False)
@@ -59,6 +60,7 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_command(label="Previous", command=self._on_menu_previous_track)
         self.popup_menu.add_command(label="Next", command=self._on_menu_next_track)
         self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Create Playlist", command=self._on_menu_create_playlist)
         self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
         self.playlist_submenu.add_command(label="Playlist One", state="disabled")
         self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
@@ -177,10 +179,6 @@ class PlaylistDisplay(ttk.Frame):
         if col_id == "#9":
             self._update_favorite(self.menu_iid)
 
-    # def _on_menu_test(self):
-    #     # print("menu clicked")
-    #     pass
-
     def _on_menu_play(self):
         # print(f"MENU IID; {self.menu_iid}")
         self.clear_play_status()
@@ -199,9 +197,19 @@ class PlaylistDisplay(ttk.Frame):
     def _on_menu_next_track(self):
         self.clear_play_status()
         self.controls.play_index = int(self.menu_iid)
-        self.controls.next_track()        
+        self.controls.next_track()     
+
+
+
+
+
+
+    def _on_menu_create_playlist(self):
+        dialog = CreatePlaylistEntry(self)
+        self.wait_window(dialog)
 
     def _on_menu_add_to_playlist(self):
+        self.playlist_manager
         pass
 
     def _on_menu_update_favorite(self):

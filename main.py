@@ -1,11 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-import time
 import vlc
 from pathlib import Path
 from src.player_controls import PlayerControls
 from src.vlc_player import VLCPlayer
-from src.playlist import Playlist
+from src.playlist import Playlist, PlaylistManager
 from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
@@ -54,8 +53,9 @@ album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
 library = Playlist("Main Library", library_all_tracks)
+playlist_manager = PlaylistManager(library)
 
-playlist_display = PlaylistDisplay(content_region, player, library)
+playlist_display = PlaylistDisplay(content_region, player, library, playlist_manager)
 playlist_display.pack(fill="both", expand=True)
 playlist_display.set_playlist(library)
 
@@ -68,7 +68,7 @@ time_label.pack(pady=5)
 
 player.load(library.track_list[controls.play_index])
 
-sidebar = Sidebar(sidebar_region, library)
+sidebar = Sidebar(sidebar_region, library, playlist_manager)
 sidebar.pack(fill="both", expand=True)
 sidebar.set_sidebar()
 paned.secondary_sidebar = None

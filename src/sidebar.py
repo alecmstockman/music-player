@@ -8,10 +8,11 @@ from .vlc_player import VLCPlayer
 # from .styles import setup_styles
 
 class Sidebar(ttk.Frame):
-    def __init__(self, parent, playlist):
+    def __init__(self, parent, playlist, playlist_manager):
         super().__init__(parent)
         self.parent = parent
         self.playlist = playlist
+        self.playlist_manager = playlist_manager
         self.selected_view = None
 
         self.sidebar_tree = ttk.Treeview(self)
@@ -24,6 +25,7 @@ class Sidebar(ttk.Frame):
     def set_sidebar(self):
         library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"))
         playlist_id = self.sidebar_tree.insert("", "end", text="Playlists", values=("Playlists"))
+        playlists = self.playlist_manager.user_playlists
         
         self.sidebar_tree.insert(library_id, "end", text="Artists", values=("Artists", ))
         self.sidebar_tree.insert(library_id, "end", text="Albums", values=("Albums", ))
@@ -34,6 +36,9 @@ class Sidebar(ttk.Frame):
 
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(playlist_id, open=True)
+
+        for playlist in playlists.keys():
+            self.sidebar_tree.insert(playlist_id, "end", text=f"- {playlist}")
 
     def on_sidebar_click(self, event):
         selection = self.sidebar_tree.selection()
