@@ -22,6 +22,7 @@ class PlaylistDisplay(ttk.Frame):
         self.menu_iid = None
         self.favorites = {}
         self.load_favorites()
+        self._last_playlist_created = None
 
         self.playlist_tree = ttk.Treeview(
             self, 
@@ -202,18 +203,25 @@ class PlaylistDisplay(ttk.Frame):
 
 
 
+
+
     def _on_menu_create_playlist(self):
         dialog = CreatePlaylistEntry(self)
         self.wait_window(dialog)
-        print(f"dialog: {dialog}")
         playlist_name = dialog.result
 
         if not playlist_name:
             return
 
-        self.playlist_manager.create_playlist(playlist_name)
+        playlist = self.playlist_manager.create_playlist(playlist_name)
+
+        self._last_playlist_created = playlist
         self.event_generate("<<PlaylistCreated>>")
         print(f"DIALOG: {playlist_name}")
+
+
+
+
 
     def _on_menu_add_to_playlist(self):
         self.playlist_manager

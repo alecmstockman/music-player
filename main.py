@@ -139,7 +139,7 @@ playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
 def on_playlist_created(event):
     display = event.widget
-    playlist = display._on_menu_create_playlist()
+    playlist = display._last_playlist_created
     sidebar.add_user_playlist(playlist)
 
 playlist_display.bind("<<PlaylistCreated>>", on_playlist_created)
