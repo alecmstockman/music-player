@@ -5,6 +5,7 @@ import vlc
 from pathlib import Path
 from .playlist import Playlist
 from .vlc_player import VLCPlayer
+import json
 # from .styles import setup_styles
 
 class Sidebar(ttk.Frame):
@@ -38,8 +39,10 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(self.playlist_id, open=True)
 
-        for playlist in playlists.keys():
-            self.sidebar_tree.insert(self.playlist_id, "end", text=f"- {playlist}")
+        for item in self.playlist_manager.user_playlists.keys():
+            playlist = self.playlist_manager.user_playlists[item]
+            playlist_name = playlist.split(",")[0]
+            self.sidebar_tree.insert(self.playlist_id, "end", text=f"- {playlist_name}")
 
     def on_sidebar_click(self, event):
         selection = self.sidebar_tree.selection()
@@ -52,6 +55,7 @@ class Sidebar(ttk.Frame):
         print(self.selected_view)
 
     def add_user_playlist(self, playlist):
+        print("ADD USER PLAYLIST")
         if not playlist:
             return
         
@@ -61,8 +65,20 @@ class Sidebar(ttk.Frame):
         
         self.sidebar_tree.insert(self.playlist_id, "end", text=f"- {playlist.name}")
         
-    def delete_user_playlist(self, playlist):
-        pass
+    # def delete_user_playlist(self, playlist):
+    #     pass
+
+    # def save_user_playlist(self, playlist):
+    #     path = Path("data/playlists.json")
+    #     item = {str(playlist.name): [], }
+    #     try: 
+    #         with path.open("w", encoding="utf-8") as f:
+    #             json.dump(item, f, indent=2)
+    #     except Exception as e:
+    #         print(f"Failed to save favorites: {e}")
+
+    # def load_user_playlist(self):
+    #     path = Path("data/playlists.json")
 
 
 class SecondarySidebar(ttk.Frame):

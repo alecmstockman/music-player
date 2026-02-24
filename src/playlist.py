@@ -2,11 +2,13 @@ import tkinter as tk
 from tkinter import ttk
 from pathlib import Path
 import json
+import uuid
 import vlc
 
 
 class Playlist():
     def __init__(self, name, track_list=None):
+        self.id = None
         self.name = name
         self.track_list = track_list
 
@@ -14,12 +16,19 @@ class Playlist():
 class PlaylistManager():
     def __init__(self, library):
         self.library = library
-        self.user_playlists = {"Playlist 1": None}
+        self.user_playlists = {}
+        self.id = uuid.uuid4()
 
     def create_playlist(self, name, tracks=None):
-        self.user_playlists[name] = Playlist(name, tracks or [])
+        playlist = Playlist(name, [])
+        playlist.id = str(uuid.uuid4())
+        self.user_playlists[playlist.id] = f"{playlist.name}, {playlist.track_list}"
+        self.save_playlists()
+        return playlist
 
     def save_playlists(self):
+        print("SAVE PLAYLIST CALLED")
+        print(self.user_playlists)
         path = Path("data/playlists.json")
         try: 
             with path.open("w", encoding="utf-8") as f:
@@ -27,7 +36,7 @@ class PlaylistManager():
         except Exception as e:
             print(f"Failed to save playlist: {e}")
 
-    def load_playlist(self, name):
+    def load_playlist(self):
         path = Path("data/playlists.json")
         if not path.exists():
             self.user_playlists = {}

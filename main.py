@@ -67,6 +67,7 @@ time_label = tk.Label(top_row_2, text="00:00 / 00:00", font=("Trebuchet MS", 15)
 time_label.pack(pady=5)
 
 player.load(library.track_list[controls.play_index])
+playlist_manager.load_playlist()
 
 sidebar = Sidebar(sidebar_region, library, playlist_manager)
 sidebar.pack(fill="both", expand=True)
@@ -138,8 +139,7 @@ playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
 def on_playlist_created(event):
     display = event.widget
-    playlist = display._last_created_playlist
-
+    playlist = display._on_menu_create_playlist()
     sidebar.add_user_playlist(playlist)
 
 playlist_display.bind("<<PlaylistCreated>>", on_playlist_created)
