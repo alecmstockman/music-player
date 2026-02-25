@@ -68,6 +68,7 @@ time_label.pack(pady=5)
 
 player.load(library.track_list[controls.play_index])
 playlist_manager.load_playlist()
+playlist_display._set_popup_playlist_list()
 
 sidebar = Sidebar(sidebar_region, library, playlist_manager)
 sidebar.pack(fill="both", expand=True)
@@ -81,7 +82,7 @@ root.bind("<Right>", controls.next_track, add="+")
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
-    print("MAIN: ON SIDEBAR EVENT", selected_view)
+    # print("MAIN: ON SIDEBAR EVENT", selected_view)
 
     if selected_view == "Favorites":
         playlist_display.show_favorites()
@@ -141,6 +142,7 @@ def on_playlist_created(event):
     display = event.widget
     playlist = display._last_playlist_created
     sidebar.add_user_playlist(playlist)
+    playlist_display._set_popup_playlist_list()
 
 playlist_display.bind("<<PlaylistCreated>>", on_playlist_created)
 

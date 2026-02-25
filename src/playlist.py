@@ -27,8 +27,8 @@ class PlaylistManager():
         return playlist
 
     def save_playlists(self):
-        print("SAVE PLAYLIST CALLED")
-        print(self.user_playlists)
+        # print("SAVE PLAYLIST CALLED")
+        # print(self.user_playlists)
         path = Path("data/playlists.json")
         try: 
             with path.open("w", encoding="utf-8") as f:

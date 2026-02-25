@@ -52,7 +52,7 @@ class Sidebar(ttk.Frame):
         print(self.selected_view)
 
     def add_user_playlist(self, playlist):
-        print("ADD USER PLAYLIST")
+        # print("ADD USER PLAYLIST")
         if not playlist:
             return
         

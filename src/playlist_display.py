@@ -63,8 +63,8 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Create Playlist", command=self._on_menu_create_playlist)
         self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
-        self.playlist_submenu.add_command(label="Playlist One", state="disabled")
-        self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
+        # self.playlist_submenu.add_command(label="Playlist One", state="disabled")
+        # self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
@@ -76,7 +76,6 @@ class PlaylistDisplay(ttk.Frame):
         if not playlist or not hasattr(playlist, "track_list"):
             print("No playlist or invalid playlist object")
             return
-        # print("SET PLAYLIST")
         index = 0
         even = True
 
@@ -122,7 +121,6 @@ class PlaylistDisplay(ttk.Frame):
                 index += 1
 
     def clear_playlist(self):
-        # print("clear_playlist")
         for iid in self.playlist_tree.get_children():
             self.playlist_tree.delete(iid)
 
@@ -202,9 +200,6 @@ class PlaylistDisplay(ttk.Frame):
 
 
 
-
-
-
     def _on_menu_create_playlist(self):
         dialog = CreatePlaylistEntry(self)
         self.wait_window(dialog)
@@ -217,15 +212,23 @@ class PlaylistDisplay(ttk.Frame):
 
         self._last_playlist_created = playlist
         self.event_generate("<<PlaylistCreated>>")
-        print(f"DIALOG: {playlist_name}")
 
+    def _set_popup_playlist_list(self):
+        for value in self.playlist_manager.user_playlists.values():
+            print(f"POPUP VALUE: {value}")
 
-
+        # for item in self.playlist_manager.user_playlists.keys():
+        #     playlist = self.playlist_manager.user_playlists[item]
+        #     playlist_name = playlist.split(",")[0]
+        #     print(f"Popup Playlist Name: {playlist_name}")
+        #     self.playlist_submenu.add_command(label=f"{playlist_name}", state="disabled")
+    
 
 
     def _on_menu_add_to_playlist(self):
-        self.playlist_manager
-        pass
+        playlists = self.playlist_manager.user_playlist 
+        selection = self.playlist_tree.selection()
+        print(selection)
 
     def _on_menu_update_favorite(self):
         self._update_favorite(self.menu_iid)
@@ -309,7 +312,7 @@ class PlaylistDisplay(ttk.Frame):
         for iid in self.playlist_tree.get_children():
             artist = self.playlist_tree.item(iid, 'values')
             if artist_album == artist[6]:
-                print(f"{artist_album} == {artist[6]}")
+                # print(f"{artist_album} == {artist[6]}")
                 track_list.append(Path(artist[0]))
         playlist = Playlist(f"{artist_album}", track_list)
         self.set_playlist(playlist)
