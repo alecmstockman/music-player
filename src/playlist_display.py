@@ -63,8 +63,6 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Create Playlist", command=self._on_menu_create_playlist)
         self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
-        # self.playlist_submenu.add_command(label="Playlist One", state="disabled")
-        # self.playlist_submenu.add_command(label="Playlist Two", state="disabled")
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
@@ -214,21 +212,23 @@ class PlaylistDisplay(ttk.Frame):
         self.event_generate("<<PlaylistCreated>>")
 
     def _set_popup_playlist_list(self):
-        for value in self.playlist_manager.user_playlists.values():
-            print(f"POPUP VALUE: {value}")
-
-        # for item in self.playlist_manager.user_playlists.keys():
-        #     playlist = self.playlist_manager.user_playlists[item]
-        #     playlist_name = playlist.split(",")[0]
-        #     print(f"Popup Playlist Name: {playlist_name}")
-        #     self.playlist_submenu.add_command(label=f"{playlist_name}", state="disabled")
+        print()
+        print("SET POPUP PLAYLIST LIST")
+        for key, value in self.playlist_manager.user_playlists.items():
+            self.playlist_submenu.add_command(
+                label=f"{value.name}", 
+                command=lambda k=key, n=value.name: 
+                    self._on_menu_add_to_playlist(k, n)
+            )
     
+    def _on_menu_add_to_playlist(self, key, name):
+        print("ON MENU ADD TO PLAYLIST")
+        track = self.playlist_tree.set(self.menu_iid, "filepath")
+        print(f"menu iid: {self.menu_iid}, track: {track}\n")
+        self.playlist_manager.add_to_user_playlist(key, name, track)
+        self.menu_iid = None
 
 
-    def _on_menu_add_to_playlist(self):
-        playlists = self.playlist_manager.user_playlist 
-        selection = self.playlist_tree.selection()
-        print(selection)
 
     def _on_menu_update_favorite(self):
         self._update_favorite(self.menu_iid)

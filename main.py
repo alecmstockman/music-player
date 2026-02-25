@@ -229,6 +229,6 @@ def test_function():
         count += 1
     print("\n")
     
-test_function()
+# test_function()
 update_time_and_progress()
 root.mainloop()

@@ -36,19 +36,17 @@ class Sidebar(ttk.Frame):
         self.sidebar_tree.item(library_id, open=True)
         self.sidebar_tree.item(self.playlist_id, open=True)
 
-        for item in self.playlist_manager.user_playlists.keys():
-            playlist = self.playlist_manager.user_playlists[item]
-            playlist_name = playlist.split(",")[0]
-            self.sidebar_tree.insert(self.playlist_id, "end", text=f"- {playlist_name}")
+        for value in self.playlist_manager.user_playlists.values():
+            self.sidebar_tree.insert(self.playlist_id, "end", text=f"- {value.name}")
 
     def on_sidebar_click(self, event):
         selection = self.sidebar_tree.selection()
+        # print(f"SIDEBAR CLICK: {selection}")
         if not selection:
             return
         self.selected_iid = selection[0]
         self.selected_view = self.sidebar_tree.item(self.selected_iid, "values")[0]
         self.event_generate("<<SidebarSelection>>")
-        print("SIDEBAR CLICK:", self.selected_iid)
         print(self.selected_view)
 
     def add_user_playlist(self, playlist):

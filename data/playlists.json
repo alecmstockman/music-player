@@ -1,5 +1,22 @@
 {
-  "0268a146-5819-47dd-a363-92178de0780f": "One, []",
-  "0bf94341-3620-4699-8c04-485215656f36": "two, []",
-  "4ad4112e-9bca-4a46-a607-f79474500e13": "three, []"
+  "cfc5fe4c-fcbe-486e-bb29-25c9d7882ac8": {
+    "name": "Bilmuri",
+    "tracks": "[]"
+  },
+  "f3ceb989-e207-458c-b0d8-8f1802b76830": {
+    "name": "Test",
+    "tracks": "[]"
+  },
+  "3c13f57f-0b41-4d52-a285-5ea3bef90064": {
+    "name": "Spotify",
+    "tracks": "[]"
+  },
+  "a200290d-3eea-481f-a0b8-20663a656459": {
+    "name": "another!",
+    "tracks": "[]"
+  },
+  "b5637a28-e40d-4f37-a056-522cda0316ca": {
+    "name": "Spiritbox",
+    "tracks": "[]"
+  }
 }
