@@ -141,6 +141,7 @@ sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()
     iid = track_values["index"]
+    print(f"MAIN, play selected track, iid; {iid}")
     controls.play_selection(iid)
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
@@ -235,7 +236,7 @@ def test_function():
         print(f"{count}: {song}")
         count += 1
     print("\n")
-    
+
 # test_function()
 update_time_and_progress()
 root.mainloop()

@@ -19,7 +19,8 @@ class PlaylistDisplay(ttk.Frame):
         
         self.popup_menu = tk.Menu(self, tearoff=False)
         self.playlist_submenu = tk.Menu(self.popup_menu, tearoff=False)
-        self.menu_iid = None
+        # self.menu_iid = None
+        self.menu_iid = 0
         self.favorites = {}
         self.load_favorites()
         self._last_playlist_created = None
@@ -66,6 +67,8 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
+
+        self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_click)
 
 
     def set_playlist(self, playlist):
@@ -122,11 +125,25 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
-        selection = self.playlist_tree.selection()
-        if not selection:
-            print("playlist_display: get_selected_tracks, no selection")
-            return None
-        selected_iid = self.playlist_tree.item(selection[0])
+        print("get_selected_tracks")
+        # --------------------------------------
+        # selection = self.playlist_tree.selection()
+        if self.playlist_tree.selection():
+            selection = self.playlist_tree.selection()
+            print(f"selection: {selection}")
+            selected_iid = self.playlist_tree.item(selection[0])
+            values = selected_iid["values"]
+            print(f"selection_iid: {values[1]}")
+            print(f"menu iid: {self.menu_iid}")
+        else:
+            print("set")
+            selection = self.playlist_tree.selection_set(self.menu_iid)
+            selected_iid = self.playlist_tree.item(selection)
+
+        # if not selection:
+        #     print("playlist_display: get_selected_tracks, no selection")
+        #     return None
+        # selected_iid = self.playlist_tree.item(selection[0])
         values = selected_iid["values"]
         return {
             "filepath": values[0],
@@ -153,6 +170,7 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.set(iid, column="play status", value="   ")
 
     def play_status_icon_playing(self, index):
+        # print(f"PLAY STATUS ICON PLAYLING - menu_iid: {self.menu_iid}")
         if index is None:
             print("playlist_display: play_status_icon_playing, index is None")
             return
@@ -166,14 +184,35 @@ class PlaylistDisplay(ttk.Frame):
         iid = index
         self.playlist_tree.set(iid, column="play status", value="  🔈")
 
+    # def on_tree_click(self, event):
+    #     row_id = self.playlist_tree.identify_row(event.y)
+    #     col_id = self.playlist_tree.identify_column(event.x)
+
+    #     self.menu_iid = row_id
+
+    #     if col_id == "#5":
+    #         self.popup_menu.tk_popup(event.x_root, event.y_root)
+    #     if col_id == "#9":
+    #         self._update_favorite(self.menu_iid)
+
     def on_tree_click(self, event):
         row_id = self.playlist_tree.identify_row(event.y)
         col_id = self.playlist_tree.identify_column(event.x)
+
+        if not row_id:
+            return
+
+        # Update Treeview selection
+        self.playlist_tree.selection_set(row_id)
+        self.playlist_tree.event_generate("<<TreeviewSelect>>")
+
         self.menu_iid = row_id
+        # Handle special column actions
         if col_id == "#5":
             self.popup_menu.tk_popup(event.x_root, event.y_root)
-        if col_id == "#9":
-            self._update_favorite(self.menu_iid)
+        elif col_id == "#9":
+            self._update_favorite(row_id)
+        print(f"ON TREE CLICK, menu_iid: {self.menu_iid}")
 
     def _on_menu_play(self):
         self.clear_play_status()
@@ -192,7 +231,8 @@ class PlaylistDisplay(ttk.Frame):
     def _on_menu_next_track(self):
         self.clear_play_status()
         self.controls.play_index = int(self.menu_iid)
-        self.controls.next_track()     
+        self.controls.next_track()
+        print(f"ON MENU NEXT TRACK: menu_iid: {self.menu_iid}")     
 
 
     def _on_menu_create_playlist(self):

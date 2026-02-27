@@ -72,10 +72,11 @@ class Sidebar(ttk.Frame):
         row_id = self.sidebar_tree.identify_row(event.y)
         
         if row_id in self.playlist_manager.user_playlists:
+            self.popup_menu.unpost()
             self.selected_user_playlist = row_id
             try: 
                 self.popup_menu.tk_popup(event.x_root + offset_x, event.y_root)
-            finally:
+            finally: 
                 self.popup_menu.grab_release()
 
     def set_popup_playlist_list(self):
