@@ -27,7 +27,6 @@ top_row_1.pack(side="top", fill="x")
 top_row_2 = ttk.Frame(top_region)
 top_row_2.pack(side="top", fill="x")
 
-
 paned = ttk.PanedWindow(root, orient="horizontal")
 paned.pack(fill="both", expand=True)
 sidebar_region = ttk.Frame(paned, width=200, style="Border.TFrame")
@@ -82,19 +81,13 @@ root.bind("<Right>", controls.next_track, add="+")
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
-    # print("MAIN: ON SIDEBAR EVENT", selected_view)
 
     if selected_view == "Favorites":
         playlist_display.show_favorites()
     if selected_view != "Favorites":
-        print("main: FAVORITES")
         playlist_display.set_playlist(library)
 
-    print(f"\n --- MAIN: on_sidebar_selection")
-
     if selected_view in playlist_manager.user_playlists.keys():
-        print(f"selected_view: {selected_view}")
-
         user_playlist = playlist_manager.user_playlists[selected_view]
         playlist_display.set_playlist(user_playlist)
         
@@ -136,15 +129,12 @@ def on_secondary_sidebar_selection(event):
     artist_album = sidebar_widget.selected_view
 
     if sidebar.selected_view == "Artists" and artist_album:
-        print("------- secondary artists")
         playlist_display.set_playlist(library)
         playlist_display.get_artist_tracks(artist_album)
 
     if sidebar.selected_view == "Albums" and artist_album:
-        print("------ secondary albums")
         playlist_display.set_playlist(library)
         playlist_display.get_album_tracks(artist_album)
-    # print(f"SIDEBAR.SELECTED_VIEW = {sidebar.selected_view}")
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
@@ -160,6 +150,7 @@ def on_playlist_created(event):
     playlist = display._last_playlist_created
     sidebar.add_user_playlist(playlist)
     playlist_display._set_popup_playlist_list()
+    playlist_manager.save_playlists()
 
 playlist_display.bind("<<PlaylistCreated>>", on_playlist_created)
 
@@ -170,7 +161,6 @@ def lock_sidebar():
     except tk.TclError:
         pass
     root.after(500, lock_sidebar)
-# start it AFTER UI is built
 root.after(200, lock_sidebar)
 
 

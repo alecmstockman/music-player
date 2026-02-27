@@ -81,7 +81,6 @@ class PlaylistManager():
         self.save_playlists()
 
 
-
 class CreatePlaylistEntry(tk.Toplevel):
     def __init__(self, parent):
         super().__init__(parent)

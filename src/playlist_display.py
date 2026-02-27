@@ -195,7 +195,6 @@ class PlaylistDisplay(ttk.Frame):
         self.controls.next_track()     
 
 
-
     def _on_menu_create_playlist(self):
         dialog = CreatePlaylistEntry(self)
         self.wait_window(dialog)

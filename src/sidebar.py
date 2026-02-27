@@ -30,7 +30,6 @@ class Sidebar(ttk.Frame):
     def set_sidebar(self):
         library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"))
         self.playlist_id = self.sidebar_tree.insert("", "end", text="Playlists", values=("Playlists"))
-        playlists = self.playlist_manager.user_playlists
         
         self.sidebar_tree.insert(library_id, "end", text="Artists", values=("Artists", ))
         self.sidebar_tree.insert(library_id, "end", text="Albums", values=("Albums", ))
@@ -49,27 +48,19 @@ class Sidebar(ttk.Frame):
     def set_user_playlists(self):
         print("SET USER PLAYLISTS:")
         children = self.sidebar_tree.get_children(self.playlist_id)
-        print(f"BEFORE CHILDREN: {children}")
-
-        print(f"USER PLAYLIST KEYS: {self.playlist_manager.user_playlists.keys()}\n")
-
+        # print(f"BEFORE CHILDREN: {children}")
         for child in children[1:]:
             self.sidebar_tree.delete(child)
-            if child in self.playlist_manager.user_playlists.keys():
-                print(f"{child} is in user playlists")
-                
 
         for key, value in self.playlist_manager.user_playlists.items():
-            if key not in children[1:]:
-                self.sidebar_tree.insert(self.playlist_id, "end", iid=value.id, text=f"- {value.name}", values=(value.id, value.name))
+            self.sidebar_tree.insert(self.playlist_id, "end", iid=value.id, text=f"- {value.name}", values=(value.id, value.name))
         
         children = self.sidebar_tree.get_children(self.playlist_id)
-        print(f"AFTER CHILDREN: {children}")
-        print("____________________________________\n\n")
+        # print(f"AFTER CHILDREN: {children}\n")
 
     def on_sidebar_click(self, event):
         selection = self.sidebar_tree.selection()
-        print(f"SIDEBAR CLICK: {selection}")
+        # print(f"SIDEBAR CLICK: {selection}")
         if not selection:
             return
         self.selected_iid = selection[0]
@@ -79,18 +70,13 @@ class Sidebar(ttk.Frame):
     def on_right_click(self, event):
         offset_x = 5
         row_id = self.sidebar_tree.identify_row(event.y)
-        col_id = self.sidebar_tree.identify_column(event.x)
-
+        
         if row_id in self.playlist_manager.user_playlists:
             self.selected_user_playlist = row_id
             try: 
                 self.popup_menu.tk_popup(event.x_root + offset_x, event.y_root)
             finally:
                 self.popup_menu.grab_release()
-
-            # print("RIGHT CLICK")
-            # print(f"SELECTED USER PLAYLIST: {self.selected_user_playlist}")
-            # print(f"ROW ID: {row_id}, COL ID: {col_id}")
 
     def set_popup_playlist_list(self):
         for key, value in self.playlist_manager.user_playlists.items():
@@ -107,11 +93,10 @@ class Sidebar(ttk.Frame):
         if not self.playlist_id:
             print("Playlist parent not initialized")
             return
-        self.sidebar_tree.insert(self.playlist_id, "end", text=f"- {playlist.name}", values=("Playlist"))
-
+        self.sidebar_tree.insert(self.playlist_id, "end", iid=playlist.id, text=f"- {playlist.name}", values=(playlist.id, playlist.name))
+        
     def delete_user_playlist(self):
         playlist_id = self.selected_user_playlist
-        # print(f"DELETE USER, playlist_id: {playlist_id}")
         self.playlist_manager.delete_user_playlist(playlist_id)
         self.set_user_playlists()
 
