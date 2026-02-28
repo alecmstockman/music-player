@@ -42,6 +42,7 @@ class PlayerControls(ttk.Frame):
         self.playlist_display.playlist_tree.selection_set(index)
 
     def toggle_play(self, event=None):
+        print(f"\nCONTROLS: current track title: {self.track.stem}")
         track = self.playlist.track_list[self.play_order[self.play_index]]        
 
         if self.player.is_playing():

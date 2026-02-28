@@ -88,6 +88,19 @@ def on_sidebar_selection(event):
     elif selected_view == "Songs":
         playlist_display.set_playlist(library)
         controls.playlist.track_list = library.track_list
+        
+        
+        print(f"\ncontrols index: {controls.play_index}")
+        for track in playlist_display.playlist_tree.get_children():
+            item = playlist_display.playlist_tree.item(track)
+            filepath = item["values"][0]
+            # print(filepath, type(filepath))
+            # print(controls.track, type(controls.track))
+            # print()
+            if filepath == str(controls.track):
+                print(filepath, controls.track)
+                playlist_display.play_status_icon_playing(item["values"][1])
+        
     else:
         playlist_display.set_playlist(library)
         controls.playlist.track_list = library.track_list 
