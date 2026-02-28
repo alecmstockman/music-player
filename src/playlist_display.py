@@ -125,6 +125,8 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
+        print("GET SELECTED TRACK")
+        print(f"Playlist Display: playlist {self.playlist.name}")
         selection = self.playlist_tree.selection()
 
         if not selection:
@@ -225,8 +227,9 @@ class PlaylistDisplay(ttk.Frame):
         self.event_generate("<<PlaylistCreated>>")
 
     def _set_popup_playlist_list(self):
+        self.playlist_submenu.delete(0, "end")
         for key, value in self.playlist_manager.user_playlists.items():
-            self.playlist_submenu.add_command(
+            self.playlist_submenu.add_command( 
                 label=f"{value.name}", 
                 command=lambda k=key, n=value.name: 
                     self._on_menu_add_to_playlist(k, n)

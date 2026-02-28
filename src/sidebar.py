@@ -28,7 +28,7 @@ class Sidebar(ttk.Frame):
 
 
     def set_sidebar(self):
-        library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"))
+        library_id = self.sidebar_tree.insert("", "end", text="Library", values=("Library"), open=True)
         self.playlist_id = self.sidebar_tree.insert("", "end", text="Playlists", values=("Playlists"))
         
         self.sidebar_tree.insert(library_id, "end", text="Artists", values=("Artists", ))
@@ -61,6 +61,7 @@ class Sidebar(ttk.Frame):
             return
         self.selected_iid = selection[0]
         self.selected_view = self.sidebar_tree.item(self.selected_iid, "values")[0]
+        print(f"SIDEBAR: on sidebar click: selected view: {self.selected_view}")
         self.event_generate("<<SidebarSelection>>")
 
     def on_right_click(self, event):

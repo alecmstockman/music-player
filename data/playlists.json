@@ -1,11 +1,36 @@
 {
-  "903d8e60-b691-4c03-a23c-91f7732ce9e6": {
+  "1fa12b4e-021e-4c58-8149-fed779c5b9d4": {
     "name": "Test",
     "tracks": [
-      "Music/Songs/02 - Jaded.mp3",
       "Music/Albums/Muri Album/01 - BETTER HELL (Thicc boi) [Explicit].mp3",
-      "Music/Albums/Test Album/01 - Blackest Eyes [Remastered].mp3"
+      "Music/Songs/01 - Voices In My Head [Explicit].mp3",
+      "Music/Songs/12 - Dress.mp3"
     ],
-    "id": "903d8e60-b691-4c03-a23c-91f7732ce9e6"
+    "id": "1fa12b4e-021e-4c58-8149-fed779c5b9d4"
+  },
+  "30655d34-7413-4d60-b603-b1a77bbaf6c8": {
+    "name": "new",
+    "tracks": [],
+    "id": "30655d34-7413-4d60-b603-b1a77bbaf6c8"
+  },
+  "53c88338-ca19-4977-944f-e157c629bf36": {
+    "name": "two",
+    "tracks": [],
+    "id": "53c88338-ca19-4977-944f-e157c629bf36"
+  },
+  "8fec63f2-6226-4540-ab89-564c71881654": {
+    "name": "three",
+    "tracks": [],
+    "id": "8fec63f2-6226-4540-ab89-564c71881654"
+  },
+  "8f9d81ce-dd01-42f1-8c66-1fe5d5b125e0": {
+    "name": "four",
+    "tracks": [],
+    "id": "8f9d81ce-dd01-42f1-8c66-1fe5d5b125e0"
+  },
+  "b7890ca4-0fd5-4a1e-8f6b-5bfc65e0de8f": {
+    "name": "another!",
+    "tracks": [],
+    "id": "b7890ca4-0fd5-4a1e-8f6b-5bfc65e0de8f"
   }
 }

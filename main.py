@@ -78,45 +78,47 @@ root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Left>", controls.previous_track, add="+")
 root.bind("<Right>", controls.next_track, add="+")
 
+def check_play_status(selected_view, artist_album=None):
+    print(f"CHECK PLAY STATUS: selected view: {selected_view}")
+    if selected_view and artist_album:
+        return
+    else:
+        for track in playlist_display.playlist_tree.get_children():
+            item = playlist_display.playlist_tree.item(track)
+            filepath = item["values"][0]
+
+            if filepath == str(controls.track):
+                print(filepath, controls.track)
+                if player.is_playing():
+                    playlist_display.play_status_icon_playing(item["values"][1])
+                else:
+                    playlist_display.play_status_icon_paused(item["values"][1])
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
+    check_play_status(selected_view)
+    print(F"\nMAIN: on sidebar selection")
+    print(f"selected view: {selected_view}")
+
+    if selected_view == "Library" or selected_view == "Songs":
+        playlist_display.set_playlist(library)
+        controls.playlist.track_list = library.track_list
+        check_play_status(selected_view)
 
     if selected_view == "Favorites":
         favorites_playlist = playlist_display.show_favorites()
         controls.playlist = favorites_playlist
-    elif selected_view == "Songs":
-        playlist_display.set_playlist(library)
-        controls.playlist.track_list = library.track_list
-        
-        
-        print(f"\ncontrols index: {controls.play_index}")
-        for track in playlist_display.playlist_tree.get_children():
-            item = playlist_display.playlist_tree.item(track)
-            filepath = item["values"][0]
-            # print(filepath, type(filepath))
-            # print(controls.track, type(controls.track))
-            # print()
-            if filepath == str(controls.track):
-                print(filepath, controls.track)
-                playlist_display.play_status_icon_playing(item["values"][1])
-        
-    else:
-        playlist_display.set_playlist(library)
-        controls.playlist.track_list = library.track_list 
+        check_play_status(selected_view)
 
     if selected_view in playlist_manager.user_playlists.keys():
+        print("USER PLAYLIST")
         user_playlist = playlist_manager.user_playlists[selected_view]
         playlist_display.set_playlist(user_playlist)
         controls.playlist = user_playlist
-        
-        if paned.secondary_sidebar is not None:
-            paned.forget(secondary_sidebar_region)
-            paned.secondary_sidebar.destroy()
-            paned.secondary_sidebar = None
-        return
+        check_play_status(selected_view)
 
     if selected_view not in ("Artists", "Albums"):
+        print("NOT IN ARTISTS OR ALBUMS")
         if paned.secondary_sidebar is not None:
             paned.forget(secondary_sidebar_region)
             paned.secondary_sidebar.destroy()
@@ -130,13 +132,14 @@ def on_sidebar_selection(event):
         paned.secondary_sidebar.destroy()
         paned.secondary_sidebar = None
     
-    
     if selected_view == "Artists":
         playlist_display.clear_playlist()
         items = playlist_display.get_all_artists(library.track_list)
+        check_play_status(selected_view)
     else:
         playlist_display.clear_playlist()
         items = playlist_display.get_all_albums(library.track_list)
+        check_play_status(selected_view)
 
     paned.secondary_sidebar = SecondarySidebar(
         secondary_sidebar_region,
@@ -153,20 +156,30 @@ def on_secondary_sidebar_selection(event):
     if sidebar.selected_view == "Artists" and artist_album:
         playlist_display.set_playlist(library)
         playlist_display.get_artist_tracks(artist_album)
+        print(f" - - CONTROLS: index: {controls.play_index}\nPlay Order: {controls.play_order}")
+        
+        # controls.playlist = playlist_display.playlist
 
-        controls.playlist = playlist_display.playlist
-
-    if sidebar.selected_view == "Albums" and artist_album:
+    elif sidebar.selected_view == "Albums" and artist_album:
         playlist_display.set_playlist(library)
         playlist_display.get_album_tracks(artist_album)
-        controls.playlist = playlist_display.playlist
+        # controls.playlist = playlist_display.playlist
+    check_play_status(sidebar.selected_view, artist_album)
 
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
+    print(f"MAIN: Play Selected Tracks")
     track_values = playlist_display.get_selected_tracks()
+    print(f"track values: {track_values}\n")
+    print(f"PLAYLIST DISPLAY: Playlist name: {playlist_display.playlist.name}")
+    controls.playlist = playlist_display.playlist
+    controls.update_play_order()
     iid = track_values["index"]
     controls.play_selection(iid)
+    # check_play_status()
+    print(f"MAIN: controls playlist: {controls.playlist.name}")
+    # print(f"MAIN: controls track_list: {controls.playlist.track_list}")
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
