@@ -43,5 +43,4 @@ def setup_styles(root):
         padding=(10, 6)
     )
 
-
     return style

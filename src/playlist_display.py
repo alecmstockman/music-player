@@ -42,7 +42,6 @@ class PlaylistDisplay(ttk.Frame):
         self.header_label.pack(fill="both", expand=True)
         ttk.Separator(self, orient="horizontal").pack(fill="x")
 
-
         self.playlist_tree = ttk.Treeview(
             self, 
             columns=("filepath", "index", "play status", "Track", "Menu", "Time", "Artist", "Album", "favorite", "Filetype", "Blank"), 
@@ -294,7 +293,6 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.set(iid, column="favorite", value=" ☆ ")
             self.favorites[filepath] = False
         self.save_favorites()
-
 
     def save_favorites(self):
         path = Path("data/favorites.json")

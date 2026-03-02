@@ -99,8 +99,8 @@ class PlayerControls(ttk.Frame):
                 self.track = self.playlist.track_list[self.play_index] 
                 if str(self.track) == filepath:
                     return index
-                else:
-                    return None
+                # else:
+            return None
 
     def previous_track(self, event=None):
         self.playlist_display.clear_play_status()
@@ -125,6 +125,9 @@ class PlayerControls(ttk.Frame):
         self._load_current_track()
 
     def _load_current_track(self):
+        if not self.playlist.track_list:
+            print("No Tracks in playlist")
+            return
         controls_index = self.play_order[self.play_index]
         display_index = self.get_display_index()
         track = self.playlist.track_list[controls_index]
@@ -149,6 +152,10 @@ class PlayerControls(ttk.Frame):
             self._update_display_for_current_track(self.player.is_playing())
 
     def shuffle_playlist(self):
+        if not self.playlist.track_list:
+            print("No Tracks in playlist")
+            return
+        
         if self.loop_status != "track":
             if self.shuffle == False:
                 self.shuffle = True
@@ -165,6 +172,10 @@ class PlayerControls(ttk.Frame):
                 self.play_order = list(range(len(self.playlist.track_list)))
 
     def toggle_loop(self):
+        if not self.playlist.track_list:
+            print("No Tracks in playlist")
+            return
+        
         if self.loop_status == None:
             self.loop_status = "playlist"
             self.loop_btn.config(text="🔁*")
