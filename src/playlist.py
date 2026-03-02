@@ -68,6 +68,18 @@ class PlaylistManager():
         playlist.track_list.append(track)
         self.save_playlists()
 
+    def update_user_playlist(self, playlist_id):
+        print(f"\nUPDATE USER PLAYLIST")
+        playlist = self.user_playlists[playlist_id]
+        for p in playlist.track_list:
+            print(p)
+        self.save_playlists()
+        
+
+
+
+
+
     def delete_user_playlist(self, playlist_id):
         remaining_user_playlists = {}
         for key, playlist in self.user_playlists.items():

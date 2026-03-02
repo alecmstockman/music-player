@@ -80,7 +80,9 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_command(label="Next", command=self._on_menu_next_track)
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Create Playlist", command=self._on_menu_create_playlist)
+        self.popup_menu.add_separator()
         self.popup_menu.add_cascade(label="Add to Playlist", menu=self.playlist_submenu)
+        self.popup_menu.add_cascade(label="Delete from Playlist", command=self._on_menu_delete_from_playlist)
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
@@ -274,6 +276,33 @@ class PlaylistDisplay(ttk.Frame):
         track = self.playlist_tree.set(self.menu_iid, "filepath")
         self.playlist_manager.add_to_user_playlist(key, name, Path(track))
         self.menu_iid = None
+
+    def _on_menu_delete_from_playlist(self):
+        print("\nDISPLAY: on menu delete from playlist")
+        track = self.playlist_tree.set(self.menu_iid, "filepath")
+        print(f"track: {track}, menu_iid: {self.menu_iid}")
+
+        new_list = []
+        for item in self.playlist.track_list:
+            print(item)
+            if track != str(item):
+                new_list.append(item)
+        self.playlist.track_list = new_list
+
+        print("---------")
+        for item in self.playlist.track_list:
+            print(item)
+        print()
+        
+        self.set_playlist(self.playlist)
+        print(f"Playlist id: {self.playlist.id}")
+        self.playlist_manager.update_user_playlist(self.playlist.id)
+        
+
+
+
+
+
 
     def _on_menu_update_favorite(self):
         self._update_favorite(self.menu_iid)
