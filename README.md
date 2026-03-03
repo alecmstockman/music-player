@@ -20,7 +20,16 @@ This is a music player app similar to Apple Music or VLC and is my first persona
 * Easily see total playlist time
 
 ## Installation
-### tbd
+tbd
+
+## Planned Features
+* move top control banner to a tkinter grid for cleaner 
+* Add ability to sort columns
+* Add artwork Display
+* Update UI with CustomTkinter
+* Create popup play queue and history display
+* Implement a play counts column
+* Ability to write meta-data to song files
 
 ## Usage
 

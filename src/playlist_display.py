@@ -315,7 +315,6 @@ class PlaylistDisplay(ttk.Frame):
 
 
 
-
     def _on_menu_update_favorite(self):
         self._update_favorite(self.menu_iid)
         
