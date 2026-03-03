@@ -12,7 +12,7 @@ This is a music player app similar to Apple Music or VLC and is my first persona
   * python-vlc
 
 ## Features
-* Plays following audio types: ".mp3", ".wav", ".aac", ".flac", ".wma", "ac3"
+* Plays following audio types: .mp3, .wav, .aac, .flac, .wma, ac3
 * Create, save, and delete custom user playlists
 * Seamlessly change states - Shuffle, Loop Playlist, Loop Track
 * Clickable progress bar allows you change playback position
