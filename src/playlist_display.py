@@ -160,7 +160,14 @@ class PlaylistDisplay(ttk.Frame):
 
         total_minutes = total_seconds // 60 
         remaining_seconds = total_seconds % 60
-        self.header_var.set(f"{self.playlist.name} ({total_minutes}:{remaining_seconds})")
+        if total_minutes >= 60:
+            total_hours = total_minutes // 60
+            remaining_minutes = total_minutes % 60
+            if remaining_minutes <= 9:
+                remaining_minutes = f"0{remaining_minutes}"
+            self.header_var.set(f"{self.playlist.name} ({total_hours}:{remaining_minutes}:{remaining_seconds})")
+        else:
+            self.header_var.set(f"{self.playlist.name} ({total_minutes}:{remaining_seconds})")
 
     def clear_playlist(self):
         for iid in self.playlist_tree.get_children():
