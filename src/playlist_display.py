@@ -160,6 +160,8 @@ class PlaylistDisplay(ttk.Frame):
 
         total_minutes = total_seconds // 60 
         remaining_seconds = total_seconds % 60
+        if remaining_seconds <= 9:
+            remaining_seconds = f"0{remaining_seconds}"
         if total_minutes >= 60:
             total_hours = total_minutes // 60
             remaining_minutes = total_minutes % 60

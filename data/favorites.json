@@ -9,7 +9,8 @@
   "Music/Albums/Test Album/01 - San Quentin [Explicit].mp3": true,
   "Music/Songs/01 - End of You.mp3": true,
   "Music/Songs/07 - The Outsider.mp3": true,
-  "Music/Songs/01 - Chokehold.mp3": true,
-  "Music/Songs/06 - Chop Suey!.mp3": true,
-  "Music/Songs/01 - Tom Sawyer.mp3": true
+  "Music/Songs/01 - Chokehold.mp3": false,
+  "Music/Songs/06 - Chop Suey!.mp3": false,
+  "Music/Songs/01 - Tom Sawyer.mp3": true,
+  "Music/Songs/08 - Drive.mp3": true
 }

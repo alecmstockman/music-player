@@ -159,10 +159,11 @@ sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()
-    controls.playlist = playlist_display.playlist
-    controls.update_play_order()
-    iid = track_values["index"]
-    controls.play_selection(iid)
+    if track_values is not None:
+        controls.playlist = playlist_display.playlist
+        controls.update_play_order()
+        iid = track_values["index"]
+        controls.play_selection(iid)
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
