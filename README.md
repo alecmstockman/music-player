@@ -1,5 +1,8 @@
-
 # Python VLC Music Player
+
+![Python](https://img.shields.io/badge/python-3.x-blue)
+![Tkinter](https://img.shields.io/badge/gui-tkinter-green)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
 This is a music player app similar to Apple Music or VLC and is my first personal project for my Boot.dev course. This app is built on the tkinter and VLC libraries. 
 
@@ -45,7 +48,7 @@ source venv/bin/activate
 ### 4. Install dependencies
 
 ```bash
-pip install python-vlc
+pip install -r requirements.txt
 ```
 
 You must also have **VLC installed** on your system since playback is handled through the VLC engine.
@@ -115,6 +118,7 @@ Music/Albums/
 The project uses `.gitkeep` files so these directories exist even when empty.
 
 ## Planned Features
+* Updates to controls, hotkeys, and right clicks
 * Move top control banner to a tkinter grid for cleaner look
 * Add ability to sort columns
 * Add artwork Display
@@ -125,7 +129,6 @@ The project uses `.gitkeep` files so these directories exist even when empty.
 * Ability to change theme and styles
 * Recently Played Playlist
 
-## Usage
 
 
 
