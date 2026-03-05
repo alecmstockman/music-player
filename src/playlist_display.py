@@ -23,6 +23,8 @@ class PlaylistDisplay(ttk.Frame):
         self.favorites = {}
         self.load_favorites()
         self._last_playlist_created = None
+        self.sort_order = None
+        self.backup_list = self.playlist.track_list.copy()
 
         self.header_var = tk.StringVar()
         self.header_var.set(playlist.name)
@@ -64,14 +66,21 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.heading("filepath")
         self.playlist_tree.heading("index")
         self.playlist_tree.heading("play status", text="  ")
-        self.playlist_tree.heading("Track", text="Title")
+        self.playlist_tree.heading("Track", text="  Title  ")
         self.playlist_tree.heading("Menu", text="···")
-        self.playlist_tree.heading("Time", text="Time")
-        self.playlist_tree.heading("Artist", text="Artist")
-        self.playlist_tree.heading("Album", text="Album")
+        self.playlist_tree.heading("Time", text=" Time ")
+        self.playlist_tree.heading("Artist", text=" Artist ")
+        self.playlist_tree.heading("Album", text="  Album  ")
         self.playlist_tree.heading("favorite", text="  ")
-        self.playlist_tree.heading("Filetype", text="Filetype")
+        self.playlist_tree.heading("Filetype", text="  Filetype  ")
         self.playlist_tree.heading("Blank", text="")
+
+        self.playlist_tree.heading("Track", command=lambda: self.sort_column("Track"))
+        self.playlist_tree.heading("Time", command=lambda: self.sort_column("Time"))
+        self.playlist_tree.heading("Artist", command=lambda: self.sort_column("Artist"))
+        self.playlist_tree.heading("Album", command=lambda: self.sort_column("Album"))
+        self.playlist_tree.heading("favorite", command=lambda: self.sort_column("favorite"))
+        self.playlist_tree.heading("Filetype", command=lambda: self.sort_column("Filetype"))
 
         self.playlist_tree.bind("<Button-1>", self.on_tree_click)
 
@@ -231,17 +240,17 @@ class PlaylistDisplay(ttk.Frame):
     def on_tree_selection(self, event):
         selected = self.playlist_tree.selection
         print(f"DISPLAY: on_tree_selection: {selected}")
+        return selected
     
     def on_tree_click(self, event):
-        print("\nDISPLAY: on_tree_click")
         row_id = self.playlist_tree.identify_row(event.y)
         col_id = self.playlist_tree.identify_column(event.x)
-        print(f"row: {row_id} col: {col_id}")
+        region = self.playlist_tree.identify_region(event.x, event.y)
 
         if not row_id:
             return
-
-        self.playlist_tree.selection_set(row_id)
+        
+        self.playlist_tree.selection_set(row_id)            
         # self.playlist_tree.event_generate("<<TreeviewSelect>>")
 
         self.menu_iid = row_id
@@ -249,6 +258,57 @@ class PlaylistDisplay(ttk.Frame):
             self.popup_menu.tk_popup(event.x_root, event.y_root)
         elif col_id == "#9":
             self._update_favorite(row_id)
+
+
+
+
+    def sort_column(self, column):        
+        print(f"\nSORT.ORDER: {self.sort_order}, COLUMN: {column} =======================================")
+
+        items = [(self.playlist_tree.set(iid, column), iid) for iid in self.playlist_tree.get_children()]
+
+        if column in ("Track", "Artist", "Album", "Filetype"):
+            if self.sort_order == None:
+                items.sort()
+                for index, (_, iid) in enumerate(items):
+                    self.playlist_tree.move(iid, "", index)
+                self.sort_order = "descending"
+                if column == "Track":
+                    self.playlist_tree.heading(column, text=f"  Title ⬆")
+                else:
+                    self.playlist_tree.heading(column, text=f"  {column} ⬆")
+
+            elif self.sort_order == "descending":
+                items.reverse()
+                for index, (_, iid) in enumerate(items):
+                    self.playlist_tree.move(iid, "", index)
+                self.sort_order = "ascending"
+                if column == "Track":
+                    self.playlist_tree.heading(column, text=f"  Title ⬇")
+                else:
+                    self.playlist_tree.heading(column, text=f"  {column} ⬇")
+
+            elif self.sort_order == "ascending":
+                for item in items:
+                    self.playlist_tree.move(item[1], "", item[1])
+                self.sort_order = None
+                if column == "Track":
+                    self.playlist_tree.heading(column, text=f"  Title  ")
+                else:
+                    self.playlist_tree.heading(column, text=f"  {column}  ")
+
+            self.recolor_rows()
+            return
+
+    def recolor_rows(self):
+        for index, iid in enumerate(self.playlist_tree.get_children()):
+            if index % 2 == 0:
+                self.playlist_tree.item(iid, tags=("even",))
+            if index % 2 == 1:
+                self.playlist_tree.item(iid, tags=("odd",))
+
+
+
 
     def _on_menu_play(self):
         self.clear_play_status()

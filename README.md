@@ -31,6 +31,7 @@ tbd
 * Implement a play counts column
 * Ability to write meta-data to song files
 * Ability to change theme and styles
+* Recently Played Playlist
 
 ## Usage
 
