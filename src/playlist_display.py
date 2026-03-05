@@ -186,7 +186,6 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
-        print("\nPLAYLIST DISPLAY: get_selected_tracks")
         selection = self.playlist_tree.selection()
 
         if not selection:
@@ -260,11 +259,8 @@ class PlaylistDisplay(ttk.Frame):
             self._update_favorite(row_id)
 
 
-
-
     def sort_column(self, column):        
-        print(f"\nSORT.ORDER: {self.sort_order}, COLUMN: {column} =======================================")
-
+        # print(f"\nSORT.ORDER: {self.sort_order}, COLUMN: {column} =======================================")
         items = [(self.playlist_tree.set(iid, column), iid) for iid in self.playlist_tree.get_children()]
 
         if column in ("Track", "Artist", "Album", "Filetype"):
@@ -306,9 +302,6 @@ class PlaylistDisplay(ttk.Frame):
                 self.playlist_tree.item(iid, tags=("even",))
             if index % 2 == 1:
                 self.playlist_tree.item(iid, tags=("odd",))
-
-
-
 
     def _on_menu_play(self):
         self.clear_play_status()

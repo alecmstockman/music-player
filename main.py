@@ -58,7 +58,6 @@ playlist_display = PlaylistDisplay(playlist_display_region, player, library, pla
 playlist_display.pack(fill="both", expand=True)
 playlist_display.set_playlist(library)
 
-
 controls = PlayerControls(top_row_1, player, playlist_display, library)
 controls.pack(side="left")
 playlist_display.controls = controls
