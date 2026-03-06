@@ -14,6 +14,13 @@ This is a music player app similar to Apple Music or VLC and is my first persona
   * tkinter
   * python-vlc
 
+## Quick Controls
+
+- **Space** → Play / Pause  
+- **Cmd + →** → Next Track  
+- **Cmd + ←** → Previous Track  
+- **Cmd + ↑ / ↓** → Volume
+
 ## Features
 * Plays following audio types: .mp3, .wav, .aac, .flac, .wma, ac3
 * Create, save, and delete custom user playlists
@@ -105,6 +112,47 @@ music-player/
 
 ---
 
+## Controls
+
+### Playback
+
+| Key | Action |
+|----|----|
+| `Space` | Play / Pause |
+| `Cmd + →` | Next Track |
+| `Cmd + ←` | Previous Track |
+
+### Volume
+
+| Key | Action |
+|----|----|
+| `Cmd + ↑` | Volume Up |
+| `Cmd + ↓` | Volume Down |
+
+### Playlist
+
+| Key | Action |
+|----|----|
+| `Click Row` | Select Track |
+| `Click ⋯` | Open Track Menu |
+| `Click ★` | Toggle Favorite |
+
+### Sidebar
+
+| Action | Result |
+|----|----|
+| Click Playlist | Load playlist |
+| Right Click Playlist | Open playlist menu |
+
+### Mouse Actions
+
+| Action | Result |
+|----|----|
+| Click Column Header | Sort by column |
+| Right Click Track | Track options menu |
+
+---
+
 # Notes
 
 Music files are **not stored in the repository**.  
@@ -119,8 +167,7 @@ The project uses `.gitkeep` files so these directories exist even when empty.
 
 ## Planned Features
 * Updates to controls, hotkeys, and right clicks
-* Move top control banner to a tkinter grid for cleaner look
-* Add ability to sort columns
+* Move top control banner to tkinter grid for cleaner look
 * Add artwork Display
 * Update UI with CustomTkinter
 * Create popup play queue and history display

@@ -188,7 +188,6 @@ def lock_sidebar():
     root.after(500, lock_sidebar)
 root.after(200, lock_sidebar)
 
-
 progress_var = tk.DoubleVar()
 
 def set_progress_on_click(event):
@@ -272,7 +271,6 @@ root.bind_all("<Command-Up>", volume_up, add="+")
 root.bind_all("<Command-Down>", volume_down, add="+")
 playlist_display.playlist_tree.bind("<Command-Up>", volume_up, add="+")
 playlist_display.playlist_tree.bind("<Command-Down>", volume_down, add="+")
-
 
 def quit_app(event=None):
     player.stop()
