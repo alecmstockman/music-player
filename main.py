@@ -158,6 +158,11 @@ sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
     track_values = playlist_display.get_selected_tracks()
+    
+    selection = playlist_display.playlist_tree.identify_region(event.x, event.y)
+    if selection == "heading" or selection == "nothing":
+        return
+
     if track_values is not None:
         controls.playlist = playlist_display.playlist
         controls.update_play_order()
