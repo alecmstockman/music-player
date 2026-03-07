@@ -26,15 +26,11 @@
     ],
     "id": "53c88338-ca19-4977-944f-e157c629bf36"
   },
-  "8fec63f2-6226-4540-ab89-564c71881654": {
-    "name": "three",
-    "tracks": [],
-    "id": "8fec63f2-6226-4540-ab89-564c71881654"
-  },
   "8f9d81ce-dd01-42f1-8c66-1fe5d5b125e0": {
     "name": "four",
     "tracks": [
-      "Music/Albums/Test Album/01 - Blackest Eyes [Remastered].mp3"
+      "Music/Albums/Test Album/01 - Blackest Eyes [Remastered].mp3",
+      "Music/Songs/08 Just Pretend.mp3"
     ],
     "id": "8f9d81ce-dd01-42f1-8c66-1fe5d5b125e0"
   },

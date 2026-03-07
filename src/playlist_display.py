@@ -96,6 +96,8 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
+        self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Write meta-data", command=self._on_menu_update_favorite, state=tk.DISABLED)
 
         # self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_click)
         self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_selection)
@@ -270,7 +272,6 @@ class PlaylistDisplay(ttk.Frame):
 
 
     def sort_column(self, column):        
-        # print(f"\nSORT.ORDER: {self.sort_order}, COLUMN: {column} =======================================")
         items = [(self.playlist_tree.set(iid, column), iid) for iid in self.playlist_tree.get_children()]
 
         if column in ("Track", "Artist", "Album", "Filetype"):
