@@ -40,7 +40,6 @@ class Sidebar(ttk.Frame):
         self.locked_parents = [self.library_id, self.playlist_id]
         for iid in self.locked_parents:
             self.sidebar_tree.item(iid, open=True)
-
         
         self.sidebar_tree.insert(self.library_id, "end", text="Artists", values=("Artists", ))
         self.sidebar_tree.insert(self.library_id, "end", text="Albums", values=("Albums", ))
