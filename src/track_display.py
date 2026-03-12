@@ -34,12 +34,15 @@ class TrackDisplay(ttk.Frame):
         print('TRACK DISPLAY: set_progress_on_click')
         proportion = event.x / event.widget.winfo_width()
         length = self.player.get_length()
+        print(proportion, length)
         if length <= 0: 
             return
         new_time = int(proportion * length)
+        print(f"new time: {new_time}")
         self.player.set_time(new_time)
 
     def update_current_track(self, track):
+        print(f"TRACK DISPLAY; update_current_track, track: {track}")
         self.current_track_title.set(track)
 
     def update_time_and_progress(self):
@@ -59,3 +62,4 @@ class TrackDisplay(ttk.Frame):
         self.time_label.config(text=f"{elapsed_str} / {total_str}")
         percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
         self.progress_var.set(percent)
+        self.after(100, self.update_time_and_progress)

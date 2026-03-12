@@ -75,6 +75,7 @@ playlist_manager = PlaylistManager(library)
 
 track_display = TrackDisplay(center_display, player)
 track_display.pack(fill="x", expand=True)
+track_display.update_time_and_progress()
 
 playlist_display = PlaylistDisplay(playlist_display_region, player, library, playlist_manager)
 playlist_display.pack(fill="both", expand=True)
@@ -179,6 +180,7 @@ def on_secondary_sidebar_selection(event):
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
+    print("\nMAIN: play_selected_track")
     track_values = playlist_display.get_selected_tracks()
     
     selection = playlist_display.playlist_tree.identify_region(event.x, event.y)
@@ -188,9 +190,11 @@ def play_selected_tracks(event):
     if track_values is not None:
         controls.playlist = playlist_display.playlist
         controls.update_play_order()
-        track_display.update_current_track(controls.current_track_title)
+        # print(f"controls.track.stem: {controls.track.stem}")
+        
         iid = track_values["index"]
         controls.play_selection(iid)
+        track_display.update_current_track(controls.track.stem)
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
@@ -249,7 +253,7 @@ root.after(200, lock_sidebar)
 #     progress_var.set(percent)
     # root.after(100, update_time_and_progress)
 
-root.after(100, track_display.update_time_and_progress)
+# root.after(100, track_display.update_time_and_progress)
 
 # progress_bar.pack(pady=5)
 # progress_bar.bind('<Button-1>', set_progress_on_click, add="+")
