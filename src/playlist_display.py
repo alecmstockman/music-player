@@ -99,7 +99,6 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_separator()
         self.popup_menu.add_command(label="Write meta-data", command=self._on_menu_update_favorite, state=tk.DISABLED)
 
-        # self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_click)
         self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_selection)
         
 
@@ -189,8 +188,9 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
+        print("\nDISPLAY: get_selected_tracks:")
         selection = self.playlist_tree.selection()
-
+        
         if not selection:
             print("playlist_display: get_selected_tracks, no selection")
             return None
@@ -201,11 +201,11 @@ class PlaylistDisplay(ttk.Frame):
             "filepath": values[0],
             "index": values[1],
             "play status": values[2],
-            "title": values[3],
-            "length": values[4],
-            "artist": values[5], 
-            "album": values[6],
-            "filetype": values[7]
+            "title": values[4],
+            "length": values[5],
+            "artist": values[6], 
+            "album": values[7],
+            "filetype": values[8]
         }
     
     def clear_play_status(self):
@@ -246,13 +246,12 @@ class PlaylistDisplay(ttk.Frame):
     def on_tree_click(self, event):
         row_id = self.playlist_tree.identify_row(event.y)
         col_id = self.playlist_tree.identify_column(event.x)
-        region = self.playlist_tree.identify_region(event.x, event.y)
+        # region = self.playlist_tree.identify_region(event.x, event.y)
 
         if not row_id:
             return
         
         self.playlist_tree.selection_set(row_id)            
-        # self.playlist_tree.event_generate("<<TreeviewSelect>>")
 
         self.menu_iid = row_id
         if col_id == "#5":

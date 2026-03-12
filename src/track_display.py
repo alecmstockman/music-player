@@ -9,11 +9,18 @@ class TrackDisplay(ttk.Frame):
         super().__init__(parent)
         self.player = player
         self.current_track_title = tk.StringVar(value="No Track Playing")
-        self.now_playing_label = ttk.Label(self, textvariable=self.current_track_title)
-        self.now_playing_label.pack(padx=(5))
+        self.current_artist_and_album = tk.StringVar(value="No Album Playing")
 
-        self.time_label = tk.Label(self, text="00:00 / 00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
-        self.time_label.pack(pady=5)
+        self.now_playing_track_label = ttk.Label(self, textvariable=self.current_track_title)
+        self.now_playing_track_label.pack(padx=(5))
+
+        self.now_playing_album_label = ttk.Label(self, textvariable=self.current_artist_and_album)
+        self.now_playing_album_label.pack(padx=(5))
+
+        self.time_elapsed_label = tk.Label(self, text="00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
+        self.total_time_label = tk.Label(self, text="00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
+        self.time_elapsed_label.pack(side="left", padx=(150, 0))
+        self.total_time_label.pack(side="right", padx=(0, 150))
 
         self.progress_var = tk.DoubleVar()
 
@@ -31,19 +38,16 @@ class TrackDisplay(ttk.Frame):
         self.progress_bar.bind('<B1-Motion>', self.set_progress_on_click, add="+")
 
     def set_progress_on_click(self, event):
-        print('TRACK DISPLAY: set_progress_on_click')
         proportion = event.x / event.widget.winfo_width()
         length = self.player.get_length()
-        print(proportion, length)
         if length <= 0: 
             return
         new_time = int(proportion * length)
-        print(f"new time: {new_time}")
         self.player.set_time(new_time)
 
-    def update_current_track(self, track):
-        print(f"TRACK DISPLAY; update_current_track, track: {track}")
+    def update_track_display(self, track, artist, album):
         self.current_track_title.set(track)
+        self.current_artist_and_album.set(f"{artist}: {album}")
 
     def update_time_and_progress(self):
         elapsed_ms = self.player.player.get_time()
@@ -59,7 +63,8 @@ class TrackDisplay(ttk.Frame):
         elapsed_str = f"{elapsed_s//60:02d}:{elapsed_s%60:02d}"
         total_str = f"{total_s//60:02d}:{total_s%60:02d}"
 
-        self.time_label.config(text=f"{elapsed_str} / {total_str}")
+        self.time_elapsed_label.config(text=f"{elapsed_str}")
+        self.total_time_label.config(text=f"{total_str}")
         percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
         self.progress_var.set(percent)
         self.after(100, self.update_time_and_progress)
