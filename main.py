@@ -64,7 +64,7 @@ library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix i
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
-library = Playlist("Main Library", library_all_tracks)
+library = ("Main Library", library_all_tracks)
 playlist_manager = PlaylistManager(library)
 
 track_display = TrackDisplay(center_display, player)
@@ -88,6 +88,16 @@ sidebar = Sidebar(sidebar_region, library, playlist_manager)
 sidebar.pack(fill="both", expand=True)
 sidebar.set_sidebar()
 paned.secondary_sidebar = None
+
+def on_left_button_previous(event):
+    controls.previous_track()
+
+def on_right_button_next(event):
+    controls.next_track()
+    print(f"CONTROLS: play_index {controls.play_index}")
+    print(player.media.get_meta(vlc.Meta.Artist))
+    # track = playlist_display.playlist_tree.set(controls.play_index, "filepath")
+    # track_display.update_track_display(controls.track.stem, track_values["artist"], track_values["album"])
 
 root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Command-Left>", controls.previous_track, add="+")

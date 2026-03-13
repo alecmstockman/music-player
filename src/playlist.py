@@ -3,14 +3,23 @@ from tkinter import ttk
 from pathlib import Path
 import json
 import uuid
+from dataclasses import dataclass
 
+
+@dataclass
+class Track:
+    filepath: str
+    title: str
+    artist: str
+    album: str
+    length: int
+    favorite: bool = False
 
 class Playlist():
     def __init__(self, name, track_list=None, song_id=None):
         self.id = song_id if song_id is not None else uuid.uuid4()
         self.name = name
         self.track_list = track_list
-
 
 class PlaylistManager():
     def __init__(self, library):
