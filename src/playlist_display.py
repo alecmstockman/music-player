@@ -97,6 +97,7 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_command(label="Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_command(label="Remove Favorite", command=self._on_menu_update_favorite)
         self.popup_menu.add_separator()
+        self.popup_menu.add_command(label="Track Info", command=self._on_menu_update_favorite, state=tk.DISABLED)
         self.popup_menu.add_command(label="Write meta-data", command=self._on_menu_update_favorite, state=tk.DISABLED)
 
         self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_selection)
@@ -188,7 +189,7 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
-        print("\nDISPLAY: get_selected_tracks:")
+        # print("\nDISPLAY: get_selected_tracks:")
         selection = self.playlist_tree.selection()
         
         if not selection:

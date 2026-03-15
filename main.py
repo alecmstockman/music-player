@@ -10,6 +10,7 @@ from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
 from src.sidebar import Sidebar, SecondarySidebar
+from src.metadata import load_track_metadata
 import random
 
 root = tk.Tk()
@@ -20,14 +21,15 @@ root.title("No Vibe Music Player - VERSION 2")
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 root.geometry(f"{screen_width}x{screen_height}")
+root.minsize(800, 600)
 
 top_region = ttk.Frame(root, style="Border.TFrame")
 top_region.grid(row=0, column=0, sticky="ew")
 root.columnconfigure(0, weight=1)
 
-top_region.columnconfigure(0, weight=1)
-top_region.columnconfigure(1, weight=1)
-top_region.columnconfigure(2, weight=1)
+top_region.columnconfigure(0, weight=0, minsize=350)
+top_region.columnconfigure(1, weight=1, minsize=300)
+top_region.columnconfigure(2, weight=0, minsize=100)
 
 left_controls = ttk.Frame(top_region)
 center_display = ttk.Frame(top_region)
@@ -36,7 +38,6 @@ right_controls = ttk.Frame(top_region)
 left_controls.grid(row=0, column=0, sticky="w", padx=10)
 center_display.grid(row=0, column=1, sticky="ew")
 right_controls.grid(row=0, column=2, sticky="e", padx=10)
-
 
 paned = ttk.PanedWindow(root, orient="horizontal")
 paned.grid(row=1, column=0, sticky="nsew")
@@ -64,7 +65,9 @@ library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix i
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
-library = ("Main Library", library_all_tracks)
+# library = ("Main Library", library_all_tracks)
+library = Playlist("Library", library_all_tracks)
+print(f"MAIN: type of library: {type(library)}")
 playlist_manager = PlaylistManager(library)
 
 track_display = TrackDisplay(center_display, player)
@@ -272,6 +275,8 @@ def test_function():
         print(f"{count}: {song}")
         count += 1
     print("\n")
+
+print(load_track_metadata("Music/Songs/08 Just Pretend.mp3"))
 
 # test_function()
 track_display.update_time_and_progress()

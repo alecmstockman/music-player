@@ -6,6 +6,7 @@ from .track_display import TrackDisplay
 from pathlib import Path
 import random
 
+
 class PlayerControls(ttk.Frame):
     def __init__(self, parent, player, track_display, playlist_display, playlist):
         super().__init__(parent)
@@ -23,19 +24,19 @@ class PlayerControls(ttk.Frame):
         self.track = self.playlist.track_list[self.play_index]
         self.current_track_title.set(self.track.stem)
 
-        self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play, takefocus=0, width=3)
-        self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track, takefocus=0, width=3)
-        self.next_btn = ttk.Button(self, text="⏭", command=self.next_track, takefocus=0, width=3)
+        self.play_pause_btn = ttk.Button(self, text="▶", command=self.toggle_play, takefocus=0, width=2)
+        self.previous_btn = ttk.Button(self, text="⏮", command=self.previous_track, takefocus=0, width=2)
+        self.next_btn = ttk.Button(self, text="⏭", command=self.next_track, takefocus=0, width=2)
         self.shuffle_btn = ttk.Button(self, text="🔀", command=self.shuffle_playlist, takefocus=0, width=3)
-        self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop, takefocus=0, width=3)
+        self.loop_btn = ttk.Button(self, text="🔁", command=self.toggle_loop, takefocus=0, width=2)
 
         self.columnconfigure(0, weight=1)
 
-        self.shuffle_btn.grid(row=0, column=1, padx=(50, 0))
+        self.shuffle_btn.grid(row=0, column=1, padx=(40, 0))
         self.previous_btn.grid(row=0, column=2)
         self.play_pause_btn.grid(row=0, column=3)
         self.next_btn.grid(row=0, column=4)
-        self.loop_btn.grid(row=0, column=5)
+        self.loop_btn.grid(row=0, column=5, padx=(0, 10))
 
     def update_play_order(self):
         self.play_order = list(range(len(self.playlist.track_list)))

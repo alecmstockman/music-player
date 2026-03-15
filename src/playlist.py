@@ -21,6 +21,7 @@ class Playlist():
         self.name = name
         self.track_list = track_list
 
+
 class PlaylistManager():
     def __init__(self, library):
         self.library = library
