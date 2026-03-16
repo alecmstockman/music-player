@@ -1,44 +1,42 @@
 {
-  "1fa12b4e-021e-4c58-8149-fed779c5b9d4": {
-    "name": "Test",
+  "e6aa9d5c-2665-46f5-b3e8-229134a248a9": {
+    "name": "Library",
     "tracks": [
-      "Music/Songs/03 - The Middle.mp3",
-      "Music/Songs/08 Just Pretend.mp3",
-      "Music/Songs/03 - The Middle.mp3",
-      "Music/Songs/05 - God is a woman [Explicit].mp3",
-      "Music/Songs/01 - Circle With Me.mp3",
-      "Music/Albums/Muri Album/01 - BETTER HELL (Thicc boi) [Explicit].mp3",
-      "Music/Songs/04 - Crimson Drum Video.wav"
+      "Title: Chokehold, Artist: Sleep Token, Album: Take Me Back To Eden, ID: cd7a4cb3",
+      "Title: The Summoning, Artist: Sleep Token, Album: The Summoning, ID: 799625e2",
+      "Title: Tom Sawyer, Artist: Rush, Album: Moving Pictures (2011 Remaster), ID: 0b24813c",
+      "Title: Reptile [Explicit], Artist: Periphery, Album: Periphery IV: HAIL STAN [Explicit], ID: 1b71f14d",
+      "Title: End of You, Artist: Poppy, Amy Lee, Spiritbox, Album: End of You, ID: e3ca2082",
+      "Title: AIMING ARROWS - All The Blame - FINAL MASTER (1), Artist: Unknown Artist, Album: Unkown Album, ID: 1639a35f",
+      "Title: The Middle, Artist: Jimmy Eat World, Album: Bleed American, ID: 34cc2926",
+      "Title: AIMING ARROWS - All The Blame - FINAL MASTER, Artist: Unknown Artist, Album: Unkown Album, ID: bfea130a",
+      "Title: THE VOID APPROACHETH, Artist: Bilmuri & Summer Hoop, Album: GOBLIN HOURS, ID: 062433aa",
+      "Title: Drive, Artist: Incubus, Album: Make Yourself [Explicit], ID: 562531dd",
+      "Title: Just Pretend, Artist: Bad Omens, Album: THE DEATH OF PEACE OF MIND [Explicit], ID: 274b8e6b",
+      "Title: Dress, Artist: Taylor Swift, Album: reputation, ID: b5abb21e",
+      "Title: Neon Grave, Artist: Dayseeker, Album: Dark Sun [Explicit], ID: e1f03136",
+      "Title: The Anthem [Clean], Artist: Good Charlotte, Album: The Young and The Hopeless, ID: 5f997c35",
+      "Title: Prayer Position [Explicit], Artist: Periphery, Album: Periphery III: Select Difficulty [Explicit], ID: db327bd5",
+      "Title: The Doomed [Explicit], Artist: A Perfect Circle, Album: Eat The Elephant [Explicit], ID: 3993dca4",
+      "Title: God is a woman [Explicit], Artist: Ariana Grande, Album: Sweetener [Explicit], ID: 1f6fd000",
+      "Title: Without Me [Explicit], Artist: Dayseeker, Album: Dark Sun [Explicit], ID: b39a4366",
+      "Title: Jaded, Artist: Spiritbox, Album: The Fear of Fear, ID: 301ed511",
+      "Title: Chop Suey!, Artist: System Of A Down, Album: Toxicity, ID: 183e87a5",
+      "Title: Subdivisions, Artist: Rush, Album: Gold, ID: 07743819",
+      "Title: Enough Final Master 2.18, Artist: Unknown Artist, Album: Unkown Album, ID: 1d623c8b",
+      "Title: 04 - Crimson Drum Video, Artist: Unknown Artist, Album: Unkown Album, ID: 75f89421",
+      "Title: Black Honey, Artist: Thrice, Album: To Be Everywhere Is To Be Nowhere, ID: 0aede3ce",
+      "Title: Voices In My Head [Explicit], Artist: Falling In Reverse, Album: Voices In My Head [Explicit], ID: 1ea11ad5",
+      "Title: Circle With Me, Artist: Spiritbox, Album: Circle With Me, ID: d4fed396",
+      "Title: Sleeptalk, Artist: Dayseeker, Album: Sleeptalk, ID: d21015f4",
+      "Title: The Outsider, Artist: A Perfect Circle, Album: Thirteenth Step, ID: 51e58359",
+      "Title: Everlong, Artist: Foo Fighters, Album: Greatest Hits [Explicit], ID: f12614fd",
+      "Title: THE VOID APPROACHETH, Artist: Bilmuri & Summer Hoop, Album: GOBLIN HOURS, ID: cab6d7fc",
+      "Title: BETTER HELL (Thicc boi) [Explicit], Artist: Bilmuri, Album: BETTER HELL (Thicc boi) [Explicit], ID: 148b01d6",
+      "Title: Blackest Eyes [Remastered], Artist: Porcupine Tree, Album: In Absentia [Remastered], ID: 3c3544f1",
+      "Title: San Quentin [Explicit], Artist: Nickelback, Album: Get Rollin' [Explicit], ID: 2aa4893a",
+      "Title: Stacy's Mom, Artist: Fountains Of Wayne, Album: Welcome Interstate Managers [Explicit], ID: e4ef9cca"
     ],
-    "id": "1fa12b4e-021e-4c58-8149-fed779c5b9d4"
-  },
-  "30655d34-7413-4d60-b603-b1a77bbaf6c8": {
-    "name": "new",
-    "tracks": [
-      "Music/Songs/01 - The Summoning.mp3"
-    ],
-    "id": "30655d34-7413-4d60-b603-b1a77bbaf6c8"
-  },
-  "53c88338-ca19-4977-944f-e157c629bf36": {
-    "name": "two",
-    "tracks": [
-      "Music/Songs/08 - Drive.mp3"
-    ],
-    "id": "53c88338-ca19-4977-944f-e157c629bf36"
-  },
-  "8f9d81ce-dd01-42f1-8c66-1fe5d5b125e0": {
-    "name": "four",
-    "tracks": [
-      "Music/Albums/Test Album/01 - Blackest Eyes [Remastered].mp3",
-      "Music/Songs/08 Just Pretend.mp3"
-    ],
-    "id": "8f9d81ce-dd01-42f1-8c66-1fe5d5b125e0"
-  },
-  "b7890ca4-0fd5-4a1e-8f6b-5bfc65e0de8f": {
-    "name": "another!",
-    "tracks": [
-      "Music/Albums/Muri Album/01 - BETTER HELL (Thicc boi) [Explicit].mp3"
-    ],
-    "id": "b7890ca4-0fd5-4a1e-8f6b-5bfc65e0de8f"
+    "id": "e6aa9d5c-2665-46f5-b3e8-229134a248a9"
   }
 }

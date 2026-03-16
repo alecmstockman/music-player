@@ -5,7 +5,7 @@ from pathlib import Path
 from src.player_controls import PlayerControls
 from src.track_display import TrackDisplay
 from src.vlc_player import VLCPlayer
-from src.playlist import Playlist, PlaylistManager
+from src.playlist import Track, Playlist, PlaylistManager
 from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
@@ -61,14 +61,30 @@ event_manager.event_attach(
 )
 
 p = Path("Music/")
-library_all_tracks = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
+
+def get_all_tracks():
+    all_tracks_list = []
+    filename_list = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
+    for name in filename_list:
+        track = Track(load_track_metadata(name))
+        all_tracks_list.append(track)
+        # print(track)
+    return all_tracks_list
+
+library_all_tracks = get_all_tracks()
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
+# for track in library_all_tracks:
+#     print("\n------------------")
+#     print(track)
+
 # library = ("Main Library", library_all_tracks)
-library = Playlist("Library", library_all_tracks)
-print(f"MAIN: type of library: {type(library)}")
-playlist_manager = PlaylistManager(library)
+# library = Playlist("Library", library_all_tracks)
+# playlist_manager = PlaylistManager(library)
+playlist_manager = PlaylistManager(library_all_tracks)
+playlist_manager.save_library()
+library = playlist_manager.create_playlist("Library", library_all_tracks)
 
 track_display = TrackDisplay(center_display, player)
 track_display.pack(fill="x", expand=True)
@@ -81,9 +97,10 @@ playlist_display.set_playlist(library)
 controls = PlayerControls(left_controls, player, track_display, playlist_display, library)
 controls.pack(side="left")
 playlist_display.controls = controls
-player.load(library.track_list[controls.play_index])
+print(f"MAIN: player.load: {library.track_list[controls.play_index].filepath}")
+player.load(library.track_list[controls.play_index].filepath)
 
-player.load(library.track_list[controls.play_index])
+player.load(library.track_list[controls.play_index].filepath)
 playlist_manager.load_playlist()
 playlist_display._set_popup_playlist_list()
 
@@ -198,7 +215,7 @@ def play_selected_tracks(event):
         iid = track_values["index"]
         controls.play_selection(iid)
 
-        track_display.update_track_display(controls.track.stem, track_values["artist"], track_values["album"])
+        track_display.update_track_display(controls.track.title, track_values["artist"], track_values["album"])
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
@@ -276,7 +293,7 @@ def test_function():
         count += 1
     print("\n")
 
-print(load_track_metadata("Music/Songs/08 Just Pretend.mp3"))
+# print(load_track_metadata("Music/Songs/08 Just Pretend.mp3"))
 
 # test_function()
 track_display.update_time_and_progress()

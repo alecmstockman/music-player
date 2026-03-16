@@ -6,14 +6,39 @@ import uuid
 from dataclasses import dataclass
 
 
-@dataclass
-class Track:
-    filepath: str
-    title: str
-    artist: str
-    album: str
-    length: int
-    favorite: bool = False
+class Track():
+    def __init__(self, metadata):
+        self.filepath = str(metadata["filepath"])
+        self.id = metadata["id"]
+        self.title = metadata["title"]
+        self.artist = metadata["artist"]
+        self.album = metadata["album"]
+        self.length = metadata["length"]
+
+        self.composer = metadata["composer"]
+        self.copyright = metadata["copyright"]
+        self.albumartist = metadata["albumartist"]
+        self.conductor = metadata["conductor"]
+        self.discnumber = metadata["discnumber"]
+        self.tracknumber = metadata["tracknumber"]
+        self.genre = metadata["genre"]
+        self.date = metadata["date"]
+
+        self.sample_rate = metadata["sample_rate"]
+        self.bit_rate = metadata["bit_rate"]
+        self.channels = metadata["channels"]
+        self.codec = metadata["codec"]
+
+        self.play_count = 0
+
+    def __repr__(self):
+        return (f"Title: {self.title}, Artist: {self.artist}, Album: {self.album}, ID: {self.id}")
+    
+    def __str__(self):
+        return (f"Title: {self.title}, Artist: {self.artist}, Album: {self.album}, ID: {self.id}")
+    
+    def __eq__(self, other):
+        return self.filepath == other.filepath
 
 class Playlist():
     def __init__(self, name, track_list=None, song_id=None):
@@ -37,6 +62,26 @@ class PlaylistManager():
         self.user_playlists[playlist.id] = playlist
         self.save_playlists()
         return playlist
+    
+    def save_library(self):
+        print("PLAYLIST: save library")
+        library = {}
+
+        for track in self.library:
+            metadata = {}
+            for key, value in vars(track).items():
+                metadata[key] = value
+            library[track.id] = metadata
+            # library[f"{item.id}"] = dict(item.metadata)
+        
+        path = Path("data/library.json")
+        try: 
+            with path.open("w", encoding="utf-8") as f:
+                json.dump(library, f , indent=2)
+        except Exception as e:
+            print(f"Failed to save library: {e}")
+
+
 
     def save_playlists(self):
         user_playlists = {}

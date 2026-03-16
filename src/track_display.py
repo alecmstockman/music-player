@@ -12,7 +12,7 @@ class TrackDisplay(ttk.Frame):
         self.current_artist_and_album = tk.StringVar(value="No Album Playing")
 
         self.now_playing_track_label = ttk.Label(self, textvariable=self.current_track_title)
-        self.now_playing_track_label.pack(padx=(5))
+        self.now_playing_track_label.pack(padx=(5), pady=5)
 
         self.now_playing_album_label = ttk.Label(self, textvariable=self.current_artist_and_album)
         self.now_playing_album_label.pack(padx=(5))

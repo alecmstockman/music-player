@@ -101,9 +101,66 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.add_command(label="Write meta-data", command=self._on_menu_update_favorite, state=tk.DISABLED)
 
         self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_selection)
+
+    # def set_playlist(self, playlist):
+    #     self.playlist = playlist
+    #     self.clear_playlist()
         
+    #     if not playlist or not hasattr(playlist, "track_list"):
+    #         print("No playlist or invalid playlist object")
+    #         return
+    #     index = 0
+    #     even = True
+    #     for track in self.playlist.track_list:
+    #         if not track or not track.exists():
+    #             print(f"Skipping invalid track: {track}")
+    #             continue
+    #         media = self.player.instance.media_new(track)
+    #         media.parse()
+
+    #         filepath = self.playlist.track_list[index]
+    #         title = media.get_meta(vlc.Meta.Title)
+    #         artist = media.get_meta(vlc.Meta.Artist)
+    #         album = media.get_meta(vlc.Meta.Album)
+    #         total_s = media.get_duration() // 1000
+    #         total_str = f"{total_s//60:d}:{total_s%60:02d}"
+    #         filetype = track.suffix[1:]
+
+    #         self.playlist_tree.tag_configure("even", background="darkblue")
+    #         self.playlist_tree.tag_configure("odd", background="black")
+
+    #         is_fav = self.favorites.get(str(filepath), False)
+    #         star = " ★ " if is_fav else " ☆ "
+
+    #         if track.suffix in AUDIO_FILETYPES:
+    #             track_index = index
+    #             if even is True:
+    #                 self.playlist_tree.insert(
+    #                     "", "end",
+    #                     iid=str(track_index),
+    #                     values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
+    #                     tags="even" 
+    #                 )
+    #                 even = False
+    #             else:
+    #                 self.playlist_tree.insert(
+    #                     "", "end",
+    #                     iid=str(track_index), 
+    #                     values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
+    #                     tags="odd" 
+    #                 )
+    #                 even = True
+    #             index += 1
+            
+
+    #         if self.playlist.id in self.playlist_manager.user_playlists.keys():
+    #              self.popup_menu.entryconfig("Delete from Playlist", state="normal")
+    #         else:
+    #             self.popup_menu.entryconfig("Delete from Playlist", state="disabled")
+    #     self.get_playlist_time()
 
     def set_playlist(self, playlist):
+        print("SET PLAYLIST")
         self.playlist = playlist
         self.clear_playlist()
         
@@ -113,19 +170,20 @@ class PlaylistDisplay(ttk.Frame):
         index = 0
         even = True
         for track in self.playlist.track_list:
-            if not track or not track.exists():
-                print(f"Skipping invalid track: {track}")
-                continue
-            media = self.player.instance.media_new(track)
-            media.parse()
+            # print(f"Track-filepath: {track.filepath}")
+            # if not track.filepath or not track.exists():
+            #     print(f"Skipping invalid track: {track}")
+            #     continue
+            # media = self.player.instance.media_new(track.filepath)
+            # media.parse()
 
-            filepath = self.playlist.track_list[index]
-            title = media.get_meta(vlc.Meta.Title)
-            artist = media.get_meta(vlc.Meta.Artist)
-            album = media.get_meta(vlc.Meta.Album)
-            total_s = media.get_duration() // 1000
+            filepath = track.filepath
+            title = track.title
+            artist = track.artist
+            album = track.album
+            total_s = track.length
             total_str = f"{total_s//60:d}:{total_s%60:02d}"
-            filetype = track.suffix[1:]
+            filetype = track.codec
 
             self.playlist_tree.tag_configure("even", background="darkblue")
             self.playlist_tree.tag_configure("odd", background="black")
@@ -133,26 +191,25 @@ class PlaylistDisplay(ttk.Frame):
             is_fav = self.favorites.get(str(filepath), False)
             star = " ★ " if is_fav else " ☆ "
 
-            if track.suffix in AUDIO_FILETYPES:
-                track_index = index
-                if even is True:
-                    self.playlist_tree.insert(
-                        "", "end",
-                        iid=str(track_index),
-                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
-                        tags="even" 
-                    )
-                    even = False
-                else:
-                    self.playlist_tree.insert(
-                        "", "end",
-                        iid=str(track_index), 
-                        values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
-                        tags="odd" 
-                    )
-                    even = True
-                index += 1
-            
+
+            track_index = index
+            if even is True:
+                self.playlist_tree.insert(
+                    "", "end",
+                    iid=str(track_index),
+                    values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
+                    tags="even" 
+                )
+                even = False
+            else:
+                self.playlist_tree.insert(
+                    "", "end",
+                    iid=str(track_index), 
+                    values=(filepath, f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
+                    tags="odd" 
+                )
+                even = True
+            index += 1
 
             if self.playlist.id in self.playlist_manager.user_playlists.keys():
                  self.popup_menu.entryconfig("Delete from Playlist", state="normal")
@@ -189,7 +246,6 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def get_selected_tracks(self):
-        # print("\nDISPLAY: get_selected_tracks:")
         selection = self.playlist_tree.selection()
         
         if not selection:
@@ -261,7 +317,6 @@ class PlaylistDisplay(ttk.Frame):
             self._update_favorite(row_id)
 
     def on_tree_right_click(self, event):
-        print("ON TREE RIGHT CLICK")
         row_id = self.playlist_tree.identify_row(event.y)
 
         if not row_id:
@@ -432,7 +487,7 @@ class PlaylistDisplay(ttk.Frame):
     def get_all_artists(self, track_list):
         artist_set = set()
         for track in track_list:
-            media = self.player.instance.media_new(track)
+            media = self.player.instance.media_new(track.filepath)
             media.parse()
             artist = media.get_meta(vlc.Meta.Artist)
             if artist:
@@ -442,7 +497,7 @@ class PlaylistDisplay(ttk.Frame):
     def get_all_albums(self, track_list):
         album_set = set()
         for track in track_list:
-            media = self.player.instance.media_new(track)
+            media = self.player.instance.media_new(track.filepath)
             media.parse()
             artist = media.get_meta(vlc.Meta.Album)
             if artist:
@@ -459,10 +514,13 @@ class PlaylistDisplay(ttk.Frame):
         self.set_playlist(playlist)
                 
     def get_album_tracks(self, artist_album):
+        print("GET ALBUM TRACKS:")
         track_list = []
         for iid in self.playlist_tree.get_children():
             album = self.playlist_tree.item(iid, 'values')
             if artist_album == album[7]:
+                print(f"iid: {iid}")
+                print(f"album: {album}")
                 track_list.append(Path(album[0]))        
         playlist = Playlist(f"{artist_album} - Album Tracks", track_list)
         self.set_playlist(playlist)

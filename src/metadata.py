@@ -1,32 +1,33 @@
 from .playlist import Track
 from mutagen import File
+from pathlib import Path
+import uuid
 
 
 def load_track_metadata(filepath):
+    track_metadata = {}
     audio = File(filepath, easy=True)
-    track_list = {}
+    
+    track_metadata["filepath"] = filepath
+    track_metadata["id"] = uuid.uuid4().hex[:8]
+    track_metadata["title"] = audio.get("title", [filepath.stem])[0]
+    track_metadata["artist"] = audio.get("artist", ["Unknown Artist"])[0]
+    track_metadata["album"] = audio.get("album", ["Unkown Album"])[0]
+    track_metadata["length"] = int(audio.info.length)
 
-    title = audio.get("title", [filepath])[0]
-    artist = audio.get("artist", ["Unknown Artist"])[0]
-    album = audio.get("album", ["Unkown Album"])[0]
-    composer = audio.get("composer", ["Unkown composer"])[0]
-    track_copyright  = audio.get("copyright", ["No Copyright"])[0]
-    albumartist = audio.get("albumartist", ["No Album Artist"])[0]
-    conductor = audio.get("conductor", ["No Conductor"])[0]
-    discnumber = audio.get("discnumber", ["No Disc Number"])[0]
-    tracknumber = audio.get("tracknumber", ["No Track Number"])[0]
-    genre = audio.get("genre", ["No Genre"])[0]
-    date = audio.get("date", ["No Date"])[0]
+    track_metadata["composer"] = audio.get("composer", ["Unknown Composer"])[0]
+    track_metadata["copyright"] = audio.get("copyright", ["No Copyright"])[0]
+    track_metadata["albumartist"] = audio.get("albumartist", ["No Album Artist"])[0]
+    track_metadata["conductor"] = audio.get("conductor", ["No Conductor"])[0]
+    track_metadata["discnumber"] = audio.get("discnumber", ["No Disc Number"])[0]
+    track_metadata["tracknumber"] = audio.get("tracknumber", ["No Track Number"])[0]
+    track_metadata["genre"] = audio.get("genre", ["No Genre"])[0]
+    track_metadata["date"] = audio.get("date", ["No Date"])[0]
 
-    length = audio.info.length
-    sample_rate = audio.info.sample_rate
-    meta_data = [title, artist, album, composer, track_copyright, albumartist, conductor, discnumber, tracknumber, genre, date]
+    track_metadata["sample_rate"] = getattr(audio.info, "sample_rate", "N/A")
+    track_metadata["bit_rate"] = getattr(audio.info, "bitrate", "N/A")
+    track_metadata["channels"] = getattr(audio.info, "channels", "N/A")
+    track_metadata["codec"] = Path(filepath).suffix.lower().strip(".")
 
-    print(int(length), sample_rate)
-    print("------------------")
-    for item in audio:
-        track_list[item] = audio.get(f"{item}", ["None"])[0]
-
-    print("track_list:")
-    print(track_list)
+    return track_metadata
 
