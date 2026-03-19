@@ -3,7 +3,6 @@ from tkinter import ttk
 from pathlib import Path
 import json
 import uuid
-from dataclasses import dataclass
 from .config import AUDIO_FILETYPES
 from src.metadata import load_track_metadata
 
@@ -12,41 +11,6 @@ ROOT = Path(__file__).resolve().parent.parent
 MUSIC = Path(f"{ROOT}/Music/")
 LIBRARY_JSON_PATH = Path(ROOT/"data/library.json")
 LIBRARY_JSON_PATH.parent.mkdir(exist_ok=True)
-
-# class Track():
-#     def __init__(self, filepath, track_id, title, artist, album, length, composer, copyright, albumartist, conductor, discnumber, tracknumber, genre, date, sample_rate, bit_rate, channels, codec, play_count, favorite, **metadata):
-#         self.filepath = metadata["filepath"]
-#         self.track_id = metadata["track_id"]
-#         self.title = metadata["title"]
-#         self.artist = metadata["artist"]
-#         self.album = metadata["album"]
-#         self.length = metadata["length"]
-
-#         self.composer = metadata["composer"]
-#         self.copyright = metadata["copyright"]
-#         self.albumartist = metadata["albumartist"]
-#         self.conductor = metadata["conductor"]
-#         self.discnumber = metadata["discnumber"]
-#         self.tracknumber = metadata["tracknumber"]
-#         self.genre = metadata["genre"]
-#         self.date = metadata["date"]
-
-#         self.sample_rate = metadata["sample_rate"]
-#         self.bit_rate = metadata["bit_rate"]
-#         self.channels = metadata["channels"]
-#         self.codec = metadata["codec"]
-
-#         self.play_count = 0
-#         self.favorite = False
-
-#     def __repr__(self):
-#         return (f"TITLE: {self.title}, ARTIST: {self.artist}, ALBUM: {self.album}, ID: {self.track_id}")
-    
-#     def __str__(self):
-#         return (f"TITLE: {self.title}, ARTIST: {self.artist}, ALBUM: {self.album}, ID: {self.track_id}")
-    
-#     def __eq__(self, other):
-#         return self.filepath == other.filepath
 
 class Track:
     def __init__(self, track_id=None, title=None, artist=None, album=None, length=None, play_count=None, favorite=None, **metadata):
@@ -61,7 +25,6 @@ class Track:
 
         for key, value in metadata.items():
             setattr(self, key, value)
-
 
     def __repr__(self):
         return (f"TITLE: {self.title}, ARTIST: {self.artist}, ALBUM: {self.album}, ID: {self.track_id}")

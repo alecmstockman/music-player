@@ -1,8 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-import time
-import vlc
-from pathlib import Path
 from .playlist import Playlist, PlaylistManager
 from .vlc_player import VLCPlayer
 

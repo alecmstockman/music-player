@@ -4,7 +4,6 @@ import time
 import vlc
 from pathlib import Path
 from src.playlist import Playlist, PlaylistManager, CreatePlaylistEntry
-# from src.vlc_player import VLCPlayer
 import json
 # from src.styles import setup_styles
 # from src.config import AUDIO_FILETYPES

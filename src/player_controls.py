@@ -1,8 +1,5 @@
 import tkinter as tk
 from tkinter import ttk
-# from .playlist import Playlist
-# from .playlist_display import PlaylistDisplay, Playlist
-# from .track_display import TrackDisplay
 from pathlib import Path
 import random
 

@@ -5,12 +5,10 @@ from pathlib import Path
 from src.player_controls import PlayerControls
 from src.track_display import TrackDisplay
 from src.vlc_player import VLCPlayer
-from src.playlist import Track, Playlist, PlaylistManager, Library
+from src.playlist import PlaylistManager, Library
 from src.styles import setup_styles
-from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
 from src.sidebar import Sidebar, SecondarySidebar
-from src.metadata import load_track_metadata
 import random
 
 root = tk.Tk()
