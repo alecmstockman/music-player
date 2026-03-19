@@ -113,13 +113,7 @@ def check_play_status(selected_view, artist_album=None):
         print("main, check_play_status err: selected view and artist_album")
         return
     else:
-        print(f"-controls.track_id; {controls.track}")
-        print(f"-seledted view: {selected_view}")
         track = library.tracks[controls.track]
-        print(f"-track: {track}")
-        print(f"-display: playlist_name{playlist_display.playlist}")
-        print(f"-controls: playlist_name{controls.playlist}")
-        # if track.track_id in 
         if player.is_playing():
             playlist_display.play_status_icon_playing(track.track_id)
         else:
@@ -128,14 +122,12 @@ def check_play_status(selected_view, artist_album=None):
 def on_sidebar_selection(event):
     print("ON SIDEBAR SELECTION")
     selected_view = sidebar.selected_view
-    # check_play_status(selected_view)
 
     if selected_view == "Library" or selected_view == "Songs":
         playlist_display.set_playlist(playlist_manager.library_playlist)
         check_play_status(selected_view)
 
     if selected_view == "Favorites":
-        print("-favorites selected")
         playlist_display.show_favorites()
         check_play_status(selected_view)
 
@@ -179,7 +171,6 @@ def on_secondary_sidebar_selection(event):
     print("\nMAIN: on_secondary_sidebar_selection")
     sidebar_widget = event.widget
     artist_album = sidebar_widget.selected_view
-    print(f"artist_album: {artist_album}")
 
     if sidebar.selected_view == "Artists" and artist_album:
         playlist_display.set_playlist(library)
@@ -206,11 +197,6 @@ def play_selected_tracks(event):
         controls.update_play_order() 
         controls.play_selection(track_values["track_id"])
         track_display.update_track_display(track_values["track_id"])
-    print(f"\nMAIN: play_selected_tracks")
-    print(f"controls: track: {controls.track}")
-    print(f"controls: play_order: {controls.play_order}")
-    print(f"controls: play_index: {controls.play_index}")
-
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 

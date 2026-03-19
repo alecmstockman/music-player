@@ -4,10 +4,10 @@ import time
 import vlc
 from pathlib import Path
 from src.playlist import Playlist, PlaylistManager, CreatePlaylistEntry
-from src.vlc_player import VLCPlayer
+# from src.vlc_player import VLCPlayer
 import json
-from src.styles import setup_styles
-from src.config import AUDIO_FILETYPES
+# from src.styles import setup_styles
+# from src.config import AUDIO_FILETYPES
 
 
 class PlaylistDisplay(ttk.Frame):
@@ -115,8 +115,7 @@ class PlaylistDisplay(ttk.Frame):
             return
         index = 0
         even = True
-        print(playlist)
-        print(playlist.track_id_list[:2])
+
         for item in self.playlist.track_id_list:
             track = self.library.tracks[item]
 
@@ -135,9 +134,6 @@ class PlaylistDisplay(ttk.Frame):
 
             # is_fav = self.favorites.get(str(filepath), False)s
             star = " ★ " if favorite == True else " ☆ "
-            # print(vars(track))
-            if track.favorite == True:
-                print(f"{track_id} IS A FAVORITE!")
 
             track_index = index
             if even is True:
@@ -203,8 +199,7 @@ class PlaylistDisplay(ttk.Frame):
             return None
         
         selected_iid = self.playlist_tree.item(first_track_id)
-        print(f"selected_iid: {selected_iid}")
-        print
+
         values = selected_iid["values"]
         return {
             "filepath": values[0],
@@ -254,10 +249,8 @@ class PlaylistDisplay(ttk.Frame):
         return selected
     
     def on_tree_click(self, event):
-        print("DISPLAY: on_tree_click")
         row_id = self.playlist_tree.identify_row(event.y)
         col_id = self.playlist_tree.identify_column(event.x)
-        print(f"row_id; {row_id}")
 
         if not row_id:
             return
@@ -270,7 +263,6 @@ class PlaylistDisplay(ttk.Frame):
             self._update_favorite(row_id)
 
     def on_tree_right_click(self, event):
-        print("DISPLAY: on_tree_right_click")
         row_id = self.playlist_tree.identify_row(event.y)
 
         if not row_id:
@@ -430,19 +422,6 @@ class PlaylistDisplay(ttk.Frame):
 
         favorites_playlist = self.playlist_manager.create_playlist("Favorites", favorites_list)
         self.set_playlist(favorites_playlist)
-        # print(favorites_list)  
-        # path = Path("data/favorites.json")
-        # if not path.exists():
-        #     self.favorites = {}
-        #     return
-        # with path.open("r", encoding="utf-8") as f:
-        #     favorites = json.load(f)
-        
-        # favorites_list = [Path(key) for key, value in favorites.items() if value == True]
-        # print(f"\nfavorites_list: {favorites_list}")
-        # favorites_playlist = Playlist("Favorites", favorites_list)        
-        # self.set_playlist(favorites_playlist)
-        # return favorites_playlist
 
     def get_all_artists(self):
         artist_set = set()
