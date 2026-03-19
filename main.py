@@ -5,7 +5,7 @@ from pathlib import Path
 from src.player_controls import PlayerControls
 from src.track_display import TrackDisplay
 from src.vlc_player import VLCPlayer
-from src.playlist import Track, Playlist, PlaylistManager
+from src.playlist import Track, Playlist, PlaylistManager, Library
 from src.styles import setup_styles
 from src.config import AUDIO_FILETYPES
 from src.playlist_display import PlaylistDisplay
@@ -27,7 +27,7 @@ top_region = ttk.Frame(root, style="Border.TFrame")
 top_region.grid(row=0, column=0, sticky="ew")
 root.columnconfigure(0, weight=1)
 
-top_region.columnconfigure(0, weight=0, minsize=350)
+top_region.columnconfigure(0, weight=0, minsize=300)
 top_region.columnconfigure(1, weight=1, minsize=300)
 top_region.columnconfigure(2, weight=0, minsize=100)
 
@@ -62,45 +62,33 @@ event_manager.event_attach(
 
 p = Path("Music/")
 
-def get_all_tracks():
-    all_tracks_list = []
-    filename_list = [filename for filename in p.rglob('*') if filename.suffix in AUDIO_FILETYPES]
-    for name in filename_list:
-        track = Track(load_track_metadata(name))
-        all_tracks_list.append(track)
-        # print(track)
-    return all_tracks_list
+library = Library()
+library.load_library()
 
-library_all_tracks = get_all_tracks()
+
+
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
-# for track in library_all_tracks:
-#     print("\n------------------")
-#     print(track)
+playlist_manager = PlaylistManager(library)
+playlist_manager.create_library_playlist()
 
-# library = ("Main Library", library_all_tracks)
-# library = Playlist("Library", library_all_tracks)
-# playlist_manager = PlaylistManager(library)
-playlist_manager = PlaylistManager(library_all_tracks)
-playlist_manager.save_library()
-library = playlist_manager.create_playlist("Library", library_all_tracks)
-
-track_display = TrackDisplay(center_display, player)
+track_display = TrackDisplay(center_display, library, player)
 track_display.pack(fill="x", expand=True)
 track_display.update_time_and_progress()
 
-playlist_display = PlaylistDisplay(playlist_display_region, player, library, playlist_manager)
+playlist_display = PlaylistDisplay(playlist_display_region, library, player, library, playlist_manager)
 playlist_display.pack(fill="both", expand=True)
-playlist_display.set_playlist(library)
+playlist_display.set_playlist(playlist_manager.library_playlist)
 
-controls = PlayerControls(left_controls, player, track_display, playlist_display, library)
+controls = PlayerControls(left_controls, library, playlist_manager.library_playlist, player, track_display, playlist_display)
 controls.pack(side="left")
 playlist_display.controls = controls
-print(f"MAIN: player.load: {library.track_list[controls.play_index].filepath}")
-player.load(library.track_list[controls.play_index].filepath)
 
-player.load(library.track_list[controls.play_index].filepath)
+first_track_id = controls.playlist.track_id_list[controls.play_index]
+first_track = library.get_track(first_track_id)
+player.load(Path(first_track.filepath))
+
 playlist_manager.load_playlist()
 playlist_display._set_popup_playlist_list()
 
@@ -114,38 +102,40 @@ def on_left_button_previous(event):
 
 def on_right_button_next(event):
     controls.next_track()
-    print(f"CONTROLS: play_index {controls.play_index}")
-    print(player.media.get_meta(vlc.Meta.Artist))
-    # track = playlist_display.playlist_tree.set(controls.play_index, "filepath")
-    # track_display.update_track_display(controls.track.stem, track_values["artist"], track_values["album"])
 
 root.bind("<space>", controls.toggle_play, add="+")
 root.bind("<Command-Left>", controls.previous_track, add="+")
 root.bind("<Command-Right>", controls.next_track, add="+")
 
 def check_play_status(selected_view, artist_album=None):
+    print("MAIN - CHECK PLAY STATUS")
     if selected_view and artist_album:
+        print("main, check_play_status err: selected view and artist_album")
         return
     else:
-        for track in playlist_display.playlist_tree.get_children():
-            item = playlist_display.playlist_tree.item(track)
-            filepath = item["values"][0]
-
-            if filepath == str(controls.track):
-                if player.is_playing():
-                    playlist_display.play_status_icon_playing(item["values"][1])
-                else:
-                    playlist_display.play_status_icon_paused(item["values"][1])
+        print(f"-controls.track_id; {controls.track}")
+        print(f"-seledted view: {selected_view}")
+        track = library.tracks[controls.track]
+        print(f"-track: {track}")
+        print(f"-display: playlist_name{playlist_display.playlist}")
+        print(f"-controls: playlist_name{controls.playlist}")
+        # if track.track_id in 
+        if player.is_playing():
+            playlist_display.play_status_icon_playing(track.track_id)
+        else:
+            playlist_display.play_status_icon_paused(track.track_id)
 
 def on_sidebar_selection(event):
+    print("ON SIDEBAR SELECTION")
     selected_view = sidebar.selected_view
-    check_play_status(selected_view)
+    # check_play_status(selected_view)
 
     if selected_view == "Library" or selected_view == "Songs":
-        playlist_display.set_playlist(library)
+        playlist_display.set_playlist(playlist_manager.library_playlist)
         check_play_status(selected_view)
 
     if selected_view == "Favorites":
+        print("-favorites selected")
         playlist_display.show_favorites()
         check_play_status(selected_view)
 
@@ -170,11 +160,11 @@ def on_sidebar_selection(event):
     
     if selected_view == "Artists":
         playlist_display.clear_playlist()
-        items = playlist_display.get_all_artists(library.track_list)
+        items = playlist_display.get_all_artists()
         check_play_status(selected_view)
     else:
         playlist_display.clear_playlist()
-        items = playlist_display.get_all_albums(library.track_list)
+        items = playlist_display.get_all_albums()
         check_play_status(selected_view)
 
     paned.secondary_sidebar = SecondarySidebar(
@@ -186,8 +176,10 @@ def on_sidebar_selection(event):
 
 
 def on_secondary_sidebar_selection(event):
+    print("\nMAIN: on_secondary_sidebar_selection")
     sidebar_widget = event.widget
     artist_album = sidebar_widget.selected_view
+    print(f"artist_album: {artist_album}")
 
     if sidebar.selected_view == "Artists" and artist_album:
         playlist_display.set_playlist(library)
@@ -202,20 +194,23 @@ def on_secondary_sidebar_selection(event):
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
-    track_values = playlist_display.get_selected_tracks()
-    
+    print("\nMAIN: play_selected_tracks")
     selection = playlist_display.playlist_tree.identify_region(event.x, event.y)
     if selection == "heading" or selection == "nothing":
         return
+    
+    track_values = playlist_display.get_selected_tracks()
 
     if track_values is not None:
         controls.playlist = playlist_display.playlist
-        controls.update_play_order()   
+        controls.update_play_order() 
+        controls.play_selection(track_values["track_id"])
+        track_display.update_track_display(track_values["track_id"])
+    print(f"\nMAIN: play_selected_tracks")
+    print(f"controls: track: {controls.track}")
+    print(f"controls: play_order: {controls.play_order}")
+    print(f"controls: play_index: {controls.play_index}")
 
-        iid = track_values["index"]
-        controls.play_selection(iid)
-
-        track_display.update_track_display(controls.track.title, track_values["artist"], track_values["album"])
 
 playlist_display.playlist_tree.bind('<Double-Button-1>', play_selected_tracks)
 
@@ -288,7 +283,7 @@ root.bind("<Command-q>", quit_app, add="+")
 def test_function():
     print("\n--- SONGS IN PLAYLIST ---")
     count = 1
-    for song in library_all_tracks:
+    for song in library.tracks:
         print(f"{count}: {song}")
         count += 1
     print("\n")

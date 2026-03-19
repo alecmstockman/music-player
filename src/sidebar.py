@@ -7,10 +7,11 @@ from .playlist import Playlist, PlaylistManager
 from .vlc_player import VLCPlayer
 
 class Sidebar(ttk.Frame):
-    def __init__(self, parent, playlist, playlist_manager):
+    def __init__(self, parent, library, playlist_manager):
         super().__init__(parent)
+        self.library = library
         self.parent = parent
-        self.playlist = playlist
+        self.playlist = None
         self.playlist_manager = playlist_manager
         self.selected_view = None
         self.library_id = None

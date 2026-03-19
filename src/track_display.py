@@ -5,8 +5,9 @@ from .playlist_display import PlaylistDisplay
 from pathlib import Path
 
 class TrackDisplay(ttk.Frame):
-    def __init__(self, parent, player):
+    def __init__(self, parent, library, player):
         super().__init__(parent)
+        self.library = library
         self.player = player
         self.current_track_title = tk.StringVar(value="No Track Playing")
         self.current_artist_and_album = tk.StringVar(value="No Album Playing")
@@ -45,9 +46,10 @@ class TrackDisplay(ttk.Frame):
         new_time = int(proportion * length)
         self.player.set_time(new_time)
 
-    def update_track_display(self, track, artist, album):
-        self.current_track_title.set(track)
-        self.current_artist_and_album.set(f"{artist}: {album}")
+    def update_track_display(self, track_id):
+        track = self.library.tracks[track_id]
+        self.current_track_title.set(track.title)
+        self.current_artist_and_album.set(f"{track.artist}: {track.album}") 
 
     def update_time_and_progress(self):
         elapsed_ms = self.player.player.get_time()

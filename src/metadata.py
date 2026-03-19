@@ -1,4 +1,3 @@
-from .playlist import Track
 from mutagen import File
 from pathlib import Path
 import uuid
@@ -8,8 +7,8 @@ def load_track_metadata(filepath):
     track_metadata = {}
     audio = File(filepath, easy=True)
     
-    track_metadata["filepath"] = filepath
-    track_metadata["id"] = uuid.uuid4().hex[:8]
+    track_metadata["filepath"] = str(filepath)
+    track_metadata["track_id"] = uuid.uuid4().hex[:8]
     track_metadata["title"] = audio.get("title", [filepath.stem])[0]
     track_metadata["artist"] = audio.get("artist", ["Unknown Artist"])[0]
     track_metadata["album"] = audio.get("album", ["Unkown Album"])[0]
