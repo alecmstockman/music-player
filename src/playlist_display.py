@@ -102,7 +102,6 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_selection)
 
     def set_playlist(self, playlist):
-        print("DISPLAY - SET PLAYLIST")
         self.playlist = playlist
         self.clear_playlist()
         
@@ -184,7 +183,6 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def highlight_playing(self, track_id):
-        print("\nHIGHLIGHT:")
         for item in self.playlist_tree.get_children():
             current_tags = list(self.playlist_tree.item(item, "tags"))
             if "playing" in current_tags:
@@ -192,7 +190,6 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.item(item, tags=tuple(current_tags))
 
         current_tags = list(self.playlist_tree.item(track_id, "tags"))
-        print(self.library.tracks[track_id], current_tags)
         if "playing" not in current_tags:
             current_tags.append("playing")
 
@@ -200,7 +197,6 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.see(track_id)
 
     def get_selected_tracks(self):
-        print("DISPLAY: get_selected_tracks")
         selection = self.playlist_tree.selection()
         first_track_id = selection[0]
 
@@ -281,12 +277,10 @@ class PlaylistDisplay(ttk.Frame):
 
 
     def sort_column(self, column):
-        print("\nDISPLAY: sort column")
         items = [(self.playlist_tree.set(iid, column), iid) for iid in self.playlist_tree.get_children()]
         
         if column in ("Track", "Artist", "Album", "Filetype"):
             if self.sort_order == None:
-                print(f"sort order: None,")
                 items.sort()
                 for index, (_, iid) in enumerate(items):
                     self.playlist_tree.move(iid, "", index)
@@ -325,7 +319,6 @@ class PlaylistDisplay(ttk.Frame):
         for child in children:
             track = self.playlist_tree.item(child)
             values = track["values"]
-            # print(values)
             index = values[2]
             new_play_order.append(index)
         return new_play_order
@@ -379,13 +372,11 @@ class PlaylistDisplay(ttk.Frame):
             )
     
     def _on_menu_add_to_playlist(self, key, name):
-        # print(f"DISPLAY: on_menu_add_to_playlist")
         track = self.playlist_tree.set(self.menu_iid, "track_id")
         self.playlist_manager.add_to_user_playlist(key, track)
         self.menu_iid = None
 
     def _on_menu_delete_from_playlist(self):
-        # print(f'DISPLAY: on_menu_delete_from_playlist')
         track = self.playlist_tree.set(self.menu_iid, "track_id")
         new_list = []
 
@@ -398,12 +389,9 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_manager.update_user_playlist(self.playlist.id)
 
     def _on_menu_update_favorite(self):
-        print(f"DISPLAY: on_menu_update_favorite: {self.menu_iid}")
         self._update_favorite(self.menu_iid)
         
     def _update_favorite(self, track_id):
-        # print("DISPLAY: update_favorte")
-        # print(f"track_id: {track_id}")
         if track_id is None or not self.playlist_tree.exists(track_id):
             print("playlist_display: _update_favorite, iid is None or doesn't exit")
             return
@@ -423,12 +411,10 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_manager.update_favorites_playlist()
 
     def save_favorites(self):
-        print(F"DISPLAY: save_favorite")
         self.library.save_library()
         self.playlist_manager.update_favorites_playlist()
 
     def show_favorites(self):
-        print("\nSHOW FAVORITES")
         self.clear_playlist()
         self.set_playlist(self.playlist_manager.favorites_playlist)
 
@@ -449,7 +435,6 @@ class PlaylistDisplay(ttk.Frame):
         return sorted(album_set)
     
     def get_artist_tracks(self, artist_album):
-        print("DISPLAY: get_artist_tracks")
         track_id_list = []
         for track_id in self.library.tracks:
             track = self.library.tracks[track_id]
@@ -460,7 +445,6 @@ class PlaylistDisplay(ttk.Frame):
         self.set_playlist(playlist)
                 
     def get_album_tracks(self, artist_album):
-        print("\nDISPLAY: get_album tracks")
         track_list = []
         for track_id in self.library.tracks:
             track = self.library.tracks[track_id]

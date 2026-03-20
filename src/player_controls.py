@@ -44,7 +44,6 @@ class PlayerControls(ttk.Frame):
         self.play_order = list(range(len(self.playlist.track_id_list)))
 
     def get_current_track(self):
-        print("CONTROLS: get_current_track")
         index = self.play_order[self.play_index]
         display_index = self.get_display_index()
         self.track_id = self.playlist.track_id_list[index]
@@ -58,7 +57,6 @@ class PlayerControls(ttk.Frame):
         return self.current_track_title
    
     def toggle_play(self, event=None):
-        # print("CONTROLS: toggle_play")
         track_id = self.playlist.track_id_list[self.play_order[self.play_index]]
         same_playlist = (self.playlist.name == self.playlist_display.playlist.name)
         if self.player.is_playing():
@@ -103,7 +101,6 @@ class PlayerControls(ttk.Frame):
             return None
 
     def previous_track(self, event=None):
-        print("CONTROLS: previous track")
         self.playlist_display.clear_play_status()
 
         if 0 < self.play_index:
@@ -117,8 +114,6 @@ class PlayerControls(ttk.Frame):
         self.playlist_display.highlight_playing(self.track)
 
     def next_track(self, event=None):
-        print("\nCONTROLS: before next track")
-        print(f"controls: {self.track}, {self.library.tracks[self.track]}")
         self.playlist_display.clear_play_status()
 
         if 0 <= self.play_index < len(self.playlist.track_id_list) -1:
@@ -128,11 +123,8 @@ class PlayerControls(ttk.Frame):
             self.play_index = 0
 
         self._load_current_track()
-        print("CONTROLS: after next track")
-        print(f"controls play_order: {self.play_order}")
         index = self.play_order[self.play_index]
         self.track = self.playlist.track_id_list[index]
-        print(f"next_track: {self.track}, {self.library.tracks[self.track]}")
         self.playlist_display.highlight_playing(self.track)
 
     def _load_current_track(self):
@@ -159,26 +151,18 @@ class PlayerControls(ttk.Frame):
         self.get_current_track()
 
     def check_play_status(self):
-        print("CONTROLS: check_play_status")
-        print(self.playlist.name)
-        print(self.playlist_display.playlist.name)
         if self.playlist.name == self.playlist_display.playlist.name:
             return
         else:
             self._update_display_for_current_track(self.player.is_playing())
 
     def shuffle_playlist(self):
-        print("\nCONTROLS: shuffle")
-        print(f"starting play order: {self.play_order}")
-        print(f"starting play_index: {self.play_index}")
-
         if not self.playlist.track_id_list:
             print("No Tracks in playlist")
             return
         
         if self.loop_status != "track":
             if self.shuffle == False:
-                print("\nshuffle is True")
                 self.shuffle = True
                 self.shuffle_btn.config(text="🔀*")
 
@@ -186,13 +170,14 @@ class PlayerControls(ttk.Frame):
                 random.shuffle(self.play_order)
                 self.play_order.remove(self.play_index)
                 self.play_order.insert(0, self.play_index)
-                print(f"new play_order: {self.play_order}")
 
             else:
                 self.shuffle = False
-                print("\nshuffle is False")
+                index = self.play_order[self.play_index]
                 self.shuffle_btn.config(text="🔀")
                 self.play_order = list(range(len(self.playlist.track_id_list)))
+                
+                self.play_index = index
 
 
     def toggle_loop(self):
@@ -211,7 +196,6 @@ class PlayerControls(ttk.Frame):
             self.loop_status = None
 
     def play_selection(self, track_ids):
-        print("CONTROLS: play_selection")
         self.update_play_order()
         if track_ids is None:
             print("player_controls: play_selection, iid is None")
@@ -233,7 +217,6 @@ class PlayerControls(ttk.Frame):
         self.playlist_display.highlight_playing(track_id)
         
     def play_next_track(self):
-        print("CONTROLS: play_next_track")
         self.playlist_display.clear_play_status()
 
         if 0 <= self.play_index < len(self.playlist.track_id_list) -1:

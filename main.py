@@ -107,7 +107,6 @@ root.bind("<Command-Left>", controls.previous_track, add="+")
 root.bind("<Command-Right>", controls.next_track, add="+")
 
 def check_play_status(selected_view, artist_album=None):
-    print("MAIN - CHECK PLAY STATUS")
     if selected_view and artist_album:
         print("main, check_play_status err: selected view and artist_album")
         return
@@ -119,7 +118,6 @@ def check_play_status(selected_view, artist_album=None):
             playlist_display.play_status_icon_paused(track.track_id)
 
 def on_sidebar_selection(event):
-    print("\nON SIDEBAR SELECTION")
     selected_view = sidebar.selected_view
     if selected_view == "Library" or selected_view == "Songs":
         playlist_display.set_playlist(playlist_manager.library_playlist)
@@ -166,7 +164,6 @@ def on_sidebar_selection(event):
 
 
 def on_secondary_sidebar_selection(event):
-    print("\nMAIN: on_secondary_sidebar_selection")
     sidebar_widget = event.widget
     artist_album = sidebar_widget.selected_view
 
@@ -183,7 +180,6 @@ def on_secondary_sidebar_selection(event):
 sidebar.bind("<<SidebarSelection>>", on_sidebar_selection)
 
 def play_selected_tracks(event):
-    print("\nMAIN: play_selected_tracks")
     selection = playlist_display.playlist_tree.identify_region(event.x, event.y)
     if selection == "heading" or selection == "nothing":
         return
