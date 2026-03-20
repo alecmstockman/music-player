@@ -211,6 +211,16 @@ def on_playlist_created(event):
 
 playlist_display.bind("<<PlaylistCreated>>", on_playlist_created)
 
+def on_playlist_sorted(event):
+    print("PLAYLIST HAS BEEN SORTED______")
+    print(f"controls.play_order: {controls.play_order}")
+    new_play_order = playlist_display.get_post_sort_play_order()
+    controls.play_order = new_play_order
+    print(f"new play order: {new_play_order}")
+    print()
+
+playlist_display.bind("<<PlaylistSorted>>", on_playlist_sorted)
+
 def lock_sidebar():
     try:
         paned.sashpos(0, 200)

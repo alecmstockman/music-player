@@ -203,20 +203,15 @@ class PlayerControls(ttk.Frame):
             print("player_controls: play_selection, iid is None")
             return
         self.playlist_display.clear_play_status()
-        print(track_ids)
         track = self.library.tracks[track_ids]
-        print(f"controls: play_selection: {self.playlist_display.playlist_tree.index(track.track_id)}")
-
 
         selected_track = self.playlist_display.playlist_tree.item(track_ids)
         values = selected_track["values"]
         self.play_index = self.play_order.index(int(values[2]))
         index = self.play_order[self.play_index]
-        print(f"index: {index}")
         track_id = self.playlist.track_id_list[index]
         self.track = self.playlist.track_id_list[self.play_index]
-        print(f"track_id_list: {self.playlist.track_id_list}")
-        print(f"track_id: {track_id}")
+
         track = self.library.tracks[track_id]
         self.player.load(Path(track.filepath))
         self.player.play()

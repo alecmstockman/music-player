@@ -190,7 +190,6 @@ class PlaylistDisplay(ttk.Frame):
         print("DISPLAY: get_selected_tracks")
         selection = self.playlist_tree.selection()
         first_track_id = selection[0]
-        print(f"first track_id: {first_track_id}")
 
         if not selection:
             print("playlist_display: get_selected_tracks, no selection")
@@ -218,19 +217,18 @@ class PlaylistDisplay(ttk.Frame):
                 return
             self.playlist_tree.set(iid, column="play status", value="")
 
-    def remove_play_status_icon(self, index):
-        # print("\nDISPLAY: remove_play_status_icon")
-        if index is None:
-            print("playlist_display: remove_play_status_icon, index is None")
-            return
-        iid = index
-        self.playlist_tree.set(iid, column="play status", value="   ")     
+    # def remove_play_status_icon(self, index):
+    #     if index is None:
+    #         print("playlist_display: remove_play_status_icon, index is None")
+    #         return
+    #     iid = index
+    #     self.playlist_tree.set(iid, column="play status", value="   ")     
 
     def play_status_icon_playing(self, track_id):
         if not self.playlist_tree.get_children():
             return
         if track_id is None:
-            print("playlist_display: play_status_icon_playing, index is None")
+            print("playlist_display: play_status_icon_playing, track_id is None")
             return
         self.playlist_tree.set(track_id, column="play status", value="  🔊")
 
@@ -238,7 +236,7 @@ class PlaylistDisplay(ttk.Frame):
         if not self.playlist_tree.get_children():
             return
         if track_id is None:
-            print("playlist_display: play_status_icon_paused, index is None")
+            print("playlist_display: play_status_icon_paused, track_id is None")
             return
         self.playlist_tree.set(track_id, column="play status", value="  🔈")
 
@@ -270,11 +268,13 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu.tk_popup(event.x_root, event.y_root)
 
 
-    def sort_column(self, column):        
+    def sort_column(self, column):
+        print("\nDISPLAY: sort column")
         items = [(self.playlist_tree.set(iid, column), iid) for iid in self.playlist_tree.get_children()]
-
+        
         if column in ("Track", "Artist", "Album", "Filetype"):
             if self.sort_order == None:
+                print(f"sort order: None,")
                 items.sort()
                 for index, (_, iid) in enumerate(items):
                     self.playlist_tree.move(iid, "", index)
@@ -295,16 +295,28 @@ class PlaylistDisplay(ttk.Frame):
                     self.playlist_tree.heading(column, text=f"  {column} ⬇")
 
             elif self.sort_order == "ascending":
-                for item in items:
-                    self.playlist_tree.move(item[1], "", item[1])
+                self.set_playlist(self.playlist)
                 self.sort_order = None
+                
                 if column == "Track":
                     self.playlist_tree.heading(column, text=f"  Title  ")
                 else:
                     self.playlist_tree.heading(column, text=f"  {column}  ")
 
             self.recolor_rows()
+            self.event_generate("<<PlaylistSorted>>")
             return
+        
+    def get_post_sort_play_order(self):
+        children = self.playlist_tree.get_children()
+        new_play_order = []
+        for child in children:
+            track = self.playlist_tree.item(child)
+            values = track["values"]
+            # print(values)
+            index = values[2]
+            new_play_order.append(index)
+        return new_play_order
 
     def recolor_rows(self):
         for index, iid in enumerate(self.playlist_tree.get_children()):
@@ -355,13 +367,13 @@ class PlaylistDisplay(ttk.Frame):
             )
     
     def _on_menu_add_to_playlist(self, key, name):
-        print(f"DISPLAY: on_menu_add_to_playlist")
+        # print(f"DISPLAY: on_menu_add_to_playlist")
         track = self.playlist_tree.set(self.menu_iid, "track_id")
         self.playlist_manager.add_to_user_playlist(key, track)
         self.menu_iid = None
 
     def _on_menu_delete_from_playlist(self):
-        print(f'DISPLAY: on_menu_delete_from_playlist')
+        # print(f'DISPLAY: on_menu_delete_from_playlist')
         track = self.playlist_tree.set(self.menu_iid, "track_id")
         new_list = []
 
@@ -378,8 +390,8 @@ class PlaylistDisplay(ttk.Frame):
         self._update_favorite(self.menu_iid)
         
     def _update_favorite(self, track_id):
-        print("DISPLAY: update_favorte")
-        print(f"track_id: {track_id}")
+        # print("DISPLAY: update_favorte")
+        # print(f"track_id: {track_id}")
         if track_id is None or not self.playlist_tree.exists(track_id):
             print("playlist_display: _update_favorite, iid is None or doesn't exit")
             return
