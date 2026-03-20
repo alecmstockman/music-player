@@ -117,7 +117,8 @@ class PlayerControls(ttk.Frame):
         self.playlist_display.highlight_playing(self.track)
 
     def next_track(self, event=None):
-        print("CONTROLS: next track")
+        print("\nCONTROLS: before next track")
+        print(f"controls: {self.track}, {self.library.tracks[self.track]}")
         self.playlist_display.clear_play_status()
 
         if 0 <= self.play_index < len(self.playlist.track_id_list) -1:
@@ -127,11 +128,14 @@ class PlayerControls(ttk.Frame):
             self.play_index = 0
 
         self._load_current_track()
-        self.track = self.playlist.track_id_list[self.play_index]
+        print("CONTROLS: after next track")
+        print(f"controls play_order: {self.play_order}")
+        index = self.play_order[self.play_index]
+        self.track = self.playlist.track_id_list[index]
+        print(f"next_track: {self.track}, {self.library.tracks[self.track]}")
         self.playlist_display.highlight_playing(self.track)
 
     def _load_current_track(self):
-        print("LOAD CURRENT TRACK")
         if not self.playlist.track_id_list:
             return
         if self.play_index >= len(self.play_order):
@@ -142,13 +146,11 @@ class PlayerControls(ttk.Frame):
         track = self.library.tracks[track_id]
 
         if self.player.is_playing():
-            print("is playing")
             self.player.load(track.filepath)
             self.player.play()
             if display_index != None:
                 self.playlist_display.play_status_icon_playing(track_id)
         else:
-            print("is not playing")
             self.player.load(track.filepath) 
             if display_index != None:
                 self.playlist_display.play_status_icon_paused(track_id)
@@ -181,16 +183,17 @@ class PlayerControls(ttk.Frame):
                 self.shuffle_btn.config(text="🔀*")
 
                 self.play_order = list(range(len(self.playlist.track_id_list)))
-                print(f"newl play_order: {self.play_order}")
                 random.shuffle(self.play_order)
                 self.play_order.remove(self.play_index)
                 self.play_order.insert(0, self.play_index)
+                print(f"new play_order: {self.play_order}")
 
             else:
                 self.shuffle = False
                 print("\nshuffle is False")
                 self.shuffle_btn.config(text="🔀")
                 self.play_order = list(range(len(self.playlist.track_id_list)))
+
 
     def toggle_loop(self):
         if not self.playlist.track_id_list:

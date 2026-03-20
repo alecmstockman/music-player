@@ -1,12 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
-import time
 import vlc
 from pathlib import Path
 from src.playlist import Playlist, PlaylistManager, CreatePlaylistEntry
-import json
-# from src.styles import setup_styles
-# from src.config import AUDIO_FILETYPES
 
 
 class PlaylistDisplay(ttk.Frame):
@@ -139,7 +135,7 @@ class PlaylistDisplay(ttk.Frame):
                 self.playlist_tree.insert(
                     "", "end",
                     iid=str(track_id),
-                    values=(filepath, f"{track_id}", f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
+                    values=("", f"{track_id}", f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
                     tags="even" 
                 )
                 even = False
@@ -147,7 +143,7 @@ class PlaylistDisplay(ttk.Frame):
                 self.playlist_tree.insert(
                     "", "end",
                     iid=str(track_id),
-                    values=(filepath, f"{track_id}", f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
+                    values=("", f"{track_id}", f"{track_index}", "", f"{title}", "···", f"{total_str}", f"{artist}", f"{album}", f"{star}", f"{filetype}"),
                     tags="odd" 
                 )
                 even = True
@@ -188,6 +184,7 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.delete(iid)
 
     def highlight_playing(self, track_id):
+        print("\nHIGHLIGHT:")
         for item in self.playlist_tree.get_children():
             current_tags = list(self.playlist_tree.item(item, "tags"))
             if "playing" in current_tags:
@@ -195,6 +192,7 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.item(item, tags=tuple(current_tags))
 
         current_tags = list(self.playlist_tree.item(track_id, "tags"))
+        print(self.library.tracks[track_id], current_tags)
         if "playing" not in current_tags:
             current_tags.append("playing")
 
@@ -226,7 +224,6 @@ class PlaylistDisplay(ttk.Frame):
         }
     
     def clear_play_status(self):
-        # print("\nDISPLAY: clear_play_status")
         for iid in self.playlist_tree.get_children():
             if iid is None:
                 return
