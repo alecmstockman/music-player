@@ -74,7 +74,7 @@ class Library():
                     self.tracks[track_id] = track
 
         except Exception as e:
-            print(f"Failed to load library: {e}")
+            print(f"Failed to load library: {e}")    
 
     def add_track(self, track):
         self.tracks[track.track_id] = track
@@ -119,6 +119,7 @@ class PlaylistManager():
         self.library_playlist = None
         self.user_playlists = {}
         self.id = uuid.uuid4()
+        self.favorites_playlist = Playlist("Favorites", [])
 
     def create_library_playlist(self):
         library_track_list = []
@@ -151,6 +152,14 @@ class PlaylistManager():
                 json.dump(user_playlists, f, indent=2)
         except Exception as e:
             print(f"Failed to save playlist: {e}")
+
+    def update_favorites_playlist(self):
+        print(F"PLAYLIST: load_favorites")
+        for key, value in self.library.tracks.items():
+            if value.favorite == True:
+                self.favorites_playlist.track_id_list.append(value.track_id)
+        print(self.favorites_playlist.track_id_list)
+
 
     def load_playlist(self):
         user_playlists = {}

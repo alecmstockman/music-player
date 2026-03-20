@@ -9,7 +9,6 @@ from src.playlist import PlaylistManager, Library
 from src.styles import setup_styles
 from src.playlist_display import PlaylistDisplay
 from src.sidebar import Sidebar, SecondarySidebar
-import random
 
 root = tk.Tk()
 root.lift()
@@ -25,7 +24,7 @@ top_region = ttk.Frame(root, style="Border.TFrame")
 top_region.grid(row=0, column=0, sticky="ew")
 root.columnconfigure(0, weight=1)
 
-top_region.columnconfigure(0, weight=0, minsize=300)
+top_region.columnconfigure(0, weight=0, minsize=250)
 top_region.columnconfigure(1, weight=1, minsize=300)
 top_region.columnconfigure(2, weight=0, minsize=100)
 
@@ -65,11 +64,13 @@ library.load_library()
 
 
 
+
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
 playlist_manager = PlaylistManager(library)
 playlist_manager.create_library_playlist()
+playlist_manager.update_favorites_playlist()
 
 track_display = TrackDisplay(center_display, library, player)
 track_display.pack(fill="x", expand=True)
@@ -118,19 +119,21 @@ def check_play_status(selected_view, artist_album=None):
             playlist_display.play_status_icon_paused(track.track_id)
 
 def on_sidebar_selection(event):
-    print("ON SIDEBAR SELECTION")
+    print("\nON SIDEBAR SELECTION")
     selected_view = sidebar.selected_view
-
+    print(f"Selected view: {selected_view}")
     if selected_view == "Library" or selected_view == "Songs":
         playlist_display.set_playlist(playlist_manager.library_playlist)
         check_play_status(selected_view)
 
     if selected_view == "Favorites":
-        playlist_display.show_favorites()
+        playlist_display.set_playlist(playlist_manager.favorites_playlist)
         check_play_status(selected_view)
 
     if selected_view in playlist_manager.user_playlists.keys():
+        print(f"-Sected view: {selected_view}")
         user_playlist = playlist_manager.user_playlists[selected_view]
+        print(f"-User Playlist: {user_playlist}")
         playlist_display.set_playlist(user_playlist)
         check_play_status(selected_view)
 

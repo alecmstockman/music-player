@@ -1,146 +1,31 @@
 {
-  "ac208895-de7b-4438-9ffb-a294c858ea91": {
-    "name": "Library",
+  "abdf20f3-f989-42cb-bf41-6705df693fcf": {
+    "name": "Playlist User One",
     "tracks": [
-      "TITLE: Chokehold, ARTIST: Sleep Token, ALBUM: Take Me Back To Eden, ID: b15855a9",
-      "TITLE: The Summoning, ARTIST: Sleep Token, ALBUM: The Summoning, ID: f4ae5317",
-      "TITLE: Tom Sawyer, ARTIST: Rush, ALBUM: Moving Pictures (2011 Remaster), ID: 2e8404dd",
-      "TITLE: Reptile [Explicit], ARTIST: Periphery, ALBUM: Periphery IV: HAIL STAN [Explicit], ID: 7c657119",
-      "TITLE: End of You, ARTIST: Poppy, Amy Lee, Spiritbox, ALBUM: End of You, ID: 12116f1f",
-      "TITLE: AIMING ARROWS - All The Blame - FINAL MASTER (1), ARTIST: Unknown Artist, ALBUM: Unkown Album, ID: c701c148",
-      "TITLE: The Middle, ARTIST: Jimmy Eat World, ALBUM: Bleed American, ID: ac326a16",
-      "TITLE: AIMING ARROWS - All The Blame - FINAL MASTER, ARTIST: Unknown Artist, ALBUM: Unkown Album, ID: 9a923362",
-      "TITLE: THE VOID APPROACHETH, ARTIST: Bilmuri & Summer Hoop, ALBUM: GOBLIN HOURS, ID: b57ac379",
-      "TITLE: Drive, ARTIST: Incubus, ALBUM: Make Yourself [Explicit], ID: 88b655b9",
-      "TITLE: Just Pretend, ARTIST: Bad Omens, ALBUM: THE DEATH OF PEACE OF MIND [Explicit], ID: 8dd4c081",
-      "TITLE: Dress, ARTIST: Taylor Swift, ALBUM: reputation, ID: 1d3a3c27",
-      "TITLE: Neon Grave, ARTIST: Dayseeker, ALBUM: Dark Sun [Explicit], ID: 8702e9b8",
-      "TITLE: The Anthem [Clean], ARTIST: Good Charlotte, ALBUM: The Young and The Hopeless, ID: 77a6ed1d",
-      "TITLE: Prayer Position [Explicit], ARTIST: Periphery, ALBUM: Periphery III: Select Difficulty [Explicit], ID: 3b7ba5c6",
-      "TITLE: The Doomed [Explicit], ARTIST: A Perfect Circle, ALBUM: Eat The Elephant [Explicit], ID: f92b20f0",
-      "TITLE: God is a woman [Explicit], ARTIST: Ariana Grande, ALBUM: Sweetener [Explicit], ID: 9fc9c883",
-      "TITLE: Without Me [Explicit], ARTIST: Dayseeker, ALBUM: Dark Sun [Explicit], ID: 694f348e",
-      "TITLE: Jaded, ARTIST: Spiritbox, ALBUM: The Fear of Fear, ID: 8a4c7e4f",
-      "TITLE: Chop Suey!, ARTIST: System Of A Down, ALBUM: Toxicity, ID: 3e4f0a48",
-      "TITLE: Subdivisions, ARTIST: Rush, ALBUM: Gold, ID: 4b84c7c2",
-      "TITLE: Enough Final Master 2.18, ARTIST: Unknown Artist, ALBUM: Unkown Album, ID: f2852dfa",
-      "TITLE: 04 - Crimson Drum Video, ARTIST: Unknown Artist, ALBUM: Unkown Album, ID: 7fd5ba63",
-      "TITLE: Black Honey, ARTIST: Thrice, ALBUM: To Be Everywhere Is To Be Nowhere, ID: f3c51c7f",
-      "TITLE: Voices In My Head [Explicit], ARTIST: Falling In Reverse, ALBUM: Voices In My Head [Explicit], ID: ba2d23c8",
-      "TITLE: Circle With Me, ARTIST: Spiritbox, ALBUM: Circle With Me, ID: 14700b9e",
-      "TITLE: Sleeptalk, ARTIST: Dayseeker, ALBUM: Sleeptalk, ID: 9c19f207",
-      "TITLE: The Outsider, ARTIST: A Perfect Circle, ALBUM: Thirteenth Step, ID: 26ddde9a",
-      "TITLE: Everlong, ARTIST: Foo Fighters, ALBUM: Greatest Hits [Explicit], ID: 263ad76d",
-      "TITLE: THE VOID APPROACHETH, ARTIST: Bilmuri & Summer Hoop, ALBUM: GOBLIN HOURS, ID: 44d08d00",
-      "TITLE: BETTER HELL (Thicc boi) [Explicit], ARTIST: Bilmuri, ALBUM: BETTER HELL (Thicc boi) [Explicit], ID: 549bf799",
-      "TITLE: Blackest Eyes [Remastered], ARTIST: Porcupine Tree, ALBUM: In Absentia [Remastered], ID: 58932940",
-      "TITLE: San Quentin [Explicit], ARTIST: Nickelback, ALBUM: Get Rollin' [Explicit], ID: fa87db8f",
-      "TITLE: Stacy's Mom, ARTIST: Fountains Of Wayne, ALBUM: Welcome Interstate Managers [Explicit], ID: 6e2575bf"
+      "/Users/alecstockman/music-player-v2/Music/Songs/08 - Drive.mp3",
+      "/Users/alecstockman/music-player-v2/Music/Songs/02 - Neon Grave.mp3"
     ],
-    "id": "ac208895-de7b-4438-9ffb-a294c858ea91"
+    "id": "abdf20f3-f989-42cb-bf41-6705df693fcf"
   },
-  "1069d857-4a9f-4443-9467-cd5fa7777194": {
-    "name": "test",
-    "tracks": [],
-    "id": "1069d857-4a9f-4443-9467-cd5fa7777194"
-  },
-  "5f4d2363-027e-437d-b404-605cd1982847": {
-    "name": "Favorites",
-    "tracks": [
-      "bce70f0e",
-      "b8d03971",
-      "c5b1f3f9",
-      "1664868a",
-      "2ae5ddd2",
-      "306d6ff4",
-      "ee0df56b"
-    ],
-    "id": "5f4d2363-027e-437d-b404-605cd1982847"
-  },
-  "c4206611-abc7-4990-9460-4d16f398f38e": {
-    "name": "Favorites",
-    "tracks": [
-      "bce70f0e",
-      "b8d03971",
-      "c5b1f3f9",
-      "1664868a",
-      "2ae5ddd2",
-      "306d6ff4",
-      "ee0df56b"
-    ],
-    "id": "c4206611-abc7-4990-9460-4d16f398f38e"
-  },
-  "e02a9386-dec7-439e-94fd-127f20a27059": {
-    "name": "Favorites",
-    "tracks": [
-      "bce70f0e",
-      "b8d03971",
-      "c5b1f3f9",
-      "1664868a",
-      "2ae5ddd2",
-      "306d6ff4",
-      "ee0df56b"
-    ],
-    "id": "e02a9386-dec7-439e-94fd-127f20a27059"
-  },
-  "a84932e0-b046-4898-9c86-2e3510bb4e22": {
-    "name": "Favorites",
-    "tracks": [
-      "bce70f0e",
-      "b8d03971",
-      "c5b1f3f9",
-      "1664868a",
-      "2ae5ddd2",
-      "306d6ff4",
-      "ee0df56b"
-    ],
-    "id": "a84932e0-b046-4898-9c86-2e3510bb4e22"
-  },
-  "498859e4-3aec-4952-af08-f79495b2e77a": {
-    "name": "Favorites",
-    "tracks": [],
-    "id": "498859e4-3aec-4952-af08-f79495b2e77a"
-  },
-  "ce57c105-121f-4117-bd88-ce136125d4da": {
-    "name": "Favorites",
-    "tracks": [],
-    "id": "ce57c105-121f-4117-bd88-ce136125d4da"
-  },
-  "b7456646-c923-4f92-b064-7acb3e863a72": {
-    "name": "Favorites",
-    "tracks": [
-      "33cf3f22",
-      "74103f11",
-      "ede72717",
-      "9198c62e",
-      "53239e4d",
-      "587cbcd4"
-    ],
-    "id": "b7456646-c923-4f92-b064-7acb3e863a72"
-  },
-  "29d13eb9-4368-4f7b-9413-59adc0da8af3": {
-    "name": "Favorites",
-    "tracks": [
-      "33cf3f22",
-      "74103f11",
-      "ede72717",
-      "9198c62e",
-      "53239e4d",
-      "587cbcd4"
-    ],
-    "id": "29d13eb9-4368-4f7b-9413-59adc0da8af3"
-  },
-  "67889726-dad8-486c-bc11-f873a6e269a9": {
-    "name": "Favorites",
-    "tracks": [],
-    "id": "67889726-dad8-486c-bc11-f873a6e269a9"
-  },
-  "f964e1db-59d9-4bea-9c82-efc648133feb": {
+  "1d0c9535-dc64-4702-8eb1-c063eb00e69e": {
     "name": "Favorites",
     "tracks": [
       "fb107921",
       "1a211128"
     ],
-    "id": "f964e1db-59d9-4bea-9c82-efc648133feb"
+    "id": "1d0c9535-dc64-4702-8eb1-c063eb00e69e"
+  },
+  "a4a72e6e-a3ce-4f50-9db5-402e47bda98d": {
+    "name": "Test",
+    "tracks": [],
+    "id": "a4a72e6e-a3ce-4f50-9db5-402e47bda98d"
+  },
+  "b41016ce-42bd-4c31-b5fa-9446e85e5071": {
+    "name": "Favorites",
+    "tracks": [
+      "fb107921",
+      "1a211128"
+    ],
+    "id": "b41016ce-42bd-4c31-b5fa-9446e85e5071"
   }
 }

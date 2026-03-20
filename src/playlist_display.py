@@ -20,8 +20,8 @@ class PlaylistDisplay(ttk.Frame):
         self.popup_menu = tk.Menu(self, tearoff=False)
         self.playlist_submenu = tk.Menu(self.popup_menu, tearoff=False)
         self.menu_iid = None
-        self.favorites = {}
-        self.load_favorites()
+        # self.favorites = {}
+        # self.load_favorites()
         self._last_playlist_created = None
         self.sort_order = None
         # self.backup_list = self.playlist.track_list.copy()
@@ -131,7 +131,6 @@ class PlaylistDisplay(ttk.Frame):
             self.playlist_tree.tag_configure("even", background="darkblue")
             self.playlist_tree.tag_configure("odd", background="black")
 
-            # is_fav = self.favorites.get(str(filepath), False)s
             star = " ★ " if favorite == True else " ☆ "
 
             track_index = index
@@ -392,35 +391,39 @@ class PlaylistDisplay(ttk.Frame):
             track.favorite = False
 
         self.library.save_library()
+        self.playlist_manager.update_favorites_playlist()
 
     def save_favorites(self):
+        print(F"DISPLAY: save_favorite")
         self.library.save_library()
+        self.playlist_manager.update_favorites_playlist()
 
-    def load_favorites(self):
-        path = Path("data/favorites.json")
+    # def load_favorites(self):
+    #     print("DISPLAY: LOAD FAVORITES DISABLED ---------")
+        # path = Path("data/favorites.json")
 
-        if not path.exists():
-            self.favorites = {}
-            return
+        # if not path.exists():
+        #     self.favorites = {}
+        #     return
         
-        try: 
-            with path.open("r", encoding="utf-8") as f:
-                self.favorites = json.load(f)
-        except Exception as e:
-            print(f"Failed to load favorites: {e}")
-            self.favorites = {}
+        # try: 
+        #     with path.open("r", encoding="utf-8") as f:
+        #         self.favorites = json.load(f)
+        # except Exception as e:
+        #     print(f"Failed to load favorites: {e}")
+        #     self.favorites = {}
 
     def show_favorites(self):
         print("\nSHOW FAVORITES")
         self.clear_playlist()
-        favorites_list = []
+        # favorites_list = []
 
-        for track_id, track in self.library.tracks.items():
-            if track.favorite == True:
-                favorites_list.append(track.track_id)
+        # for track_id, track in self.library.tracks.items():
+        #     if track.favorite == True:
+        #         favorites_list.append(track.track_id)
 
-        favorites_playlist = self.playlist_manager.create_playlist("Favorites", favorites_list)
-        self.set_playlist(favorites_playlist)
+        # favorites_playlist = self.playlist_manager.create_playlist("Favorites", favorites_list)
+        self.set_playlist(self.playlist_manager.favorites_playlist)
 
     def get_all_artists(self):
         artist_set = set()
@@ -446,10 +449,6 @@ class PlaylistDisplay(ttk.Frame):
             if artist_album == track.artist:
                 track_id_list.append(track.track_id)
 
-        # for track in self.playlist_manager.library.tracks:
-        #     if artist_album == self.library.tracks:
-        #         track_id_list.append(track.track_id)
-        print(track_id_list)
         playlist = Playlist(f"{artist_album} - All Tracks", track_id_list)
         self.set_playlist(playlist)
                 
@@ -459,14 +458,8 @@ class PlaylistDisplay(ttk.Frame):
         for track_id in self.library.tracks:
             track = self.library.tracks[track_id]
             if artist_album == track.album:
-                track_list.append(track.track_id)
+                track_list.append(track.track_id)  
 
-        # for iid in self.playlist_tree.get_children():
-        #     album = self.playlist_tree.item(iid, 'values')
-        #     if artist_album == album[8]:
-        #         print(f"iid: {iid}")
-        #         print(f"album: {album}")
-        #         track_list.append(Path(album[0]))        
         playlist = Playlist(f"{artist_album} - Album Tracks", track_list)
         self.set_playlist(playlist)
 
