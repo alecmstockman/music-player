@@ -372,9 +372,12 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_manager.update_user_playlist(self.playlist.id)
 
     def _on_menu_update_favorite(self):
+        print(f"DISPLAY: on_menu_update_favorite: {self.menu_iid}")
         self._update_favorite(self.menu_iid)
         
     def _update_favorite(self, track_id):
+        print("DISPLAY: update_favorte")
+        print(f"track_id: {track_id}")
         if track_id is None or not self.playlist_tree.exists(track_id):
             print("playlist_display: _update_favorite, iid is None or doesn't exit")
             return
@@ -398,31 +401,9 @@ class PlaylistDisplay(ttk.Frame):
         self.library.save_library()
         self.playlist_manager.update_favorites_playlist()
 
-    # def load_favorites(self):
-    #     print("DISPLAY: LOAD FAVORITES DISABLED ---------")
-        # path = Path("data/favorites.json")
-
-        # if not path.exists():
-        #     self.favorites = {}
-        #     return
-        
-        # try: 
-        #     with path.open("r", encoding="utf-8") as f:
-        #         self.favorites = json.load(f)
-        # except Exception as e:
-        #     print(f"Failed to load favorites: {e}")
-        #     self.favorites = {}
-
     def show_favorites(self):
         print("\nSHOW FAVORITES")
         self.clear_playlist()
-        # favorites_list = []
-
-        # for track_id, track in self.library.tracks.items():
-        #     if track.favorite == True:
-        #         favorites_list.append(track.track_id)
-
-        # favorites_playlist = self.playlist_manager.create_playlist("Favorites", favorites_list)
         self.set_playlist(self.playlist_manager.favorites_playlist)
 
     def get_all_artists(self):

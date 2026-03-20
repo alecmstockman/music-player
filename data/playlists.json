@@ -1,31 +1,10 @@
 {
-  "abdf20f3-f989-42cb-bf41-6705df693fcf": {
-    "name": "Playlist User One",
+  "7fd1f113-4d19-41da-a2eb-b7bbd3dabe6a": {
+    "name": "Playlist One",
     "tracks": [
-      "/Users/alecstockman/music-player-v2/Music/Songs/08 - Drive.mp3",
-      "/Users/alecstockman/music-player-v2/Music/Songs/02 - Neon Grave.mp3"
+      "/Users/alecstockman/music-player-v2/Music/Songs/03 - The Middle.mp3",
+      "/Users/alecstockman/music-player-v2/Music/Songs/AIMING ARROWS - All The Blame - FINAL MASTER.wav"
     ],
-    "id": "abdf20f3-f989-42cb-bf41-6705df693fcf"
-  },
-  "1d0c9535-dc64-4702-8eb1-c063eb00e69e": {
-    "name": "Favorites",
-    "tracks": [
-      "fb107921",
-      "1a211128"
-    ],
-    "id": "1d0c9535-dc64-4702-8eb1-c063eb00e69e"
-  },
-  "a4a72e6e-a3ce-4f50-9db5-402e47bda98d": {
-    "name": "Test",
-    "tracks": [],
-    "id": "a4a72e6e-a3ce-4f50-9db5-402e47bda98d"
-  },
-  "b41016ce-42bd-4c31-b5fa-9446e85e5071": {
-    "name": "Favorites",
-    "tracks": [
-      "fb107921",
-      "1a211128"
-    ],
-    "id": "b41016ce-42bd-4c31-b5fa-9446e85e5071"
+    "id": "7fd1f113-4d19-41da-a2eb-b7bbd3dabe6a"
   }
 }

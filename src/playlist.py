@@ -154,12 +154,13 @@ class PlaylistManager():
             print(f"Failed to save playlist: {e}")
 
     def update_favorites_playlist(self):
-        print(F"PLAYLIST: load_favorites")
+        self.favorites_playlist.track_id_list = []
+
         for key, value in self.library.tracks.items():
             if value.favorite == True:
                 self.favorites_playlist.track_id_list.append(value.track_id)
+        print(f"\nPLAYLIST: update_favorites_playlist")
         print(self.favorites_playlist.track_id_list)
-
 
     def load_playlist(self):
         user_playlists = {}
