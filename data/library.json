@@ -1,12 +1,12 @@
 {
-  "33cf3f22": {
-    "track_id": "33cf3f22",
+  "2dc97fd0": {
+    "track_id": "2dc97fd0",
     "title": "Chokehold",
     "artist": "Sleep Token",
     "album": "Take Me Back To Eden",
     "length": 304,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/01 - Chokehold.mp3",
     "composer": "Vessel1",
     "copyright": "[PIAS] Recordings UK Limited",
@@ -21,14 +21,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "74103f11": {
-    "track_id": "74103f11",
+  "21b81a19": {
+    "track_id": "21b81a19",
     "title": "The Summoning",
     "artist": "Sleep Token",
     "album": "The Summoning",
     "length": 395,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/01 - The Summoning.mp3",
     "composer": "Vessel1",
     "copyright": "[PIAS] Recordings UK Limited",
@@ -43,14 +43,36 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "ede72717": {
-    "track_id": "ede72717",
+  "102c6f8c": {
+    "track_id": "102c6f8c",
+    "title": "AIMING ARROWS - Sink or Swim REDO - Final Mix VERSION 11",
+    "artist": "Unknown Artist",
+    "album": "Unkown Album",
+    "length": 200,
+    "play_count": null,
+    "favorite": null,
+    "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/AIMING ARROWS - Sink or Swim REDO - Final Mix VERSION 11.wav",
+    "composer": "Unknown Composer",
+    "copyright": "No Copyright",
+    "albumartist": "No Album Artist",
+    "conductor": "No Conductor",
+    "discnumber": "No Disc Number",
+    "tracknumber": "No Track Number",
+    "genre": "No Genre",
+    "date": "No Date",
+    "sample_rate": 48000,
+    "bit_rate": 3072000,
+    "channels": 2,
+    "codec": "wav"
+  },
+  "ec6f9ac9": {
+    "track_id": "ec6f9ac9",
     "title": "Tom Sawyer",
     "artist": "Rush",
     "album": "Moving Pictures (2011 Remaster)",
     "length": 276,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/01 - Tom Sawyer.mp3",
     "composer": "",
     "copyright": "\u00a9 2011 The Island Def Jam Music Group",
@@ -65,14 +87,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "9198c62e": {
-    "track_id": "9198c62e",
+  "5989aedc": {
+    "track_id": "5989aedc",
     "title": "Reptile [Explicit]",
     "artist": "Periphery",
     "album": "Periphery IV: HAIL STAN [Explicit]",
     "length": 1003,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/01 - Reptile [Explicit].mp3",
     "composer": "",
     "copyright": "2019: 3DOT Recordings and Many Hats Distribution",
@@ -87,14 +109,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "53239e4d": {
-    "track_id": "53239e4d",
+  "378cbac4": {
+    "track_id": "378cbac4",
     "title": "End of You",
     "artist": "Poppy, Amy Lee, Spiritbox",
     "album": "End of You",
     "length": 192,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/01 - End of You.mp3",
     "composer": "Poppy",
     "copyright": "\u00a9 2025 Sumerian Records",
@@ -109,14 +131,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "587cbcd4": {
-    "track_id": "587cbcd4",
+  "032fb944": {
+    "track_id": "032fb944",
     "title": "AIMING ARROWS - All The Blame - FINAL MASTER (1)",
     "artist": "Unknown Artist",
     "album": "Unkown Album",
     "length": 218,
     "play_count": null,
-    "favorite": true,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/AIMING ARROWS - All The Blame - FINAL MASTER (1).mp3",
     "composer": "Unknown Composer",
     "copyright": "No Copyright",
@@ -131,14 +153,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "7655dfb8": {
-    "track_id": "7655dfb8",
+  "cd9867e4": {
+    "track_id": "cd9867e4",
     "title": "The Middle",
     "artist": "Jimmy Eat World",
     "album": "Bleed American",
     "length": 165,
     "play_count": null,
-    "favorite": true,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/03 - The Middle.mp3",
     "composer": "Thomas Darrell Linton",
     "copyright": "\u00a9 2001 SKG Music L.L.C.",
@@ -153,14 +175,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "40673e70": {
-    "track_id": "40673e70",
+  "3003f118": {
+    "track_id": "3003f118",
     "title": "AIMING ARROWS - All The Blame - FINAL MASTER",
     "artist": "Unknown Artist",
     "album": "Unkown Album",
     "length": 218,
     "play_count": null,
-    "favorite": true,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/AIMING ARROWS - All The Blame - FINAL MASTER.wav",
     "composer": "Unknown Composer",
     "copyright": "No Copyright",
@@ -175,8 +197,8 @@
     "channels": 2,
     "codec": "wav"
   },
-  "fd93173f": {
-    "track_id": "fd93173f",
+  "28e8492d": {
+    "track_id": "28e8492d",
     "title": "THE VOID APPROACHETH",
     "artist": "Bilmuri & Summer Hoop",
     "album": "GOBLIN HOURS",
@@ -197,14 +219,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "7f2dfad0": {
-    "track_id": "7f2dfad0",
+  "df87ce62": {
+    "track_id": "df87ce62",
     "title": "Drive",
     "artist": "Incubus",
     "album": "Make Yourself [Explicit]",
     "length": 232,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/08 - Drive.mp3",
     "composer": "Jos\u00e9 Pasillas II",
     "copyright": "",
@@ -219,8 +241,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "f6221f85": {
-    "track_id": "f6221f85",
+  "d29243cd": {
+    "track_id": "d29243cd",
     "title": "Just Pretend",
     "artist": "Bad Omens",
     "album": "THE DEATH OF PEACE OF MIND [Explicit]",
@@ -241,8 +263,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "a6d5078e": {
-    "track_id": "a6d5078e",
+  "265e488b": {
+    "track_id": "265e488b",
     "title": "Dress",
     "artist": "Taylor Swift",
     "album": "reputation",
@@ -263,8 +285,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "16b2d019": {
-    "track_id": "16b2d019",
+  "3bd9bece": {
+    "track_id": "3bd9bece",
     "title": "Neon Grave",
     "artist": "Dayseeker",
     "album": "Dark Sun [Explicit]",
@@ -285,8 +307,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "9e5980fb": {
-    "track_id": "9e5980fb",
+  "be397590": {
+    "track_id": "be397590",
     "title": "The Anthem [Clean]",
     "artist": "Good Charlotte",
     "album": "The Young and The Hopeless",
@@ -307,8 +329,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "220fc28e": {
-    "track_id": "220fc28e",
+  "9511608e": {
+    "track_id": "9511608e",
     "title": "Prayer Position [Explicit]",
     "artist": "Periphery",
     "album": "Periphery III: Select Difficulty [Explicit]",
@@ -329,14 +351,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "fb107921": {
-    "track_id": "fb107921",
+  "2daef9bb": {
+    "track_id": "2daef9bb",
     "title": "The Doomed [Explicit]",
     "artist": "A Perfect Circle",
     "album": "Eat The Elephant [Explicit]",
     "length": 281,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/04 - The Doomed [Explicit].mp3",
     "composer": "A Perfect Circle",
     "copyright": "2018 A Perfect Circle under exclusive license to BMG Rights Management (US) LLC",
@@ -351,8 +373,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "401bf9ac": {
-    "track_id": "401bf9ac",
+  "36c7c634": {
+    "track_id": "36c7c634",
     "title": "God is a woman [Explicit]",
     "artist": "Ariana Grande",
     "album": "Sweetener [Explicit]",
@@ -373,8 +395,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "5055d2de": {
-    "track_id": "5055d2de",
+  "4a3b6f7c": {
+    "track_id": "4a3b6f7c",
     "title": "Without Me [Explicit]",
     "artist": "Dayseeker",
     "album": "Dark Sun [Explicit]",
@@ -395,8 +417,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "6b3fde07": {
-    "track_id": "6b3fde07",
+  "47399461": {
+    "track_id": "47399461",
     "title": "Jaded",
     "artist": "Spiritbox",
     "album": "The Fear of Fear",
@@ -417,8 +439,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "7261abd1": {
-    "track_id": "7261abd1",
+  "74778506": {
+    "track_id": "74778506",
     "title": "Chop Suey!",
     "artist": "System Of A Down",
     "album": "Toxicity",
@@ -439,8 +461,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "0021612b": {
-    "track_id": "0021612b",
+  "3d42c3c6": {
+    "track_id": "3d42c3c6",
     "title": "Subdivisions",
     "artist": "Rush",
     "album": "Gold",
@@ -461,8 +483,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "7177bcd1": {
-    "track_id": "7177bcd1",
+  "b00f338f": {
+    "track_id": "b00f338f",
     "title": "Enough Final Master 2.18",
     "artist": "Unknown Artist",
     "album": "Unkown Album",
@@ -483,8 +505,8 @@
     "channels": 2,
     "codec": "wav"
   },
-  "af8633b7": {
-    "track_id": "af8633b7",
+  "f611dd9e": {
+    "track_id": "f611dd9e",
     "title": "04 - Crimson Drum Video",
     "artist": "Unknown Artist",
     "album": "Unkown Album",
@@ -505,8 +527,8 @@
     "channels": 2,
     "codec": "wav"
   },
-  "b507c23f": {
-    "track_id": "b507c23f",
+  "3beb1ef7": {
+    "track_id": "3beb1ef7",
     "title": "Black Honey",
     "artist": "Thrice",
     "album": "To Be Everywhere Is To Be Nowhere",
@@ -527,8 +549,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "7c64e99c": {
-    "track_id": "7c64e99c",
+  "d667b8d9": {
+    "track_id": "d667b8d9",
     "title": "Voices In My Head [Explicit]",
     "artist": "Falling In Reverse",
     "album": "Voices In My Head [Explicit]",
@@ -549,8 +571,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "827104eb": {
-    "track_id": "827104eb",
+  "9964ddef": {
+    "track_id": "9964ddef",
     "title": "Circle With Me",
     "artist": "Spiritbox",
     "album": "Circle With Me",
@@ -571,8 +593,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "66dd4289": {
-    "track_id": "66dd4289",
+  "6d64ad4d": {
+    "track_id": "6d64ad4d",
     "title": "Sleeptalk",
     "artist": "Dayseeker",
     "album": "Sleeptalk",
@@ -593,14 +615,14 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "1a211128": {
-    "track_id": "1a211128",
+  "5101cf4e": {
+    "track_id": "5101cf4e",
     "title": "The Outsider",
     "artist": "A Perfect Circle",
     "album": "Thirteenth Step",
     "length": 246,
     "play_count": null,
-    "favorite": false,
+    "favorite": null,
     "filepath": "/Users/alecstockman/music-player-v2/Music/Songs/07 - The Outsider.mp3",
     "composer": "Billy Howerdel",
     "copyright": "\u00a9 2003 Virgin Records",
@@ -615,8 +637,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "94915182": {
-    "track_id": "94915182",
+  "9caeef90": {
+    "track_id": "9caeef90",
     "title": "Everlong",
     "artist": "Foo Fighters",
     "album": "Greatest Hits [Explicit]",
@@ -637,8 +659,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "7407c498": {
-    "track_id": "7407c498",
+  "77ad92ae": {
+    "track_id": "77ad92ae",
     "title": "THE VOID APPROACHETH",
     "artist": "Bilmuri & Summer Hoop",
     "album": "GOBLIN HOURS",
@@ -659,8 +681,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "e5e03e10": {
-    "track_id": "e5e03e10",
+  "8162aa36": {
+    "track_id": "8162aa36",
     "title": "BETTER HELL (Thicc boi) [Explicit]",
     "artist": "Bilmuri",
     "album": "BETTER HELL (Thicc boi) [Explicit]",
@@ -681,8 +703,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "9e7d791f": {
-    "track_id": "9e7d791f",
+  "7de1c46a": {
+    "track_id": "7de1c46a",
     "title": "Blackest Eyes [Remastered]",
     "artist": "Porcupine Tree",
     "album": "In Absentia [Remastered]",
@@ -703,8 +725,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "29c26668": {
-    "track_id": "29c26668",
+  "d618cc65": {
+    "track_id": "d618cc65",
     "title": "San Quentin [Explicit]",
     "artist": "Nickelback",
     "album": "Get Rollin' [Explicit]",
@@ -725,8 +747,8 @@
     "channels": 2,
     "codec": "mp3"
   },
-  "4f9b3c99": {
-    "track_id": "4f9b3c99",
+  "d855283e": {
+    "track_id": "d855283e",
     "title": "Stacy's Mom",
     "artist": "Fountains Of Wayne",
     "album": "Welcome Interstate Managers [Explicit]",

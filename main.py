@@ -4,6 +4,7 @@ import vlc
 from pathlib import Path
 from src.player_controls import PlayerControls
 from src.track_display import TrackDisplay
+from src.volume_controls import VolumeControls
 from src.vlc_player import VLCPlayer
 from src.playlist import PlaylistManager, Library
 from src.styles import setup_styles
@@ -62,9 +63,6 @@ p = Path("Music/")
 library = Library()
 library.load_library()
 
-
-
-
 album_dir = p / "albums"
 album_dir_list = [filename for filename in album_dir.iterdir() if filename.is_dir()]
 
@@ -83,6 +81,8 @@ playlist_display.set_playlist(playlist_manager.library_playlist)
 controls = PlayerControls(left_controls, library, playlist_manager.library_playlist, player, track_display, playlist_display)
 controls.pack(side="left")
 playlist_display.controls = controls
+
+volume_controls = VolumeControls(right_controls, player)
 
 first_track_id = controls.playlist.track_id_list[controls.play_index]
 first_track = library.get_track(first_track_id)
@@ -221,47 +221,10 @@ def lock_sidebar():
     root.after(500, lock_sidebar)
 root.after(200, lock_sidebar)
 
-def set_audio_volume(val):
-    volume_level = int(float(val))
-    player.set_volume(volume_level)
-
-def volume_up(event):
-    volume  = player.player.audio_get_volume()
-    if volume <= 95:
-        set_audio_volume(volume + 5)
-        volume_slider.set(volume + 5)
-        return "break"
-    else:
-        set_audio_volume(100)
-        volume_slider.set(100)
-        return "break"
-
-def volume_down(event):
-    volume = player.player.audio_get_volume()
-    if volume >= 5:
-        set_audio_volume(volume - 5)
-        volume_slider.set(volume -5)
-        return "break"
-    else:
-        set_audio_volume(0)
-        volume_slider.set(0)
-        return "break"
-
-volume_slider = ttk.Scale(
-        right_controls,
-        orient="horizontal",
-        from_=0,
-        to=100,
-        command=set_audio_volume,
-        length = 100
-    )
-volume_slider.set(80)
-volume_slider.pack(padx=100, pady=10)
-
-root.bind_all("<Command-Up>", volume_up, add="+")
-root.bind_all("<Command-Down>", volume_down, add="+")
-playlist_display.playlist_tree.bind("<Command-Up>", volume_up, add="+")
-playlist_display.playlist_tree.bind("<Command-Down>", volume_down, add="+")
+root.bind_all("<Command-Up>", volume_controls.volume_up, add="+")
+root.bind_all("<Command-Down>", volume_controls.volume_down, add="+")
+playlist_display.playlist_tree.bind("<Command-Up>", volume_controls.volume_up, add="+")
+playlist_display.playlist_tree.bind("<Command-Down>", volume_controls.volume_down, add="+")
 
 def quit_app(event=None):
     player.stop()
