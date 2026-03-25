@@ -103,6 +103,7 @@ class PlaylistDisplay(ttk.Frame):
         self.playlist_tree.bind("<<TreeviewSelect>>", self.on_tree_selection)
 
     def set_playlist(self, playlist):
+
         self.playlist = playlist
         self.clear_playlist()
 
@@ -211,13 +212,13 @@ class PlaylistDisplay(ttk.Frame):
         values = selected_iid["values"]
         return {
             "filepath": values[0],
-            "track_id": values[1],
-            "index": values[2],
+            "track_id": str(values[1]),
+            "index": int(values[2]),
             "play status": values[3],
-            "title": values[4],
+            "title": str(values[4]),
             "length": values[5],
-            "artist": values[6], 
-            "album": values[7],
+            "artist": str(values[6]), 
+            "album": str(values[7]),
             "filetype": values[8]
         }
     

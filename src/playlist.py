@@ -71,6 +71,8 @@ class Library():
 
                 for track_id, track_data in data.items():
                     track = Track(**track_data)
+                    track_id = str(track_id)
+                    track.track_id = str(track_id)
                     self.tracks[track_id] = track
 
         except Exception as e:
