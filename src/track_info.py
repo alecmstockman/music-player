@@ -4,17 +4,16 @@ from tkinter import ttk
 class TrackInfo(tk.Toplevel):
     def __init__(self, parent, track):
         super().__init__(parent)
+        self.withdraw()
         self.track = track
 
         self.title("Track Information")
 
         self.minsize(500, 450)
 
-        self.transient(parent)   # stay on top of parent
-        self.grab_set()          # modal
+        self.transient(parent)   
+        self.grab_set()          
         self.focus_force()
-
-        self.center_over_parent(parent)
 
         ttk.Label(self, text="Track Information").pack(anchor="w")
 
@@ -34,7 +33,15 @@ class TrackInfo(tk.Toplevel):
 
         self.set_fields_and_data()
 
-        self.after(10, lambda: self.center_over_parent(parent))
+        self.center_over_parent(parent)
+        # self.wait_visibility()
+        self.deiconify()
+        self.lift()
+        self.grab_set()
+
+        # self.after(10, lambda: self.center_over_parent(parent))
+
+        
 
     def set_fields_and_data(self):
         for field, data in vars(self.track).items():
