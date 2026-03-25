@@ -241,7 +241,7 @@ class PlaylistDisplay(ttk.Frame):
             print("playlist_display: play_status_icon_playing, track_id is None")
             return
         if track_id not in self.playlist.track_id_list:
-            print(f"{track_id} not in playlist: {self.playlist.name}")
+            print(f"DISPLAY: play_status_icon_playing: {track_id} not in playlist: {self.playlist.name}")
             return
         self.playlist_tree.set(track_id, column="play status", value="  🔊")
 
@@ -252,7 +252,7 @@ class PlaylistDisplay(ttk.Frame):
             print("playlist_display: play_status_icon_paused, track_id is None")
             return
         if track_id not in self.playlist.track_id_list:
-            print(f"{track_id} not in playlist: {self.playlist.name}")
+            print(f"DISPLAY: play_status_icon_paused: {track_id} not in playlist: {self.playlist.name}")
             return
         self.playlist_tree.set(track_id, column="play status", value="  🔈")
 

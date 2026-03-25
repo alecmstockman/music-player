@@ -229,16 +229,18 @@ class PlayerControls(ttk.Frame):
 
         controls_index = self.play_order[self.play_index]
         display_index = self.get_display_index()
-        track = self.playlist.track_id_list[controls_index]
+        track_id = self.playlist.track_id_list[controls_index]
 
-        self.player.load(track)
+        track = self.library.tracks[track_id]
+        self.player.load(track.filepath)
+        
         self.player.play()
         if display_index != None:
             self.playlist_display.play_status_icon_playing(display_index)
         
         self.playlist_display.menu_iid = display_index
         self.get_current_track()
-        self.playlist_display.highlight_playing(track)
+        self.playlist_display.highlight_playing(track_id)
 
 
 
