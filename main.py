@@ -125,6 +125,7 @@ def check_play_status(selected_view, artist_album=None):
 
 def on_sidebar_selection(event):
     selected_view = sidebar.selected_view
+    print(f"selected view: {selected_view}")
     if selected_view == "Library" or selected_view == "Songs":
         playlist_display.set_playlist(playlist_manager.library_playlist)
         check_play_status(selected_view)
@@ -174,11 +175,11 @@ def on_secondary_sidebar_selection(event):
     artist_album = sidebar_widget.selected_view
 
     if sidebar.selected_view == "Artists" and artist_album:
-        playlist_display.set_playlist(library)
+        # playlist_display.set_playlist(library)
         playlist_display.get_artist_tracks(artist_album)
         
     elif sidebar.selected_view == "Albums" and artist_album:
-        playlist_display.set_playlist(library)
+        # playlist_display.set_playlist(library)
         playlist_display.get_album_tracks(artist_album)
 
     controls.check_play_status()

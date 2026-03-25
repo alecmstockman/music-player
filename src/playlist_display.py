@@ -105,7 +105,8 @@ class PlaylistDisplay(ttk.Frame):
     def set_playlist(self, playlist):
         self.playlist = playlist
         self.clear_playlist()
-        
+
+        print(playlist.name)
         if not playlist or not hasattr(playlist, "track_id_list"):
             print("No playlist or invalid playlist object")
             return
@@ -239,6 +240,9 @@ class PlaylistDisplay(ttk.Frame):
         if track_id is None:
             print("playlist_display: play_status_icon_playing, track_id is None")
             return
+        if track_id not in self.playlist.track_id_list:
+            print(f"{track_id} not in playlist: {self.playlist.name}")
+            return
         self.playlist_tree.set(track_id, column="play status", value="  🔊")
 
     def play_status_icon_paused(self, track_id):
@@ -246,6 +250,9 @@ class PlaylistDisplay(ttk.Frame):
             return
         if track_id is None:
             print("playlist_display: play_status_icon_paused, track_id is None")
+            return
+        if track_id not in self.playlist.track_id_list:
+            print(f"{track_id} not in playlist: {self.playlist.name}")
             return
         self.playlist_tree.set(track_id, column="play status", value="  🔈")
 
@@ -456,14 +463,16 @@ class PlaylistDisplay(ttk.Frame):
         self.set_playlist(playlist)
 
     def display_track_info(self):
-        print("DISPLAY: display_track_info")
-        print(f"menu_iid: {self.menu_iid}")
-        print(self.library.tracks[self.menu_iid])
-
+        selected = self.playlist_tree.selection()
+        if not selected:
+            return
+        
         track_id = self.menu_iid
-        track = self.library.tracks[self.menu_iid]
-        for key, value in vars(track).items():
-            print(key, value)
+        track = self.library.tracks[track_id]
+        self.track_info_popup = TrackInfo(self, track)
+
+
+        
 
 
 

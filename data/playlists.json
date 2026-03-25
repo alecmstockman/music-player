@@ -1,20 +1,7 @@
 {
-  "6c80b9b7-ba6e-4584-8ce6-e1115d07cb41": {
-    "name": "User Playlist 1",
-    "tracks": [
-      "40673e70",
-      "220fc28e",
-      "5055d2de",
-      "9198c62e",
-      "9198c62e",
-      "40673e70",
-      "587cbcd4"
-    ],
-    "id": "6c80b9b7-ba6e-4584-8ce6-e1115d07cb41"
-  },
-  "6ac04487-d293-49a9-b32a-6a7f5cd07768": {
-    "name": "User Playlist 2",
+  "b6bba6b0-4fbe-4cbd-a121-35671a455869": {
+    "name": "Test",
     "tracks": [],
-    "id": "6ac04487-d293-49a9-b32a-6a7f5cd07768"
+    "id": "b6bba6b0-4fbe-4cbd-a121-35671a455869"
   }
 }
