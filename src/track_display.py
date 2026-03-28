@@ -19,9 +19,9 @@ class TrackDisplay(ttk.Frame):
         self.now_playing_album_label.pack(padx=(5))
 
         self.time_elapsed_label = tk.Label(self, text="00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
-        self.total_time_label = tk.Label(self, text="00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
+        self.time_left_label = tk.Label(self, text="00:00", font=("Trebuchet MS", 15), fg="black", bg="CadetBlue")
         self.time_elapsed_label.pack(side="left", padx=(150, 0))
-        self.total_time_label.pack(side="right", padx=(0, 150))
+        self.time_left_label.pack(side="right", padx=(0, 150))
 
         self.progress_var = tk.DoubleVar()
 
@@ -63,10 +63,15 @@ class TrackDisplay(ttk.Frame):
         elapsed_s = elapsed_ms // 1000
         total_s = total_ms // 1000
         elapsed_str = f"{elapsed_s//60:02d}:{elapsed_s%60:02d}"
-        total_str = f"{total_s//60:02d}:{total_s%60:02d}"
+
+        remaining_s = total_s - elapsed_s
+        if remaining_s <= 0:
+            remaining_s = 0
+
+        time_left_str = f"{remaining_s//60:02d}:{remaining_s%60:02d}"
 
         self.time_elapsed_label.config(text=f"{elapsed_str}")
-        self.total_time_label.config(text=f"{total_str}")
+        self.time_left_label.config(text=f"{time_left_str}")
         percent = (elapsed_ms / total_ms * 100) if total_ms > 0 else 0
         self.progress_var.set(percent)
-        self.after(100, self.update_time_and_progress)
+        self.after(50, self.update_time_and_progress)

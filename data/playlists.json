@@ -1,7 +1,10 @@
 {
   "f0fa6496-6c07-49ca-909d-3bfc3e9af5cd": {
     "name": "Test",
-    "tracks": [],
+    "tracks": [
+      "1d5e6dbf",
+      "de1e8a13"
+    ],
     "id": "f0fa6496-6c07-49ca-909d-3bfc3e9af5cd"
   },
   "c936ed27-7ce8-4f9e-8b57-d04c75321308": {
