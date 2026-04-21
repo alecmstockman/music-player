@@ -105,7 +105,7 @@ python3 main.py
 ```
 music-player/
 │
-├── main.py                # Application entry point
+├── main.py                
 ├── README.md
 │
 ├── src/
@@ -117,13 +117,13 @@ music-player/
 │   ├── styles.py
 │   └── vlc_player.py
 │
-├── data/                  # JSON data files (favorites, playlists, etc.)
+├── data/                  
 │
 ├── Music/
 │   ├── Songs/
 │   └── Albums/
 │
-└── venv/                  # Python virtual environment (ignored by git)
+└── venv/                 
 ```
 
 ---
