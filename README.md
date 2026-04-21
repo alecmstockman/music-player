@@ -55,7 +55,7 @@ See my Boot.dev profile and other projects here: [https://www.boot.dev/u/stockma
 * Add songs to your favorites list
 * Easily see total playlist time
 
-# Setup
+# Usage
 
 ### 1. Clone the repository
 
