@@ -189,6 +189,20 @@ The project uses `.gitkeep` files so these directories exist even when empty.
 * Recently Played Playlist
 
 
+## 🤝 Contributing
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/alecmstockman/music-player.git
+cd music-player
+```
+
+### Submit a pull request
+
+If you'd like to contribute, please fork the repository and open a pull request to the `main` branch.
+
+
 
 
     
