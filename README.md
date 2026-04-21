@@ -13,9 +13,9 @@ As a lifelong musician, I’ve always struggled to organize my demo tracks, song
 
 #### Challenges:
 
-Like most personal projects one takes on, I vastly underestimated the amount of work involved in creating a custom player from scratch. There were a number of significant challenges I faced such as deciding on how the actual audio should be produced, shuffling the current view, and learning the Tkinter library, but by far the biggest was managing the play state while moving through different menus. There were so many little edge cases and fun challenges I had to solve to make sure song display, playlist display, and backend play order were all in sync as the user was actively changing songs and moving through the playlists and libraries. 
+Like most personal projects, I vastly underestimated the amount of work involved in building a custom player from scratch. I ran into several significant challenges like deciding how to handle audio playback, implementing shuffle for the current view, and learning Tkinter, but by far the biggest was managing play state across different menus. There were countless small edge cases to solve to keep song display, playlist display, and backend play order in sync as users switched tracks and navigated between libraries and playlists. The core functionality is now fully built out, but I have many more updates on the way. I’d love to hear what you think!
 
-This is a music player app similar to Apple Music or VLC player and a personal project for the Boot.dev backend engineering course. 
+This is a music player app similar to Apple Music and VLC media player, and a personal project for the Boot.dev backend engineering course.
 
 See my Boot.dev profile and other projects here: [https://www.boot.dev/u/stockman]
 
@@ -40,7 +40,7 @@ See my Boot.dev profile and other projects here: [https://www.boot.dev/u/stockma
   * python-vlc
   * mutagen
 
-## Quick Controls
+## Quick Start
 
 - **Space** : Play / Pause  
 - **Cmd + →** : Next Track  
